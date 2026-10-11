@@ -1,0 +1,82 @@
+{
+  "hero": {
+    "title": "Every unit of your money has a place you can see.",
+    "lead": "Ledgerline is a crypto investment account kept on a double-entry ledger. Deposits, holds, investments, results and withdrawals are entries you can open and check, and nothing is shown as earned until it has been realised.",
+    "cta": "Open an account",
+    "secondary": "See how it works",
+    "note": "Crypto investments can lose value. Returns are never guaranteed."
+  },
+  "ledger": {
+    "total": "One balance, four parts",
+    "available": "Available",
+    "availableText": "Yours to invest or withdraw.",
+    "depositHold": "Held after deposit",
+    "depositHoldText": "For 7 days a new deposit can be invested but not withdrawn.",
+    "withdrawalHold": "Reserved for withdrawal",
+    "withdrawalHoldText": "Set aside from the moment you request a withdrawal until it is sent or cancelled.",
+    "invested": "Invested",
+    "investedText": "Working in a 28-day term. Results are added only once they are realised.",
+    "caption": "Illustration of how balances are shown in your account. Not real figures."
+  },
+  "flow": {
+    "title": "From deposit to withdrawal",
+    "lead": "The same five steps for every account, with the rules written down before you start.",
+    "deposit": {
+      "fact": "Blockchain confirmations",
+      "title": "Deposit",
+      "text": "Send crypto to your personal address. It is credited after the network confirms it, never before."
+    },
+    "hold": {
+      "fact": "7 days",
+      "title": "Hold",
+      "text": "A new deposit cannot be withdrawn for 7 days. You can invest it straight away."
+    },
+    "invest": {
+      "fact": "28-day term",
+      "title": "Invest",
+      "text": "Choose a product, read what generates its return and its risks, and accept the terms in force that day."
+    },
+    "results": {
+      "fact": "Realised only",
+      "title": "Results",
+      "text": "A result is posted after the period has closed and a second staff member has checked the evidence. Losses are posted the same way."
+    },
+    "withdraw": {
+      "fact": "3% + network fee",
+      "title": "Withdraw",
+      "text": "You see the exact fee and the amount that arrives before you confirm. Staff review each request before it is sent."
+    }
+  },
+  "rules": {
+    "title": "Rules we hold ourselves to",
+    "lead": "Written into the database, not just this page: the system refuses to break them.",
+    "always": "Always",
+    "a1": "Every movement of money is a balanced debit and credit you can inspect.",
+    "a2": "Large withdrawals and every relaxation of a control need two different people.",
+    "a3": "Platform assets are reconciled against user balances, and withdrawals pause if they do not match.",
+    "a4": "Referral rewards are paid from the platform's own revenue.",
+    "never": "Never",
+    "n1": "Promise or display a return that has not been earned.",
+    "n2": "Pay one customer's returns with another customer's deposit.",
+    "n3": "Ask for your private keys, seed phrase or passwords.",
+    "n4": "Change a balance without a recorded, approved reason."
+  },
+  "products": {
+    "title": "Products",
+    "lead": "Each product shows what generates its return, its fees and its realised history. None of them shows a projected return.",
+    "all": "Compare all products",
+    "none": "No products are open for investment right now."
+  },
+  "risk": {
+    "title": "Before you invest",
+    "text": "The value of crypto assets can fall sharply and you can lose the money you invest. Past results do not predict future ones. Only invest what you can afford to lose, and read the risk disclosure first.",
+    "cta": "Read the risk disclosure"
+  },
+  "metaDescription": "A crypto investment account kept on a double-entry ledger: clear holds, realised results only, transparent withdrawal fees.",
+  "metaTitle": "Crypto investing on an open ledger",
+  "stats": {
+    "accounts": "Accounts",
+    "custody": "{{asset}} held for customers and strategies",
+    "reconciled": "Last reconciled against custody balances {{date}}."
+  }
+}

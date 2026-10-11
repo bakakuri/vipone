@@ -1,0 +1,41 @@
+/* Dark theme. Applied when <html data-theme="dark">. */
+[data-theme='dark'] {
+  color-scheme: dark;
+  --color-canvas: #0d1412;
+  --color-surface: #141d1a;
+  --color-surface-raised: #1a2521;
+  --color-surface-sunken: #101815;
+  --color-surface-hover: #1d2925;
+  --color-ink: #e3ece8;
+  --color-ink-muted: #9aaba3;
+  --color-ink-subtle: #76877f;
+  --color-ink-inverse: #0d1412;
+  --color-line: #26332e;
+  --color-line-strong: #34443d;
+
+  --color-accent: #4fb3a2;
+  --color-accent-hover: #6cc6b6;
+  --color-accent-soft: #15302b;
+  --color-accent-ink: #08110f;
+
+  --color-brass: #d9ab52;
+  --color-brass-soft: #2e2615;
+  --color-positive: #4cc38a;
+  --color-positive-soft: #12291e;
+  --color-negative: #f07a6e;
+  --color-negative-soft: #321a17;
+  --color-info: #86afd9;
+  --color-info-soft: #16222f;
+  --color-neutral-soft: #1c2622;
+
+  --color-seg-available: #4fb3a2;
+  --color-seg-deposit-hold: #d9ab52;
+  --color-seg-withdrawal-hold: #a98bd1;
+  --color-seg-invested: #6f9ccc;
+
+  --color-focus: rgba(79, 179, 162, 0.45);
+  --color-overlay: rgba(0, 0, 0, 0.6);
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-overlay: 0 24px 70px rgba(0, 0, 0, 0.55);
+  --hero-grid: rgba(79, 179, 162, 0.08);
+}

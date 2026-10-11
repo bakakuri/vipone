@@ -1,0 +1,43 @@
+{
+  "title": "Notifications",
+  "subtitle": "Updates about your account, newest first.",
+  "all": "All",
+  "unread": "Unread",
+  "filter": "Show",
+  "markAll": "Mark all as read",
+  "empty": "No notifications yet",
+  "noneUnread": "You have read everything",
+  "emptyText": "We will let you know here when something changes in your account.",
+  "securityKinds": {
+    "new_device": "A sign-in from a new device",
+    "password_changed": "Your password was changed",
+    "mfa_enabled": "Two-factor authentication was turned on",
+    "mfa_disabled": "Two-factor authentication was turned off",
+    "account_restricted": "Your account was restricted",
+    "account_frozen": "Your account was frozen",
+    "account_reinstated": "Your account was reinstated"
+  },
+  "types": {
+    "registration_completed": { "title": "Welcome to Ledgerline", "body": "Your account is ready. Start with a deposit or take the tour." },
+    "deposit_detected": { "title": "Deposit detected", "body": "{{amount}} {{asset}} is waiting for network confirmations. Reference {{reference}}." },
+    "deposit_under_review": { "title": "Deposit under review", "body": "{{amount}} {{asset}} is being checked by our compliance team. Reference {{reference}}." },
+    "deposit_credited": { "title": "Deposit credited", "body": "{{amount}} {{asset}} was added to your balance. It can be withdrawn after {{holdDays}} days." },
+    "deposit_rejected": { "title": "Deposit not credited", "body": "Deposit {{reference}} was not credited. Contact support for details." },
+    "withdrawal_created": { "title": "Withdrawal requested", "body": "{{amount}} {{asset}} is reserved while we review request {{reference}}." },
+    "withdrawal_approved": { "title": "Withdrawal approved", "body": "Request {{reference}} was approved and will be sent shortly." },
+    "withdrawal_completed": { "title": "Withdrawal sent", "body": "{{amount}} {{asset}} was confirmed on the blockchain. Reference {{reference}}." },
+    "withdrawal_rejected": { "title": "Withdrawal rejected", "body": "Request {{reference}} was rejected and the amount is back in your available balance." },
+    "withdrawal_failed": { "title": "Withdrawal failed", "body": "Request {{reference}} could not be sent. The amount is back in your available balance." },
+    "withdrawal_cancelled": { "title": "Withdrawal cancelled", "body": "Request {{reference}} was cancelled and the amount is back in your available balance." },
+    "investment_opened": { "title": "Position opened", "body": "{{amount}} {{asset}} invested. Reference {{reference}}." },
+    "investment_result_posted": { "title": "Result posted", "body": "A realised result of {{amount}} {{asset}} was posted to position {{reference}}." },
+    "investment_awaiting_settlement": { "title": "Term ended", "body": "Position {{reference}} will be released when the result for its last period is posted." },
+    "investment_matured": { "title": "Position released", "body": "{{amount}} {{asset}} from position {{reference}} is back in your available balance." },
+    "referral_reward_pending": { "title": "Referral reward pending", "body": "{{amount}} {{asset}} will be credited after the check period." },
+    "referral_reward_credited": { "title": "Referral reward credited", "body": "{{amount}} {{asset}} was added to your balance." },
+    "wallet_added": { "title": "Withdrawal address added", "body": "\"{{label}}\" on {{network}} was added. If this was not you, contact support now." },
+    "kyc_updated": { "title": "Identity verification updated", "body": "Status: {{status}}." },
+    "support_reply": { "title": "Support replied", "body": "There is a new reply in request {{reference}}." },
+    "security_alert": { "title": "Security alert", "body": "{{kind}}. If this was not you, change your password and contact support." }
+  }
+}

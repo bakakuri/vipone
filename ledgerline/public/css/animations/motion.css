@@ -1,0 +1,31 @@
+/* Motion: short, purposeful, and only in response to something real. */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes shimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+@keyframes toast-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes toast-out { to { opacity: 0; transform: translateY(8px); } }
+@keyframes dropdown-in { from { opacity: 0; transform: translateY(-4px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes tour-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes live-pulse { 0% { opacity: 0.7; transform: scale(0.6); } 80%, 100% { opacity: 0; transform: scale(1.6); } }
+@keyframes blink { 50% { opacity: 0.35; } }
+@keyframes value-flash { 0% { color: var(--color-accent); } 100% { color: inherit; } }
+@keyframes card-flash { 0% { box-shadow: 0 0 0 2px var(--color-accent-soft); } 100% { box-shadow: 0 0 0 0 transparent; } }
+@keyframes row-in { from { background: var(--color-accent-soft); } to { background: transparent; } }
+@keyframes badge-pop { 0% { transform: scale(0.85); } 60% { transform: scale(1.06); } 100% { transform: none; } }
+@keyframes draw-line { from { stroke-dasharray: 1200; stroke-dashoffset: 1200; } to { stroke-dasharray: 1200; stroke-dashoffset: 0; } }
+
+/* The one orchestrated page-load moment: main content rises in once. */
+.page-enter > * { animation: rise-in var(--duration-slow) var(--ease-out) both; }
+.page-enter > *:nth-child(2) { animation-delay: 40ms; }
+.page-enter > *:nth-child(3) { animation-delay: 80ms; }
+.page-enter > *:nth-child(n + 4) { animation-delay: 110ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,7 @@
+.stat { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+.stat__label { font-size: var(--text-sm); color: var(--color-ink-muted); display: flex; align-items: center; gap: var(--space-1); }
+.stat__value { font-size: var(--text-xl); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.15; }
+.stat__value--lg { font-size: var(--text-2xl); }
+.stat__meta { font-size: var(--text-xs); color: var(--color-ink-subtle); }
+.stat-card { padding: var(--space-5); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-panel); }
+.stat-card.is-updated .stat__value { animation: value-flash 900ms var(--ease-out); }

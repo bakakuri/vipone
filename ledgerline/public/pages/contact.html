@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-title-key="public:contact.metaTitle" data-localized="true">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Contact · Ledgerline</title>
+  <meta name="description" content="How to reach Ledgerline support." data-i18n-attr="content:public:contact.metaDescription">
+  <meta name="robots" content="index, follow">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#1f6f63">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icons/app-icon-180.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="preload" href="/assets/fonts/IBMPlexSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/pages/contact.css">
+  <script src="/js/core/boot-theme.js"></script>
+  <script type="module" src="/js/pages/contact.js"></script>
+</head>
+<body class="area-public">
+  <a class="skip-link" href="#main" data-i18n="common:a11y.skipToContent">Skip to content</a>
+  <main id="main" tabindex="-1">
+    <div id="page" class="public-page">
+      <section class="section section--tight">
+        <div class="section__inner section__inner--narrow">
+          <header class="section__header">
+            <h1 data-i18n="public:contact.title">Contact</h1>
+            <p data-i18n="public:contact.lead">The fastest way to get help with your account is a support request from inside your account: it is linked to your details, so we never need to ask for them.</p>
+          </header>
+          <div class="grid grid--2">
+            <div class="card">
+              <h2 class="card__title" data-i18n="public:contact.ticketTitle">Support request</h2>
+              <p class="text-muted" data-i18n="public:contact.ticketText">Sign in and open Support to start a conversation with our team.</p>
+              <div><a class="btn btn--primary" id="contact-ticket" href="/login?next=%2Fsupport" data-i18n="public:contact.ticketCta">Open a support request</a></div>
+            </div>
+            <div class="card">
+              <h2 class="card__title" data-i18n="public:contact.emailTitle">Email</h2>
+              <p class="text-muted" data-i18n="public:contact.emailText">For questions before you open an account.</p>
+              <p id="contact-email" class="text-md"><span class="skeleton skeleton--text" aria-hidden="true"></span></p>
+            </div>
+          </div>
+          <div class="alert alert--warning mt-6" role="note">
+            <div class="alert__body">
+              <div class="alert__title" data-i18n="public:contact.safetyTitle">We will never ask for your keys</div>
+              <div data-i18n="public:contact.safetyText">Ledgerline staff never ask for passwords, two-factor codes, private keys or seed phrases. Anyone who does is not us.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <noscript><p class="noscript" data-i18n="common:noscript">Ledgerline needs JavaScript for your account pages. Public information pages work without it.</p></noscript>
+</body>
+</html>

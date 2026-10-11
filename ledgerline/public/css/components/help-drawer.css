@@ -1,0 +1,12 @@
+.help-drawer {
+  position: fixed; inset-block: 0; inset-inline-end: 0; z-index: calc(var(--z-overlay) + 1);
+  width: min(420px, 100vw); background: var(--color-surface); box-shadow: var(--shadow-overlay);
+  display: flex; flex-direction: column; transform: translateX(100%); transition: transform var(--duration-slow) var(--ease-out);
+}
+[dir='rtl'] .help-drawer { transform: translateX(-100%); }
+.help-drawer.is-open { transform: translateX(0); }
+.help-drawer__header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-5); border-block-end: 1px solid var(--color-line); }
+.help-drawer__body { padding: var(--space-5); overflow-y: auto; display: flex; flex-direction: column; gap: var(--space-5); }
+.help-topic h3 { font-size: var(--text-base); margin-block-end: var(--space-2); }
+.help-topic p { font-size: var(--text-sm); color: var(--color-ink-muted); }
+.help-topic p + p { margin-block-start: var(--space-2); }

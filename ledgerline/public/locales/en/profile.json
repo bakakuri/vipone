@@ -1,0 +1,35 @@
+{
+  "title": "Profile",
+  "subtitle": "Your details, language, theme and verification.",
+  "account": "Account",
+  "email": "Email",
+  "country": "Country of residence",
+  "memberSince": "Member since",
+  "displayName": "Display name",
+  "displayNameHint": "Used to greet you. Leave it empty if you prefer.",
+  "saved": "Profile saved.",
+  "preferences": "Preferences",
+  "languageHint": "Also used for emails we send you.",
+  "statusContact": "Contact support to find out why and what to do next.",
+  "status": {
+    "restricted": "Your account is restricted",
+    "frozen": "Your account is frozen",
+    "closed": "Your account is closed"
+  },
+  "kyc": {
+    "title": "Identity verification",
+    "status": "Status",
+    "start": "Start verification",
+    "manualNote": "Our team will contact you by email with the next step.",
+    "statuses": { "none": "Not started", "pending": "In review", "approved": "Verified", "rejected": "Not approved" },
+    "explain": {
+      "none": "Verification may be required before deposits, investments or withdrawals, depending on your country.",
+      "pending": "We are reviewing your documents. We will notify you when it is done.",
+      "approved": "Your identity is verified.",
+      "rejected": "Your verification was not approved. You can try again or contact support."
+    }
+  },
+  "legal": "Agreements you accepted",
+  "acceptedOn": "version {{version}}, accepted {{date}}",
+  "docs": { "terms": "Terms of Service", "privacy": "Privacy Policy", "cookies": "Cookie Policy", "risk": "Risk disclosure" }
+}

@@ -1,0 +1,53 @@
+{
+  "title": "Overview",
+  "greeting": "Hello, {{name}}",
+  "subtitle": "Where your money is right now, from your ledger balances.",
+  "positions": "Open positions",
+  "history": "Balance over the last 30 days",
+  "historyLabel": "Daily closing balance in {{asset}} for the last 30 days",
+  "historyNote": "Closing balance of each UTC day in {{asset}}, including held and invested funds.",
+  "recent": "Recent activity",
+  "inFlight": "In progress",
+  "nothingInFlight": "No deposits or withdrawals in progress.",
+  "depositLine": "Deposit · {{asset}} on {{network}}",
+  "withdrawalLine": "Withdrawal {{reference}}",
+  "noPositions": "No open positions",
+  "noPositionsText": "When you invest, each position and its term progress appear here.",
+  "browseProducts": "Browse products",
+  "firstDeposit": "Your first deposit will appear here once it is confirmed.",
+  "valuation": "About {{value}} at prices from {{time}}. Prices are indicative; your balances are kept in crypto.",
+  "valuationUnavailable": "A US dollar estimate is not available right now. Your balances are kept in crypto.",
+  "alerts": {
+    "restrictedTitle": "Your account is restricted",
+    "restrictedText": "Some actions are unavailable. Our support team can tell you why and what to do next.",
+    "mfaTitle": "Turn on two-factor authentication",
+    "mfaText": "It protects your account and is required before you can add withdrawal addresses or withdraw.",
+    "mfaAction": "Set it up"
+  },
+  "balance": {
+    "title": "Balances",
+    "total": "Total balance",
+    "asset": "Asset",
+    "available": "Available",
+    "availableHint": "You can invest or withdraw this amount now.",
+    "depositHold": "Held after deposit",
+    "depositHoldHint": "New deposits cannot be withdrawn for 7 days. You can invest them during that time.",
+    "withdrawalHold": "Reserved for withdrawals",
+    "withdrawalHoldHint": "Set aside for withdrawal requests that have not been sent yet.",
+    "invested": "Invested",
+    "investedHint": "Principal plus posted results of your open positions.",
+    "nextUnlock": "{{amount}} becomes withdrawable on {{date}}."
+  },
+  "earnings": {
+    "title": "Realised earnings",
+    "realised": "Investment results, {{asset}}",
+    "referralCredited": "Referral rewards credited",
+    "referralPending": "Referral rewards pending",
+    "none": "No realised results or rewards yet.",
+    "awaitingSettlement": {
+      "one": "{{count}} position is waiting for its final result.",
+      "other": "{{count}} positions are waiting for their final result."
+    },
+    "note": "Only realised, posted results are counted. Nothing is estimated."
+  }
+}

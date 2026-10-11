@@ -1,0 +1,20 @@
+{
+  "back": "Back",
+  "next": "Next",
+  "finish": "Finish",
+  "later": "Continue later",
+  "skip": "Skip the tour",
+  "stepOf": "Step {{current}} of {{total}}",
+  "steps": {
+    "welcome": { "title": "Welcome to Ledgerline", "text": "A two-minute tour of where your money is and how it moves. You can leave and resume it any time from Help." },
+    "balances": { "title": "Your balance in four parts", "text": "Available, held after a deposit, reserved for a withdrawal, and invested. The total is always the sum of these four ledger balances." },
+    "deposit": { "title": "Deposit", "text": "Get your personal address for each network here. Funds are credited after the blockchain confirms them." },
+    "transactions": { "title": "Transactions", "text": "Every change to your balance, with the ledger entries behind it. You can export it as a spreadsheet." },
+    "investments": { "title": "Investments", "text": "Read what generates a product's return and its risks before investing. Results are added only after they are realised." },
+    "withdrawals": { "title": "Withdrawals", "text": "You see the 3% platform fee, the network fee and the amount that arrives before you confirm." },
+    "wallets": { "title": "Withdrawal addresses", "text": "Add the addresses you withdraw to. Each one is confirmed by an emailed code." },
+    "referrals": { "title": "Referrals", "text": "Your invitation link and the rewards it has earned. Rewards are paid by the platform." },
+    "security": { "title": "Security", "text": "Turn on two-factor authentication — it is required for withdrawals." },
+    "help": { "title": "Help is always here", "text": "Each page has a help button that explains it. The help centre has the full guides." }
+  }
+}

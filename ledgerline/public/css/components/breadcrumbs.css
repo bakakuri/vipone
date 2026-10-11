@@ -1,0 +1,5 @@
+.breadcrumbs ol { list-style: none; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); font-size: var(--text-xs); color: var(--color-ink-subtle); }
+.breadcrumbs a { color: var(--color-ink-muted); text-decoration: none; }
+.breadcrumbs a:hover { color: var(--color-ink); text-decoration: underline; }
+.breadcrumbs li + li::before { content: '/'; margin-inline-end: var(--space-1); color: var(--color-line-strong); }
+.breadcrumbs [aria-current='page'] { color: var(--color-ink); }

@@ -1,0 +1,30 @@
+{
+  "title": "Support",
+  "subtitle": "Ask us anything about your account. Replies arrive here and by email.",
+  "safetyTitle": "Never share secrets in a message",
+  "safetyText": "We will never ask for your password, two-factor codes, private keys or seed phrase. Do not include them in a request.",
+  "newTicket": "New request",
+  "subject": "Subject",
+  "category": "Topic",
+  "categories": {
+    "account": "Account",
+    "deposit": "Deposit",
+    "withdrawal": "Withdrawal",
+    "investment": "Investment",
+    "referral": "Referral",
+    "security": "Security",
+    "other": "Something else"
+  },
+  "message": "Message",
+  "messageHint": "Include references or transaction hashes if your question is about a specific operation.",
+  "send": "Send request",
+  "created": "Request {{reference}} sent. We will reply here.",
+  "yourTickets": "Your requests",
+  "noTickets": "No requests yet",
+  "noTicketsText": "Your conversations with support will appear here.",
+  "reply": "Your reply",
+  "sendReply": "Send reply",
+  "staff": "Ledgerline support",
+  "you": "You",
+  "closedNote": "This conversation is closed. Open a new request if you need more help."
+}

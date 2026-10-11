@@ -1,0 +1,39 @@
+/* Sign-in, registration and email-link pages. */
+.auth-shell {
+  min-height: 100vh; min-height: 100dvh;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.auth-shell__aside {
+  position: relative; overflow: hidden;
+  background: var(--color-surface-sunken);
+  border-inline-end: 1px solid var(--color-line);
+  padding: var(--space-10);
+  display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-8);
+}
+.auth-shell__aside::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(var(--hero-grid) 1px, transparent 1px), linear-gradient(90deg, var(--hero-grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
+}
+.auth-shell__aside > * { position: relative; }
+.auth-shell__quote { display: flex; flex-direction: column; gap: var(--space-4); max-width: 44ch; }
+.auth-shell__quote h2 { font-size: var(--text-xl); }
+.auth-shell__quote p { color: var(--color-ink-muted); }
+.auth-shell__main { display: flex; flex-direction: column; padding: var(--space-6) var(--space-8); }
+.auth-shell__top { display: flex; justify-content: flex-end; gap: var(--space-2); }
+.auth-shell__content { flex: 1; display: flex; align-items: center; justify-content: center; padding-block: var(--space-8); }
+.auth-card { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: var(--space-6); }
+.auth-card__header { display: flex; flex-direction: column; gap: var(--space-2); }
+.auth-card__header p { color: var(--color-ink-muted); }
+.auth-card__footer { color: var(--color-ink-muted); font-size: var(--text-sm); text-align: center; }
+.auth-shell__legal { color: var(--color-ink-subtle); font-size: var(--text-xs); text-align: center; }
+.auth-shell__legal.cluster { justify-content: center; gap: var(--space-4); }
+
+/* Confirmation states (email sent, verified) and consent boxes. */
+.auth-done { display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--color-accent-soft); color: var(--color-accent); }
+.auth-done .icon { width: 28px; height: 28px; }
+.auth-done--success { background: var(--color-positive-soft); color: var(--color-positive); }
+.consents { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.consents legend { margin-block-end: var(--space-2); }

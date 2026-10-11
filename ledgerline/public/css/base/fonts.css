@@ -1,0 +1,9 @@
+/* IBM Plex — one family across Latin, Cyrillic and Arabic (SIL OFL 1.1, see /assets/fonts/OFL-IBM-Plex.txt). */
+@font-face { font-family: 'Plex Sans'; src: url('/assets/fonts/IBMPlexSans-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Plex Sans'; src: url('/assets/fonts/IBMPlexSans-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Plex Sans'; src: url('/assets/fonts/IBMPlexSans-SemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Plex Sans Arabic'; src: url('/assets/fonts/IBMPlexSansArabic-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Plex Sans Arabic'; src: url('/assets/fonts/IBMPlexSansArabic-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Plex Sans Arabic'; src: url('/assets/fonts/IBMPlexSansArabic-SemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Plex Mono'; src: url('/assets/fonts/IBMPlexMono-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Plex Mono'; src: url('/assets/fonts/IBMPlexMono-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }

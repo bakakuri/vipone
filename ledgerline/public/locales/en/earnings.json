@@ -1,0 +1,21 @@
+{
+  "title": "Earnings",
+  "subtitle": "Realised investment results and referral rewards.",
+  "realisedOnly": "Only realised, posted results appear here. Nothing is estimated or projected.",
+  "awaiting": {
+    "one": "{{count}} position has ended its term and is waiting for its final result.",
+    "other": "{{count}} positions have ended their term and are waiting for their final result."
+  },
+  "realisedProfit": "Realised gains",
+  "realisedLoss": "Realised losses",
+  "performanceFees": "Performance fees paid",
+  "referralCredited": "Referral rewards credited",
+  "referralPending": "Referral rewards pending",
+  "historyTitle": "History",
+  "kind": "Type",
+  "kinds": { "profit": "Investment gain", "loss": "Investment loss", "referral_reward": "Referral reward" },
+  "source": "Source",
+  "releaseAt": "Pending until {{date}}",
+  "emptyTitle": "No earnings yet",
+  "emptyText": "Results appear after a period ends and its realised result is posted."
+}

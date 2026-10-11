@@ -1,0 +1,167 @@
+{
+  "title": "Help centre",
+  "subtitle": "Guides for every part of your account. Search, or pick a topic.",
+  "button": "Help",
+  "openHelpCenter": "Open the help centre",
+  "search": "Search the guides",
+  "searchPlaceholder": "For example: withdrawal fee",
+  "resultsCount": { "zero": "No matching answers.", "one": "{{count}} matching answer", "other": "{{count}} matching answers" },
+  "contents": "Topics",
+  "replayTour": "Replay the tour",
+  "stillNeed": "Still need help? Contact support",
+  "glossary": {
+    "title": "Glossary",
+    "terms": [
+      { "term": "Ledger", "text": "The record of every movement of money. Each transaction has equal debits and credits, and recorded entries are never edited." },
+      { "term": "Available", "text": "The part of your balance you can invest or withdraw now." },
+      { "term": "Deposit hold", "text": "A newly credited deposit that cannot be withdrawn for 7 days but can be invested." },
+      { "term": "Reserved for withdrawal", "text": "Funds set aside by a withdrawal request until it is sent or cancelled." },
+      { "term": "Position", "text": "An amount invested in one product for its term." },
+      { "term": "Realised result", "text": "A gain or loss that has actually happened in a closed period, approved and posted to the ledger." },
+      { "term": "Awaiting settlement", "text": "A position whose term has ended but whose last period result is not posted yet." },
+      { "term": "Confirmation", "text": "A new block added after the block containing your transaction. More confirmations mean the transaction is final." },
+      { "term": "Memo or tag", "text": "An extra identifier some networks need so a deposit reaches the right account." },
+      { "term": "Network fee", "text": "The fee paid to the blockchain to process a transfer." }
+    ]
+  },
+  "center": {
+    "sections": [
+      {
+        "id": "getting-started",
+        "title": "Getting started",
+        "items": [
+          { "q": "How do I open an account?", "a": ["Register with your email, confirm it with the link we send, then sign in. Turn on two-factor authentication in Security before your first withdrawal."] },
+          { "q": "Do I need to verify my identity?", "a": ["It depends on your country and the rules that apply to us. If verification is needed, you will see a prompt with a link to Profile, where you can start it."] },
+          { "q": "What is demo mode?", "a": ["A demo deployment shows a banner on every page. Its balances and transactions are test data with no value, and no real deposits or withdrawals happen."] }
+        ]
+      },
+      {
+        "id": "deposits",
+        "title": "Deposits",
+        "items": [
+          { "q": "How do I deposit?", "a": ["Open Deposit, choose the asset and network, and send funds to the address shown. If a memo or tag is shown, include it.", "The deposit appears as detected within minutes and is credited after the required confirmations."] },
+          { "q": "Why is my deposit still confirming?", "a": ["Each network needs a number of confirmations before a transaction is final. The progress bar shows how many have arrived. Busy networks can take longer."] },
+          { "q": "Why is my deposit under review?", "a": ["Some deposits are held for a compliance check, for example when an automated check flags the sending address. Nothing is needed from you unless we contact you."] },
+          { "q": "I sent funds on the wrong network or without a memo.", "a": ["Contact support with the transaction hash. Recovery is not always possible; when it is, it needs a manual review."] }
+        ]
+      },
+      {
+        "id": "holds",
+        "title": "The 7-day hold",
+        "items": [
+          { "q": "Why can't I withdraw my deposit yet?", "a": ["For 7 days after a deposit is credited, it cannot be withdrawn. This protects every customer against payment fraud. The dashboard shows when each held amount is released."] },
+          { "q": "Can I invest held funds?", "a": ["Yes. Held funds can be invested straight away. The hold only affects withdrawals."] }
+        ]
+      },
+      {
+        "id": "investing",
+        "title": "Investing",
+        "items": [
+          { "q": "How do I choose a product?", "a": ["Each product explains what generates its return, its term, fees, limits and risks, and shows its realised history. There are no projected returns."] },
+          { "q": "What does the progress bar mean?", "a": ["It shows how much of the term has passed. It is time only, not profit."] },
+          { "q": "When are results added?", "a": ["After a period ends, the realised result is recorded with evidence and approved by a second staff member, then posted to every position that was open during the period. Gains and losses are posted the same way."] },
+          { "q": "What does awaiting settlement mean?", "a": ["The term has ended but the result for its last period is not posted yet. The position is released to your available balance as soon as it is."] },
+          { "q": "Can I leave before the term ends?", "a": ["Only if the product allows early exit. The early-exit fee is shown on the product and before you confirm."] }
+        ]
+      },
+      {
+        "id": "withdrawals",
+        "title": "Withdrawals and fees",
+        "items": [
+          { "q": "How much does a withdrawal cost?", "a": ["A 3% platform fee plus the network fee. Both are shown in the quote, with the exact amount that will arrive, before you confirm."] },
+          { "q": "Why must I add an address first?", "a": ["Withdrawals go only to addresses you have confirmed by email. A new address can be used after a short cooldown, which protects you if someone gets into your email."] },
+          { "q": "How long does a withdrawal take?", "a": ["Staff review every request before it is sent, and large amounts need two approvers. You can follow each step on the Withdrawals page and you are notified when the funds are sent."] },
+          { "q": "Can I cancel a withdrawal?", "a": ["Yes, while it is pending. The reserved amount returns to your available balance immediately."] }
+        ]
+      },
+      {
+        "id": "referrals",
+        "title": "Referrals",
+        "items": [
+          { "q": "How are referral rewards calculated?", "a": ["5% of each confirmed deposit made by someone you invited, and 2% of their realised, posted gains. The rates in force are shown on the Referrals page."] },
+          { "q": "Who pays the reward?", "a": ["The platform, from its own revenue. Nothing is deducted from the person you invited."] },
+          { "q": "Why is my reward pending?", "a": ["Each reward waits for a short check period before it is credited. Rewards linked to self-referral or duplicate accounts are cancelled."] }
+        ]
+      },
+      {
+        "id": "security",
+        "title": "Security and access",
+        "items": [
+          { "q": "How do I turn on two-factor authentication?", "a": ["Open Security, choose Turn on, scan the QR code with an authenticator app and enter the code it shows."] },
+          { "q": "I lost my two-factor device.", "a": ["Contact support from the email address on your account. We will verify your identity before restoring access; this takes time on purpose."] },
+          { "q": "I forgot my password.", "a": ["Use Forgot your password on the sign-in page. Changing it signs out every other device."] },
+          { "q": "Someone asked for my seed phrase.", "a": ["It was not us. We never ask for passwords, codes, private keys or seed phrases. Report it to support."] }
+        ]
+      },
+      {
+        "id": "records",
+        "title": "Records and statements",
+        "items": [
+          { "q": "Where can I see every movement of my money?", "a": ["Transactions lists everything from the ledger. Open a line to see its debit and credit entries."] },
+          { "q": "Can I export my history?", "a": ["Yes. Use Export CSV on the Transactions page; filters apply to the export."] }
+        ]
+      }
+    ]
+  },
+  "pages": {
+    "dashboard": {
+      "title": "About the overview",
+      "topics": [
+        { "title": "The balance strip", "body": ["Your total is split into four parts: available, held after deposit, reserved for withdrawals and invested. Each comes from a separate ledger account, so the parts always add up to the total."] },
+        { "title": "US dollar estimate", "body": ["The dollar figure is approximate, uses recent market prices and is shown with the time of those prices. Your balances are kept in crypto."] },
+        { "title": "Live updates", "body": ["When the server records a change — a confirmation, a posted result, a withdrawal update — the page refreshes that data. The time next to Live is the server time of the last update."] }
+      ]
+    },
+    "deposit": {
+      "title": "About deposits",
+      "topics": [
+        { "title": "Choosing the network", "body": ["Pick the same network your wallet or exchange uses to send. Sending on another network can lose the funds."] },
+        { "title": "Memo or tag", "body": ["Some networks share one address among many users and use a memo or tag to identify you. If one is shown, include it exactly."] },
+        { "title": "After you send", "body": ["The deposit appears as detected, then counts confirmations, then is credited. It can be invested at once and withdrawn after 7 days."] }
+      ]
+    },
+    "withdrawals": {
+      "title": "About withdrawals",
+      "topics": [
+        { "title": "Fees", "body": ["A 3% platform fee and the network fee are deducted from the amount. The quote shows both and the amount that will arrive."] },
+        { "title": "Review", "body": ["Every request is reviewed before it is sent. Large amounts need two approvers, and the person who sends the funds cannot be the one who confirms them."] },
+        { "title": "Cancelling", "body": ["You can cancel while a request is pending. The reserved amount returns to your available balance."] }
+      ]
+    },
+    "wallets": {
+      "title": "About withdrawal addresses",
+      "topics": [
+        { "title": "What to add", "body": ["The public address of a wallet or exchange account you control. Never enter a private key or seed phrase."] },
+        { "title": "Confirmation and cooldown", "body": ["Each new address is confirmed with an emailed code and can be used after a short cooldown."] }
+      ]
+    },
+    "investments": {
+      "title": "About investments",
+      "topics": [
+        { "title": "Terms", "body": ["The product terms in force when you invest are stored with your position. Later changes do not apply to it."] },
+        { "title": "Results", "body": ["Results are posted only after they are realised and approved. They can be negative."] },
+        { "title": "Early exit", "body": ["Allowed only if the product says so, with the fee shown before you confirm."] }
+      ]
+    },
+    "earnings": {
+      "title": "About earnings",
+      "topics": [
+        { "title": "What counts", "body": ["Realised investment results after performance fees, and referral rewards once credited. Pending rewards are shown separately."] }
+      ]
+    },
+    "transactions": {
+      "title": "About transactions",
+      "topics": [
+        { "title": "Ledger entries", "body": ["Each line is a ledger transaction. Open it to see the debit and credit entries posted to your accounts."] },
+        { "title": "Fee lines", "body": ["Fee lines show how much of a withdrawal or early exit went to fees. They are already included in that line, so they do not change your balance twice."] }
+      ]
+    },
+    "referrals": {
+      "title": "About referrals",
+      "topics": [
+        { "title": "Rewards", "body": ["You earn a share of confirmed deposits and realised gains of people you invited. The platform pays it."] },
+        { "title": "Checks", "body": ["Rewards wait for a short period and are checked for abuse before they are credited."] }
+      ]
+    }
+  }
+}

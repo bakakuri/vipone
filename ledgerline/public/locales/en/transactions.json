@@ -1,0 +1,39 @@
+{
+  "title": "Transactions",
+  "subtitle": "Every change to your balances, taken from the ledger. Open a line to see its entries.",
+  "type": "Type",
+  "amount": "Amount",
+  "status": "Status",
+  "reference": "Reference",
+  "date": "Date",
+  "txHash": "Transaction hash",
+  "export": "Export CSV",
+  "included": "Included in the withdrawal or exit above",
+  "feeIncluded": "This fee is shown for clarity. It is already included in the withdrawal or early exit it belongs to.",
+  "types": {
+    "deposit": "Deposit",
+    "withdrawal": "Withdrawal",
+    "investment_allocation": "Invested",
+    "investment_release": "Released from investment",
+    "profit": "Investment gain",
+    "loss": "Investment loss",
+    "referral_reward": "Referral reward",
+    "fee": "Fee",
+    "refund": "Returned to balance",
+    "adjustment": "Adjustment"
+  },
+  "entriesTitle": "Ledger entries",
+  "entriesHint": "Entries posted to your own accounts by this transaction. The platform side of each entry is kept on system accounts.",
+  "account": "Account",
+  "debit": "Debit",
+  "credit": "Credit",
+  "ledgerId": "Ledger transaction",
+  "accounts": {
+    "available": "Available",
+    "withdrawal_hold": "Reserved for withdrawals",
+    "invested": "Invested"
+  },
+  "emptyTitle": "No transactions yet",
+  "emptyText": "Your deposits, investments, results and withdrawals will be listed here.",
+  "emptyAction": "Make a deposit"
+}

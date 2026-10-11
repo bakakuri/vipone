@@ -1,0 +1,8 @@
+<!-- Supabase Auth → Emails → "Confirm signup". The link goes to our page, which verifies the token on the server. -->
+<h2>Confirm your email</h2>
+<p>Click the button to confirm your email address and open your account.</p>
+<p><a href="{{ .SiteURL }}/verify-email?token_hash={{ .TokenHash }}&type=signup">Confirm my email</a></p>
+<p>If you did not create an account, you can ignore this email.</p>
+<hr>
+<p lang="ru">Подтвердите адрес электронной почты: <a href="{{ .SiteURL }}/verify-email?token_hash={{ .TokenHash }}&type=signup">подтвердить</a>. Если вы не регистрировались, просто проигнорируйте это письмо.</p>
+<p lang="ar" dir="rtl">أكّد بريدك الإلكتروني: <a href="{{ .SiteURL }}/verify-email?token_hash={{ .TokenHash }}&type=signup">تأكيد البريد</a>. إذا لم تقم بإنشاء حساب، فتجاهل هذه الرسالة.</p>

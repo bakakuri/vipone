@@ -1,0 +1,123 @@
+{
+  "brand": "Ledgerline",
+  "language": "اللغة",
+  "loading": "جارٍ التحميل…",
+  "optional": "اختياري",
+  "copied": "تم النسخ",
+  "noscript": "تحتاج صفحات حسابك في Ledgerline إلى JavaScript. صفحات المعلومات العامة تعمل بدونه.",
+  "a11y": {
+    "skipToContent": "تخطَّ إلى المحتوى"
+  },
+  "actions": {
+    "back": "رجوع",
+    "cancel": "إلغاء",
+    "close": "إغلاق",
+    "confirm": "تأكيد",
+    "copy": "نسخ",
+    "copyAddress": "نسخ العنوان",
+    "edit": "تعديل",
+    "max": "الحد الأقصى",
+    "openExplorer": "فتح في مستكشف الكتل",
+    "retry": "حاول مرة أخرى",
+    "save": "حفظ",
+    "showMore": "عرض المزيد",
+    "viewAll": "عرض الكل"
+  },
+  "fields": {
+    "amount": "المبلغ",
+    "asset": "الأصل",
+    "network": "الشبكة",
+    "networkHint": "يجب أن تطابق الشبكة تلك التي تستخدمها المحفظة أو المنصة المُرسِلة.",
+    "reason": "السبب"
+  },
+  "filters": {
+    "all": "الكل",
+    "from": "من",
+    "to": "إلى",
+    "reset": "مسح عوامل التصفية"
+  },
+  "chart": {
+    "noData": "لا توجد بيانات لهذه الفترة بعد."
+  },
+  "demo": {
+    "banner": "الوضع التجريبي: الأرصدة والعمليات على هذا الموقع بيانات اختبارية ولا قيمة لها. الإيداعات والسحوبات ليست حقيقية."
+  },
+  "footer": {
+    "copyright": "© {{year}} Ledgerline",
+    "tagline": "حساب استثمار في العملات المشفّرة يُدار بدفتر قيود مزدوج.",
+    "riskNotice": "الأصول المشفّرة متقلبة وقد تخسر الأموال التي تستثمرها. العوائد غير مضمونة والنتائج السابقة لا تتنبأ بالنتائج المستقبلية."
+  },
+  "theme": {
+    "label": "المظهر",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "مثل الجهاز"
+  },
+  "live": {
+    "live": "مباشر",
+    "connecting": "جارٍ الاتصال",
+    "reconnecting": "جارٍ إعادة الاتصال",
+    "offline": "غير متصل",
+    "disabled": "التحديثات متوقفة",
+    "updatedAt": "آخر تحديث {{time}}"
+  },
+  "time": {
+    "justNow": "الآن"
+  },
+  "duration": {
+    "daysHours": "{{days}} يوم {{hours}} ساعة",
+    "hoursMinutes": "{{hours}} ساعة {{minutes}} دقيقة",
+    "minutes": "{{minutes}} دقيقة"
+  },
+  "status": {
+    "active": "نشط",
+    "approved": "موافَق عليه",
+    "approved_kyc": "موثَّق",
+    "assigned": "مُخصَّص",
+    "available": "متاح",
+    "awaiting_payment": "بانتظار الدفع",
+    "awaiting_settlement": "بانتظار التسوية",
+    "awaiting_user": "بانتظار ردّك",
+    "cancelled": "ملغى",
+    "clear": "سليم",
+    "closed": "مغلق",
+    "closed_early": "مغلق مبكرًا",
+    "completed": "مكتمل",
+    "confirmed": "مؤكَّد",
+    "confirming": "قيد التأكيد",
+    "cooling_down": "فترة انتظار",
+    "created": "تم الإنشاء",
+    "credited": "تمت الإضافة",
+    "detected": "تم الرصد",
+    "disabled": "متوقف",
+    "dismissed": "مُستبعَد",
+    "draft": "مسودة",
+    "enabled": "مُفعَّل",
+    "executed": "مُنفَّذ",
+    "expired": "منتهي الصلاحية",
+    "failed": "فشل",
+    "flagged": "مُعلَّم",
+    "frozen": "مجمَّد",
+    "matured": "انتهت المدة",
+    "mismatch": "عدم تطابق",
+    "none": "لم يبدأ",
+    "ok": "سليم",
+    "open": "مفتوح",
+    "paused": "متوقف مؤقتًا",
+    "pending": "قيد الانتظار",
+    "pending_confirmation": "بحاجة إلى تأكيد",
+    "posted": "مُرحَّل",
+    "processing": "قيد المعالجة",
+    "queued": "في قائمة الانتظار",
+    "rejected": "مرفوض",
+    "removed": "محذوف",
+    "resolved": "تمت المعالجة",
+    "restricted": "مقيَّد",
+    "retired": "خارج الخدمة",
+    "running": "قيد التشغيل",
+    "sending": "قيد الإرسال",
+    "sent": "مُرسَل",
+    "succeeded": "نجح",
+    "under_review": "قيد المراجعة"
+  }
+}

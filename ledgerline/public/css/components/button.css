@@ -1,0 +1,38 @@
+.btn {
+  --btn-bg: var(--color-surface);
+  --btn-ink: var(--color-ink);
+  --btn-border: var(--color-line-strong);
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  min-height: 40px; padding: 0 var(--space-4);
+  border: 1px solid var(--btn-border); border-radius: var(--radius-control);
+  background: var(--btn-bg); color: var(--btn-ink);
+  font-size: var(--text-sm); font-weight: 500; line-height: 1; white-space: nowrap; text-decoration: none;
+  transition: background-color var(--duration-fast), border-color var(--duration-fast), color var(--duration-fast), transform var(--duration-fast) var(--ease-out);
+  user-select: none;
+}
+.btn:hover { background: var(--color-surface-hover); color: var(--btn-ink); }
+.btn:active:not(:disabled) { transform: scale(0.98); }
+.btn:disabled, .btn[aria-disabled='true'] { opacity: 0.55; cursor: not-allowed; }
+.btn .icon { width: 18px; height: 18px; }
+
+.btn--primary { --btn-bg: var(--color-accent); --btn-ink: var(--color-accent-ink); --btn-border: var(--color-accent); }
+.btn--primary:hover { background: var(--color-accent-hover); border-color: var(--color-accent-hover); color: var(--color-accent-ink); }
+.btn--danger { --btn-bg: var(--color-negative); --btn-ink: #fff; --btn-border: var(--color-negative); }
+.btn--danger:hover { background: color-mix(in srgb, var(--color-negative) 88%, #000); color: #fff; }
+.btn--ghost { --btn-bg: transparent; --btn-border: transparent; --btn-ink: var(--color-ink-muted); }
+.btn--ghost:hover { background: var(--color-surface-hover); color: var(--color-ink); }
+.btn--sm { min-height: 32px; padding: 0 var(--space-3); font-size: var(--text-xs); }
+.btn--lg { min-height: 48px; padding: 0 var(--space-6); font-size: var(--text-base); }
+.btn--block { width: 100%; }
+.btn--icon { width: 40px; padding: 0; }
+.btn--icon.btn--sm { width: 32px; }
+
+.btn.is-loading { position: relative; color: transparent; pointer-events: none; }
+.btn.is-loading::after {
+  content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid currentColor; border-color: var(--btn-ink) transparent var(--btn-ink) transparent;
+  animation: spin 0.8s linear infinite;
+}
+
+.link-button { color: var(--color-accent); font-weight: 500; font-size: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.link-button:hover { color: var(--color-accent-hover); }

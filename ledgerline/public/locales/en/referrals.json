@@ -1,0 +1,38 @@
+{
+  "title": "Referrals",
+  "subtitle": "Invite people you know. Rewards are paid by the platform, never taken from them.",
+  "yourLink": "Your invitation",
+  "code": "Code",
+  "link": "Link",
+  "copyLink": "Copy link",
+  "share": "Share",
+  "shareTitle": "Join me on Ledgerline",
+  "rulesTitle": "How rewards work",
+  "rules": {
+    "deposit": "{{rate}} of each confirmed deposit made by someone you invited ({{scope}}).",
+    "profit": "{{rate}} of their realised, posted investment gains.",
+    "paidByPlatform": "Paid by the platform from its own revenue. Nothing is deducted from the person you invited.",
+    "hold": "A reward stays pending for a short check before it is credited.",
+    "abuse": "Rewards from self-referral, duplicate accounts or shared addresses are cancelled."
+  },
+  "scope": { "all_deposits": "every deposit", "first_deposit": "first deposit only" },
+  "paused": "The referral programme is paused. Rewards already pending are not affected.",
+  "stats": {
+    "invited": "People invited",
+    "funded": "Made a deposit",
+    "fundedHint": "Invited people with at least one confirmed deposit.",
+    "pending": "Pending rewards",
+    "pendingHint": "Waiting for the check period to end.",
+    "credited": "Credited rewards"
+  },
+  "confirmedDeposits": "Confirmed deposits by people you invited:",
+  "rewardsTitle": "Rewards",
+  "source": "For",
+  "sources": { "deposit": "Deposit", "profit": "Realised gain" },
+  "base": "Based on",
+  "rate": "Rate",
+  "reward": "Reward",
+  "releaseAt": "Pending until {{date}}",
+  "emptyTitle": "No rewards yet",
+  "emptyText": "Share your link. Rewards appear when people you invited make confirmed deposits or realise gains."
+}

@@ -1,0 +1,123 @@
+{
+  "brand": "Ledgerline",
+  "language": "Language",
+  "loading": "Loading…",
+  "optional": "Optional",
+  "copied": "Copied",
+  "noscript": "Ledgerline needs JavaScript for your account pages. Public information pages work without it.",
+  "a11y": {
+    "skipToContent": "Skip to content"
+  },
+  "actions": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "close": "Close",
+    "confirm": "Confirm",
+    "copy": "Copy",
+    "copyAddress": "Copy address",
+    "edit": "Edit",
+    "max": "Max",
+    "openExplorer": "Open in block explorer",
+    "retry": "Try again",
+    "save": "Save",
+    "showMore": "Show more",
+    "viewAll": "View all"
+  },
+  "fields": {
+    "amount": "Amount",
+    "asset": "Asset",
+    "network": "Network",
+    "networkHint": "The network must match the one used by the sending wallet or exchange.",
+    "reason": "Reason"
+  },
+  "filters": {
+    "all": "All",
+    "from": "From",
+    "to": "To",
+    "reset": "Clear filters"
+  },
+  "chart": {
+    "noData": "No data for this period yet."
+  },
+  "demo": {
+    "banner": "Demo mode: balances and transactions on this site are test data and have no value. Deposits and withdrawals are not real."
+  },
+  "footer": {
+    "copyright": "© {{year}} Ledgerline",
+    "tagline": "A crypto investment account kept on a double-entry ledger.",
+    "riskNotice": "Crypto assets are volatile and you can lose the money you invest. Returns are not guaranteed and past results do not predict future ones."
+  },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "Match device"
+  },
+  "live": {
+    "live": "Live",
+    "connecting": "Connecting",
+    "reconnecting": "Reconnecting",
+    "offline": "Offline",
+    "disabled": "Updates paused",
+    "updatedAt": "updated {{time}}"
+  },
+  "time": {
+    "justNow": "just now"
+  },
+  "duration": {
+    "daysHours": "{{days}} d {{hours}} h",
+    "hoursMinutes": "{{hours}} h {{minutes}} min",
+    "minutes": "{{minutes}} min"
+  },
+  "status": {
+    "active": "Active",
+    "approved": "Approved",
+    "approved_kyc": "Verified",
+    "assigned": "Assigned",
+    "available": "Available",
+    "awaiting_payment": "Awaiting payment",
+    "awaiting_settlement": "Awaiting settlement",
+    "awaiting_user": "Waiting for you",
+    "cancelled": "Cancelled",
+    "clear": "Clear",
+    "closed": "Closed",
+    "closed_early": "Closed early",
+    "completed": "Completed",
+    "confirmed": "Confirmed",
+    "confirming": "Confirming",
+    "cooling_down": "Cooling down",
+    "created": "Created",
+    "credited": "Credited",
+    "detected": "Detected",
+    "disabled": "Off",
+    "dismissed": "Dismissed",
+    "draft": "Draft",
+    "enabled": "On",
+    "executed": "Executed",
+    "expired": "Expired",
+    "failed": "Failed",
+    "flagged": "Flagged",
+    "frozen": "Frozen",
+    "matured": "Matured",
+    "mismatch": "Mismatch",
+    "none": "Not started",
+    "ok": "OK",
+    "open": "Open",
+    "paused": "Paused",
+    "pending": "Pending",
+    "pending_confirmation": "Needs confirmation",
+    "posted": "Posted",
+    "processing": "Processing",
+    "queued": "Queued",
+    "rejected": "Rejected",
+    "removed": "Removed",
+    "resolved": "Resolved",
+    "restricted": "Restricted",
+    "retired": "Retired",
+    "running": "Running",
+    "sending": "Sending",
+    "sent": "Sent",
+    "succeeded": "Succeeded",
+    "under_review": "Under review"
+  }
+}

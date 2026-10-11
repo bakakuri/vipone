@@ -1,0 +1,122 @@
+{
+  "cookies": {
+    "title": "Cookie Policy",
+    "lead": "The cookies and browser storage Ledgerline uses.",
+    "what": {
+      "title": "What we use",
+      "p1": "We use only cookies that are needed for the service to work. We do not use advertising or cross-site tracking cookies."
+    },
+    "session": {
+      "title": "Session cookies",
+      "p1": "Secure, HTTP-only cookies keep you signed in. Scripts on the page cannot read them, and they are sent only to our own site."
+    },
+    "csrf": {
+      "title": "Security cookie",
+      "p1": "A separate cookie protects forms against cross-site request forgery."
+    },
+    "storage": {
+      "title": "Preferences on your device",
+      "p1": "Your chosen language and theme are saved in your browser’s local storage. No financial data or sign-in tokens are stored there."
+    },
+    "control": {
+      "title": "Your choices",
+      "p1": "You can delete cookies in your browser settings. If you delete the session cookies you will be signed out."
+    },
+    "metaDescription": "Cookies and browser storage used by Ledgerline.",
+    "metaTitle": "Cookie Policy"
+  },
+  "draft": {
+    "title": "Draft for legal review",
+    "text": "This document is a template prepared for the operator's lawyers. It takes effect only when the operator publishes it with its legal name, registration details and an effective date."
+  },
+  "contents": "Contents",
+  "prevailing": "This document is available in English, Russian and Arabic. If the versions differ, the English version prevails.",
+  "privacy": {
+    "title": "Privacy Policy",
+    "lead": "What personal data we process, why, and your rights.",
+    "controller": {
+      "title": "Who is responsible for your data",
+      "p1": "The operator identified in the published terms is the controller of your personal data."
+    },
+    "data": {
+      "title": "What we collect",
+      "p1": "Account data (email, country, language), verification data provided through our identity-verification provider, transaction data (deposits, withdrawals, positions, ledger entries), security data (sign-in events, device information and a one-way hash of your IP address) and your messages to support."
+    },
+    "purposes": {
+      "title": "Why we use it",
+      "p1": "To provide the account and its services, to meet legal obligations such as anti-money-laundering checks and record keeping, to protect you and the platform against fraud, and to communicate with you about your account."
+    },
+    "sharing": {
+      "title": "Who we share it with",
+      "p1": "Service providers acting on our instructions — hosting and database, email delivery, identity verification, blockchain data and screening — and authorities where the law requires it. We do not sell personal data."
+    },
+    "retention": {
+      "title": "How long we keep it",
+      "p1": "Financial and verification records are kept for the period required by law, which can be several years after your account closes. Other data is deleted or anonymised when it is no longer needed."
+    },
+    "rights": {
+      "title": "Your rights",
+      "p1": "Depending on where you live, you can ask for access to, correction of, deletion of or a copy of your data, and object to or restrict some uses. Records we must keep by law cannot be deleted before the end of the legal period."
+    },
+    "security": {
+      "title": "Security",
+      "p1": "Passwords are handled by our authentication provider and never stored in readable form. Sessions use secure cookies that scripts cannot read. Access by staff is limited by role and recorded in an audit log."
+    },
+    "contact": {
+      "title": "Contact",
+      "p1": "Send privacy requests through Support in your account or to the address given in the published version of this policy."
+    },
+    "metaDescription": "How Ledgerline processes personal data.",
+    "metaTitle": "Privacy Policy"
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lead": "The agreement between you and the operator of Ledgerline.",
+    "scope": {
+      "title": "Who we are and what these terms cover",
+      "p1": "These terms govern your use of the Ledgerline platform and your account. The operator of the platform is identified in the published version of these terms, together with its registration number and supervising authority where one applies."
+    },
+    "eligibility": {
+      "title": "Eligibility",
+      "p1": "You must be at least 18 years old, have full legal capacity and not be resident in a country where we do not offer the service. We may ask you to verify your identity and the source of your funds, and we may refuse or close an account where the law requires it."
+    },
+    "account": {
+      "title": "Your account and security",
+      "p1": "Keep your password and two-factor device safe. We will never ask for them. You are responsible for activity on your account until you tell us it has been compromised; contact support immediately if you suspect it has been."
+    },
+    "deposits": {
+      "title": "Deposits",
+      "p1": "Deposits are credited after the number of blockchain confirmations shown on the deposit page. Funds sent on an unsupported network, without a required memo or to an address that is not yours may not be recoverable. A credited deposit cannot be withdrawn for 7 days."
+    },
+    "investments": {
+      "title": "Investment products",
+      "p1": "Each product states what generates its return, its term, fees, limits and risks. When you invest, the version of the product terms in force at that moment applies to your position. Results are posted only after they are realised and approved; they can be negative."
+    },
+    "withdrawals": {
+      "title": "Withdrawals and fees",
+      "p1": "Withdrawals are sent only to addresses you have added and confirmed. Before you confirm a withdrawal you are shown the platform fee, the network fee and the amount that will arrive. Requests are reviewed and may be delayed or refused where the law or our risk controls require it."
+    },
+    "referrals": {
+      "title": "Referral programme",
+      "p1": "Referral rewards are paid by the operator from its own funds and are subject to the programme rules shown in your account. Rewards obtained through self-referral, multiple accounts or other abuse are cancelled."
+    },
+    "prohibited": {
+      "title": "Prohibited use",
+      "p1": "You may not use the platform for money laundering, terrorist financing, sanctions evasion, fraud or any other unlawful purpose, or attempt to interfere with its security."
+    },
+    "liability": {
+      "title": "Liability",
+      "p1": "Nothing in these terms limits liability that cannot be limited by law. Subject to that, the operator is not liable for losses caused by market movements, by blockchain networks or by events outside its reasonable control."
+    },
+    "changes": {
+      "title": "Changes and termination",
+      "p1": "We will give you notice of material changes to these terms before they take effect. You can close your account at any time after withdrawing your available balance; open positions remain subject to their terms until they are released."
+    },
+    "law": {
+      "title": "Governing law and complaints",
+      "p1": "The governing law, the courts with jurisdiction and the complaints procedure are stated in the published version of these terms."
+    },
+    "metaDescription": "Ledgerline Terms of Service.",
+    "metaTitle": "Terms of Service"
+  }
+}

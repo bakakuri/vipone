@@ -1,0 +1,35 @@
+{
+  "name": "ledgerline",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Transparent crypto investment platform: double-entry ledger, deposits, withdrawals, investments, referrals, admin panel. Vanilla JS + Express + Supabase, deployable on Vercel.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.9"
+  },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env server/server.js",
+    "build": "node scripts/build.js",
+    "start": "node --env-file-if-exists=.env server/server.js",
+    "db:migrate": "node --env-file-if-exists=.env scripts/migrate.js",
+    "db:migrate:local": "node --env-file-if-exists=.env scripts/migrate.js --with-local-shim",
+    "db:seed:demo": "node --env-file-if-exists=.env scripts/seed-demo.js",
+    "admin:grant": "node --env-file-if-exists=.env scripts/grant-role.js",
+    "vercel:config": "node scripts/generate-vercel-config.js",
+    "check:i18n": "node scripts/check-i18n.js",
+    "test": "node scripts/run-tests.js",
+    "test:unit": "node scripts/run-tests.js unit",
+    "test:integration": "node scripts/run-tests.js integration security",
+    "test:e2e": "node scripts/run-tests.js end-to-end"
+  },
+  "dependencies": {
+    "decimal.js": "^10.5.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "postgres": "^3.4.7",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "title": "Security",
+  "subtitle": "Two-factor authentication, password and recent activity.",
+  "neverAsk": {
+    "title": "We never ask for your secrets",
+    "text": "Ledgerline staff never ask for your password, two-factor codes, private keys or seed phrase — by email, chat or phone."
+  },
+  "mfa": {
+    "title": "Two-factor authentication",
+    "status": "Status",
+    "on": "On",
+    "off": "Off",
+    "onText": "A code from your authenticator app is needed to sign in and for sensitive actions.",
+    "offText": "Turn it on to protect your account. It is required to add withdrawal addresses and to withdraw.",
+    "verifiedSession": "This session is verified with your second factor.",
+    "enable": "Turn on",
+    "disable": "Turn off",
+    "enrollTitle": "Set up two-factor authentication",
+    "step1": "Install an authenticator app, such as one from your phone's app store.",
+    "step2": "Scan this QR code with the app.",
+    "manual": "Or enter this key manually:",
+    "qrLabel": "QR code for your authenticator app",
+    "step3": "Enter the 6-digit code the app shows.",
+    "backupWarning": "If you lose the device, you will need support to recover access. Keep the key above somewhere safe and offline.",
+    "enabled": "Two-factor authentication is on.",
+    "disableTitle": "Turn off two-factor authentication?",
+    "disableWarning": "Without it you cannot add addresses or withdraw, and your account is easier to take over.",
+    "disableText": "Enter a code from your authenticator app to confirm.",
+    "disabled": "Two-factor authentication is off."
+  },
+  "password": {
+    "title": "Password",
+    "current": "Current password",
+    "new": "New password",
+    "change": "Change password",
+    "changed": "Password changed. Other devices were signed out.",
+    "wrongCurrent": "The current password is not correct.",
+    "signsOut": "Changing your password signs out every other device."
+  },
+  "eventsTitle": "Recent security activity",
+  "eventsHint": "If you do not recognise something here, change your password and contact support.",
+  "noEvents": "No activity yet.",
+  "events": {
+    "login_success": "Signed in",
+    "login_failed": "Failed sign-in attempt",
+    "logout": "Signed out",
+    "new_device": "Sign-in from a new device",
+    "password_changed": "Password changed",
+    "password_reset_requested": "Password reset requested",
+    "recovery": "Account recovered with a reset link",
+    "email_confirmed": "Email confirmed",
+    "mfa_enabled": "Two-factor authentication turned on",
+    "mfa_disabled": "Two-factor authentication turned off",
+    "mfa_failed": "Wrong two-factor code entered",
+    "wallet_added": "Withdrawal address added",
+    "wallet_confirmed": "Withdrawal address confirmed",
+    "wallet_removed": "Withdrawal address removed"
+  }
+}

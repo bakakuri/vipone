@@ -1,0 +1,43 @@
+{
+  "title": "الإشعارات",
+  "subtitle": "تحديثات حسابك، الأحدث أولًا.",
+  "all": "الكل",
+  "unread": "غير المقروءة",
+  "filter": "عرض",
+  "markAll": "تعليم الكل كمقروء",
+  "empty": "لا توجد إشعارات بعد",
+  "noneUnread": "قرأت كل شيء",
+  "emptyText": "سنخبرك هنا عندما يتغير شيء في حسابك.",
+  "securityKinds": {
+    "new_device": "تسجيل دخول من جهاز جديد",
+    "password_changed": "تم تغيير كلمة المرور",
+    "mfa_enabled": "تم تفعيل المصادقة الثنائية",
+    "mfa_disabled": "تم إيقاف المصادقة الثنائية",
+    "account_restricted": "تم تقييد حسابك",
+    "account_frozen": "تم تجميد حسابك",
+    "account_reinstated": "تمت إعادة تفعيل حسابك"
+  },
+  "types": {
+    "registration_completed": { "title": "مرحبًا بك في Ledgerline", "body": "حسابك جاهز. ابدأ بإيداع أو خذ الجولة التعريفية." },
+    "deposit_detected": { "title": "تم رصد إيداع", "body": "{{amount}} {{asset}} بانتظار تأكيدات الشبكة. المرجع {{reference}}." },
+    "deposit_under_review": { "title": "إيداع قيد المراجعة", "body": "يراجع فريق الامتثال {{amount}} {{asset}}. المرجع {{reference}}." },
+    "deposit_credited": { "title": "تمت إضافة الإيداع", "body": "أُضيف {{amount}} {{asset}} إلى رصيدك. يمكن سحبه بعد {{holdDays}} يومًا." },
+    "deposit_rejected": { "title": "لم يُضف الإيداع", "body": "لم يُضف الإيداع {{reference}}. تواصل مع الدعم لمعرفة التفاصيل." },
+    "withdrawal_created": { "title": "تم طلب السحب", "body": "حُجز {{amount}} {{asset}} أثناء مراجعة الطلب {{reference}}." },
+    "withdrawal_approved": { "title": "تمت الموافقة على السحب", "body": "تمت الموافقة على الطلب {{reference}} وسيُرسل قريبًا." },
+    "withdrawal_completed": { "title": "تم إرسال السحب", "body": "تأكد {{amount}} {{asset}} على سلسلة الكتل. المرجع {{reference}}." },
+    "withdrawal_rejected": { "title": "رُفض السحب", "body": "رُفض الطلب {{reference}} وعاد المبلغ إلى رصيدك المتاح." },
+    "withdrawal_failed": { "title": "فشل السحب", "body": "تعذّر إرسال الطلب {{reference}}. عاد المبلغ إلى رصيدك المتاح." },
+    "withdrawal_cancelled": { "title": "أُلغي السحب", "body": "أُلغي الطلب {{reference}} وعاد المبلغ إلى رصيدك المتاح." },
+    "investment_opened": { "title": "تم فتح مركز", "body": "استُثمر {{amount}} {{asset}}. المرجع {{reference}}." },
+    "investment_result_posted": { "title": "تم ترحيل نتيجة", "body": "رُحّلت نتيجة محققة قدرها {{amount}} {{asset}} إلى المركز {{reference}}." },
+    "investment_awaiting_settlement": { "title": "انتهت المدة", "body": "سيُحرَّر المركز {{reference}} عند ترحيل نتيجة فترته الأخيرة." },
+    "investment_matured": { "title": "تم تحرير المركز", "body": "عاد {{amount}} {{asset}} من المركز {{reference}} إلى رصيدك المتاح." },
+    "referral_reward_pending": { "title": "مكافأة إحالة قيد الانتظار", "body": "سيُضاف {{amount}} {{asset}} بعد فترة التحقق." },
+    "referral_reward_credited": { "title": "أُضيفت مكافأة إحالة", "body": "أُضيف {{amount}} {{asset}} إلى رصيدك." },
+    "wallet_added": { "title": "أُضيف عنوان سحب", "body": "أُضيف «{{label}}» على {{network}}. إن لم تكن أنت، فتواصل مع الدعم فورًا." },
+    "kyc_updated": { "title": "تحديث التحقق من الهوية", "body": "الحالة: {{status}}." },
+    "support_reply": { "title": "رد الدعم", "body": "يوجد رد جديد في الطلب {{reference}}." },
+    "security_alert": { "title": "تنبيه أمني", "body": "{{kind}}. إن لم تكن أنت، فغيّر كلمة المرور وتواصل مع الدعم." }
+  }
+}

@@ -1,0 +1,720 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 60,
+      "includeFiles": "public/locales/**"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api"
+    },
+    {
+      "source": "/",
+      "destination": "/pages/home.html"
+    },
+    {
+      "source": "/ru",
+      "destination": "/pages/ru/home.html"
+    },
+    {
+      "source": "/ar",
+      "destination": "/pages/ar/home.html"
+    },
+    {
+      "source": "/how-it-works",
+      "destination": "/pages/how-it-works.html"
+    },
+    {
+      "source": "/ru/how-it-works",
+      "destination": "/pages/ru/how-it-works.html"
+    },
+    {
+      "source": "/ar/how-it-works",
+      "destination": "/pages/ar/how-it-works.html"
+    },
+    {
+      "source": "/products",
+      "destination": "/pages/products.html"
+    },
+    {
+      "source": "/ru/products",
+      "destination": "/pages/ru/products.html"
+    },
+    {
+      "source": "/ar/products",
+      "destination": "/pages/ar/products.html"
+    },
+    {
+      "source": "/risk-disclosure",
+      "destination": "/pages/risk-disclosure.html"
+    },
+    {
+      "source": "/ru/risk-disclosure",
+      "destination": "/pages/ru/risk-disclosure.html"
+    },
+    {
+      "source": "/ar/risk-disclosure",
+      "destination": "/pages/ar/risk-disclosure.html"
+    },
+    {
+      "source": "/faq",
+      "destination": "/pages/faq.html"
+    },
+    {
+      "source": "/ru/faq",
+      "destination": "/pages/ru/faq.html"
+    },
+    {
+      "source": "/ar/faq",
+      "destination": "/pages/ar/faq.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/pages/contact.html"
+    },
+    {
+      "source": "/ru/contact",
+      "destination": "/pages/ru/contact.html"
+    },
+    {
+      "source": "/ar/contact",
+      "destination": "/pages/ar/contact.html"
+    },
+    {
+      "source": "/sitemap",
+      "destination": "/pages/sitemap.html"
+    },
+    {
+      "source": "/ru/sitemap",
+      "destination": "/pages/ru/sitemap.html"
+    },
+    {
+      "source": "/ar/sitemap",
+      "destination": "/pages/ar/sitemap.html"
+    },
+    {
+      "source": "/legal/terms",
+      "destination": "/pages/legal/terms.html"
+    },
+    {
+      "source": "/ru/legal/terms",
+      "destination": "/pages/ru/legal/terms.html"
+    },
+    {
+      "source": "/ar/legal/terms",
+      "destination": "/pages/ar/legal/terms.html"
+    },
+    {
+      "source": "/legal/privacy",
+      "destination": "/pages/legal/privacy.html"
+    },
+    {
+      "source": "/ru/legal/privacy",
+      "destination": "/pages/ru/legal/privacy.html"
+    },
+    {
+      "source": "/ar/legal/privacy",
+      "destination": "/pages/ar/legal/privacy.html"
+    },
+    {
+      "source": "/legal/cookies",
+      "destination": "/pages/legal/cookies.html"
+    },
+    {
+      "source": "/ru/legal/cookies",
+      "destination": "/pages/ru/legal/cookies.html"
+    },
+    {
+      "source": "/ar/legal/cookies",
+      "destination": "/pages/ar/legal/cookies.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/pages/login.html"
+    },
+    {
+      "source": "/register",
+      "destination": "/pages/register.html"
+    },
+    {
+      "source": "/forgot-password",
+      "destination": "/pages/forgot-password.html"
+    },
+    {
+      "source": "/reset-password",
+      "destination": "/pages/reset-password.html"
+    },
+    {
+      "source": "/verify-email",
+      "destination": "/pages/verify-email.html"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/pages/dashboard.html"
+    },
+    {
+      "source": "/deposit",
+      "destination": "/pages/deposit.html"
+    },
+    {
+      "source": "/investments",
+      "destination": "/pages/investments.html"
+    },
+    {
+      "source": "/earnings",
+      "destination": "/pages/earnings.html"
+    },
+    {
+      "source": "/withdrawals",
+      "destination": "/pages/withdrawals.html"
+    },
+    {
+      "source": "/wallets",
+      "destination": "/pages/wallets.html"
+    },
+    {
+      "source": "/transactions",
+      "destination": "/pages/transactions.html"
+    },
+    {
+      "source": "/referrals",
+      "destination": "/pages/referrals.html"
+    },
+    {
+      "source": "/notifications",
+      "destination": "/pages/notifications.html"
+    },
+    {
+      "source": "/profile",
+      "destination": "/pages/profile.html"
+    },
+    {
+      "source": "/security",
+      "destination": "/pages/security.html"
+    },
+    {
+      "source": "/support",
+      "destination": "/pages/support.html"
+    },
+    {
+      "source": "/help",
+      "destination": "/pages/help.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/pages/admin/dashboard.html"
+    },
+    {
+      "source": "/admin/users",
+      "destination": "/pages/admin/users.html"
+    },
+    {
+      "source": "/admin/user",
+      "destination": "/pages/admin/user.html"
+    },
+    {
+      "source": "/admin/deposits",
+      "destination": "/pages/admin/deposits.html"
+    },
+    {
+      "source": "/admin/withdrawals",
+      "destination": "/pages/admin/withdrawals.html"
+    },
+    {
+      "source": "/admin/investments",
+      "destination": "/pages/admin/investments.html"
+    },
+    {
+      "source": "/admin/referrals",
+      "destination": "/pages/admin/referrals.html"
+    },
+    {
+      "source": "/admin/treasury",
+      "destination": "/pages/admin/treasury.html"
+    },
+    {
+      "source": "/admin/approvals",
+      "destination": "/pages/admin/approvals.html"
+    },
+    {
+      "source": "/admin/settings",
+      "destination": "/pages/admin/settings.html"
+    },
+    {
+      "source": "/admin/support",
+      "destination": "/pages/admin/support.html"
+    },
+    {
+      "source": "/admin/announcements",
+      "destination": "/pages/admin/announcements.html"
+    },
+    {
+      "source": "/admin/audit",
+      "destination": "/pages/admin/audit.html"
+    },
+    {
+      "source": "/admin/system",
+      "destination": "/pages/admin/system.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "Cross-Origin-Resource-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://*.supabase.co wss://*.supabase.co; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests"
+        }
+      ]
+    },
+    {
+      "source": "/pages/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(css|js|locales|vendor)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/login",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/register",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/forgot-password",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/dashboard",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/deposit",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/investments",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/earnings",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/withdrawals",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/wallets",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/transactions",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/referrals",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/notifications",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/profile",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/security",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/support",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/users",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/user",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/deposits",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/withdrawals",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/investments",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/referrals",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/treasury",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/approvals",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/settings",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/support",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/announcements",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/audit",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/admin/system",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/v1/jobs/group/frequent",
+      "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/v1/jobs/group/daily",
+      "schedule": "0 3 * * *"
+    }
+  ]
+}

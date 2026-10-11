@@ -1,0 +1,43 @@
+/* Light theme (default). Every colour used by components is a token here. */
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --color-canvas: #f4f6f5;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-surface-sunken: #eef2f0;
+  --color-surface-hover: #f1f5f3;
+  --color-ink: #15211d;
+  --color-ink-muted: #56655f;
+  --color-ink-subtle: #7a8a83;
+  --color-ink-inverse: #ffffff;
+  --color-line: #d9e1dd;
+  --color-line-strong: #bccac4;
+
+  --color-accent: #1f6f63;
+  --color-accent-hover: #185a50;
+  --color-accent-soft: #e2f0ed;
+  --color-accent-ink: #ffffff;
+
+  --color-brass: #8a5f12;
+  --color-brass-soft: #f6ecd6;
+  --color-positive: #1e7a4c;
+  --color-positive-soft: #e3f3ea;
+  --color-negative: #b4382e;
+  --color-negative-soft: #fbe9e7;
+  --color-info: #2f5d8a;
+  --color-info-soft: #e6eef7;
+  --color-neutral-soft: #edf0ef;
+
+  /* Ledger strip segments */
+  --color-seg-available: #1f6f63;
+  --color-seg-deposit-hold: #c99a3a;
+  --color-seg-withdrawal-hold: #8c6bb5;
+  --color-seg-invested: #2f5d8a;
+
+  --color-focus: rgba(31, 111, 99, 0.35);
+  --color-overlay: rgba(14, 22, 19, 0.45);
+  --shadow-raised: 0 1px 2px rgba(21, 33, 29, 0.06), 0 8px 24px rgba(21, 33, 29, 0.08);
+  --shadow-overlay: 0 20px 60px rgba(14, 22, 19, 0.22);
+  --hero-grid: rgba(31, 111, 99, 0.07);
+}

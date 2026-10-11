@@ -1,0 +1,69 @@
+{
+  "title": "Deposit",
+  "subtitle": "Send crypto to your personal address. It is credited after the network confirms it.",
+  "formTitle": "Your deposit address",
+  "addressLabel": "{{asset}} address on {{network}}",
+  "qrLabel": "QR code of your {{asset}} deposit address on {{network}}",
+  "memo": "Memo",
+  "memoRequiredTitle": "Include the {{label}}",
+  "memoRequiredText": "Deposits without it cannot be matched to your account and may be lost.",
+  "wrongNetworkTitle": "Check the network before you send",
+  "wrongNetworkText": "Send only {{asset}} on {{network}} to this address. Other assets or networks may be lost permanently.",
+  "rules": {
+    "onlyAsset": "Only {{asset}} on {{network}}",
+    "minimum": "Minimum deposit {{amount}}; smaller amounts need manual review",
+    "confirmations": {
+      "one": "Credited after {{count}} network confirmation",
+      "other": "Credited after {{count}} network confirmations"
+    },
+    "hold": {
+      "one": "Withdrawable {{count}} day after it is credited; you can invest it straight away",
+      "other": "Withdrawable {{count}} days after it is credited; you can invest it straight away"
+    }
+  },
+  "unavailableTitle": "Deposits are not available",
+  "unavailableText": "No asset is open for deposits right now. Do not send funds until deposits are available again.",
+  "verifyIdentity": "Verify your identity",
+  "announceTitle": "Tell us the amount you are sending (optional)",
+  "expectedAmount": "Amount you are sending",
+  "expectedAmountHint": "Creates a reference that helps support match your payment. It does not change how the deposit is credited.",
+  "createReference": "Create reference",
+  "referenceCreated": "Reference {{reference}} created",
+  "referenceText": "We are expecting {{amount}}. The reference is valid until {{date}}.",
+  "howTitle": "How deposits work",
+  "how": {
+    "send": { "title": "You send", "text": "From your wallet or exchange to the address shown, on the same network." },
+    "detected": { "title": "We see the transaction", "text": "It appears in your list as detected, usually within minutes." },
+    "confirmations": { "title": "The network confirms it", "text": "We wait for the required number of blockchain confirmations." },
+    "credited": { "title": "It is credited", "text": "The amount is added to your balance and you get a notification." },
+    "hold": {
+      "title": "Hold for withdrawals",
+      "text": "For {{count}} days it can be invested but not withdrawn."
+    }
+  },
+  "historyTitle": "Your deposits",
+  "emptyTitle": "No deposits yet",
+  "emptyText": "Deposits you send to your address appear here as soon as they are detected.",
+  "confirmationsLabel": "Confirmations",
+  "confirmationsShort": "{{done}} / {{required}}",
+  "detailTitle": "Deposit details",
+  "reference": "Reference",
+  "notReceivedYet": "Not received yet",
+  "reviewNote": "Our compliance team is checking this deposit. Nothing is needed from you unless we contact you.",
+  "timeline": {
+    "detected": "Transaction detected",
+    "confirming": "Confirmations",
+    "confirmed": "Confirmed by the network",
+    "review": "Compliance review",
+    "credited": "Credited to your balance"
+  },
+  "reasons": {
+    "expired": "The reference expired before a payment arrived.",
+    "chain_reorg": "The transaction was removed from the blockchain by a reorganisation.",
+    "risk_check": "Held for a risk check.",
+    "screening_flagged": "Held because an automated check flagged the sending address.",
+    "screening_unavailable": "Held because the automated check could not be completed.",
+    "below_minimum": "Below the minimum deposit; it needs manual review.",
+    "source_not_settled": "The source transaction has not settled yet."
+  }
+}

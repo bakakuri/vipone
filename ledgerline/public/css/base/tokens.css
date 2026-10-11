@@ -1,0 +1,62 @@
+/* Design tokens that do not change between themes. Colours live in themes/. */
+:root {
+  --font-sans: 'Plex Sans', 'Plex Sans Arabic', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-arabic: 'Plex Sans Arabic', 'Plex Sans', system-ui, sans-serif;
+  --font-mono: 'Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* Type scale (1.25) */
+  --text-xs: 0.8125rem;   /* 13 */
+  --text-sm: 0.875rem;    /* 14 */
+  --text-base: 1rem;      /* 16 */
+  --text-md: 1.125rem;    /* 18 */
+  --text-lg: 1.25rem;     /* 20 */
+  --text-xl: 1.5625rem;   /* 25 */
+  --text-2xl: 2rem;       /* 32 */
+  --text-3xl: 2.75rem;    /* 44 */
+  --leading-tight: 1.2;
+  --leading-normal: 1.55;
+
+  /* Spacing (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* Radius follows hierarchy: panels > controls > chips */
+  --radius-panel: 14px;
+  --radius-control: 10px;
+  --radius-chip: 6px;
+  --radius-round: 999px;
+
+  --container: 1180px;
+  --container-narrow: 760px;
+  --sidebar-width: 248px;
+  --topbar-height: 60px;
+  --mobile-nav-height: 64px;
+
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-slow: 280ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --z-sticky: 20;
+  --z-drawer: 40;
+  --z-overlay: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+  --z-tour: 80;
+
+  --focus-ring: 0 0 0 3px var(--color-focus);
+}
+
+:lang(ar) {
+  --font-sans: var(--font-arabic);
+}

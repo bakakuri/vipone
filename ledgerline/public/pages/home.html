@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-title-key="home:metaTitle" data-localized="true">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Crypto investing on an open ledger · Ledgerline</title>
+  <meta name="description" content="A crypto investment account kept on a double-entry ledger: clear holds, realised results only, transparent withdrawal fees." data-i18n-attr="content:home:metaDescription">
+  <meta name="robots" content="index, follow">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#1f6f63">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icons/app-icon-180.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="preload" href="/assets/fonts/IBMPlexSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/pages/home.css">
+  <script src="/js/core/boot-theme.js"></script>
+  <script type="module" src="/js/pages/home.js"></script>
+</head>
+<body class="area-public">
+  <a class="skip-link" href="#main" data-i18n="common:a11y.skipToContent">Skip to content</a>
+  <main id="main" tabindex="-1">
+    <div id="page" class="public-page">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__inner">
+          <div class="hero__text">
+            <h1 class="hero__title" id="hero-title" data-i18n="home:hero.title">Every unit of your money has a place you can see.</h1>
+            <p class="hero__lead" data-i18n="home:hero.lead">Ledgerline is a crypto investment account kept on a double-entry ledger. Deposits, holds, investments, results and withdrawals are entries you can open and check, and nothing is shown as earned until it has been realised.</p>
+            <div class="hero__actions">
+              <a class="btn btn--primary btn--lg" href="/register" data-i18n="home:hero.cta">Open an account</a>
+              <a class="btn btn--lg" href="/how-it-works" data-i18n="home:hero.secondary">See how it works</a>
+            </div>
+            <p class="hero__note" data-i18n="home:hero.note">Crypto investments can lose value. Returns are never guaranteed.</p>
+          </div>
+          <figure class="hero-ledger" aria-labelledby="hero-ledger-caption">
+            <div class="hero-ledger__head">
+              <span class="hero-ledger__label" data-i18n="home:ledger.total">One balance, four parts</span>
+              <span class="hero-ledger__asset">USDT</span>
+            </div>
+            <div class="hero-ledger__strip" aria-hidden="true">
+              <span class="hero-ledger__seg hero-ledger__seg--available"></span>
+              <span class="hero-ledger__seg hero-ledger__seg--deposit-hold"></span>
+              <span class="hero-ledger__seg hero-ledger__seg--withdrawal-hold"></span>
+              <span class="hero-ledger__seg hero-ledger__seg--invested"></span>
+            </div>
+            <dl class="hero-ledger__legend">
+              <div class="hero-ledger__item">
+                <dt><span class="hero-ledger__swatch hero-ledger__swatch--available"></span><span data-i18n="home:ledger.available">Available</span></dt>
+                <dd data-i18n="home:ledger.availableText">Yours to invest or withdraw.</dd>
+              </div>
+              <div class="hero-ledger__item">
+                <dt><span class="hero-ledger__swatch hero-ledger__swatch--deposit-hold"></span><span data-i18n="home:ledger.depositHold">Held after deposit</span></dt>
+                <dd data-i18n="home:ledger.depositHoldText">For 7 days a new deposit can be invested but not withdrawn.</dd>
+              </div>
+              <div class="hero-ledger__item">
+                <dt><span class="hero-ledger__swatch hero-ledger__swatch--withdrawal-hold"></span><span data-i18n="home:ledger.withdrawalHold">Reserved for withdrawal</span></dt>
+                <dd data-i18n="home:ledger.withdrawalHoldText">Set aside from the moment you request a withdrawal until it is sent or cancelled.</dd>
+              </div>
+              <div class="hero-ledger__item">
+                <dt><span class="hero-ledger__swatch hero-ledger__swatch--invested"></span><span data-i18n="home:ledger.invested">Invested</span></dt>
+                <dd data-i18n="home:ledger.investedText">Working in a 28-day term. Results are added only once they are realised.</dd>
+              </div>
+            </dl>
+            <figcaption class="hero-ledger__caption" id="hero-ledger-caption" data-i18n="home:ledger.caption">Illustration of how balances are shown in your account. Not real figures.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="flow-title">
+        <div class="section__inner">
+          <header class="section__header">
+            <h2 id="flow-title" data-i18n="home:flow.title">From deposit to withdrawal</h2>
+            <p data-i18n="home:flow.lead">The same five steps for every account, with the rules written down before you start.</p>
+          </header>
+          <ol class="flow">
+            <li class="flow__step">
+              <span class="flow__fact" data-i18n="home:flow.deposit.fact">Blockchain confirmations</span>
+              <h3 data-i18n="home:flow.deposit.title">Deposit</h3>
+              <p data-i18n="home:flow.deposit.text">Send crypto to your personal address. It is credited after the network confirms it, never before.</p>
+            </li>
+            <li class="flow__step">
+              <span class="flow__fact" data-i18n="home:flow.hold.fact">7 days</span>
+              <h3 data-i18n="home:flow.hold.title">Hold</h3>
+              <p data-i18n="home:flow.hold.text">A new deposit cannot be withdrawn for 7 days. You can invest it straight away.</p>
+            </li>
+            <li class="flow__step">
+              <span class="flow__fact" data-i18n="home:flow.invest.fact">28-day term</span>
+              <h3 data-i18n="home:flow.invest.title">Invest</h3>
+              <p data-i18n="home:flow.invest.text">Choose a product, read what generates its return and its risks, and accept the terms in force that day.</p>
+            </li>
+            <li class="flow__step">
+              <span class="flow__fact" data-i18n="home:flow.results.fact">Realised only</span>
+              <h3 data-i18n="home:flow.results.title">Results</h3>
+              <p data-i18n="home:flow.results.text">A result is posted after the period has closed and a second staff member has checked the evidence. Losses are posted the same way.</p>
+            </li>
+            <li class="flow__step">
+              <span class="flow__fact" data-i18n="home:flow.withdraw.fact">3% + network fee</span>
+              <h3 data-i18n="home:flow.withdraw.title">Withdraw</h3>
+              <p data-i18n="home:flow.withdraw.text">You see the exact fee and the amount that arrives before you confirm. Staff review each request before it is sent.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section section--alt" aria-labelledby="rules-title">
+        <div class="section__inner">
+          <header class="section__header">
+            <h2 id="rules-title" data-i18n="home:rules.title">Rules we hold ourselves to</h2>
+            <p data-i18n="home:rules.lead">Written into the database, not just this page: the system refuses to break them.</p>
+          </header>
+          <div class="rules">
+            <div class="rules__column">
+              <h3 class="rules__heading rules__heading--always" data-i18n="home:rules.always">Always</h3>
+              <ul class="rules__list">
+                <li data-i18n="home:rules.a1">Every movement of money is a balanced debit and credit you can inspect.</li>
+                <li data-i18n="home:rules.a2">Large withdrawals and every relaxation of a control need two different people.</li>
+                <li data-i18n="home:rules.a3">Platform assets are reconciled against user balances, and withdrawals pause if they do not match.</li>
+                <li data-i18n="home:rules.a4">Referral rewards are paid from the platform's own revenue.</li>
+              </ul>
+            </div>
+            <div class="rules__column">
+              <h3 class="rules__heading rules__heading--never" data-i18n="home:rules.never">Never</h3>
+              <ul class="rules__list">
+                <li data-i18n="home:rules.n1">Promise or display a return that has not been earned.</li>
+                <li data-i18n="home:rules.n2">Pay one customer's returns with another customer's deposit.</li>
+                <li data-i18n="home:rules.n3">Ask for your private keys, seed phrase or passwords.</li>
+                <li data-i18n="home:rules.n4">Change a balance without a recorded, approved reason.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="products-title">
+        <div class="section__inner">
+          <header class="section__header">
+            <h2 id="products-title" data-i18n="home:products.title">Products</h2>
+            <p data-i18n="home:products.lead">Each product shows what generates its return, its fees and its realised history. None of them shows a projected return.</p>
+          </header>
+          <div class="product-grid" id="home-products" aria-live="polite">
+            <div class="skeleton skeleton--block" aria-hidden="true"></div>
+          </div>
+          <p class="mt-6"><a href="/products" data-i18n="home:products.all">Compare all products</a></p>
+          <div class="home-stats" id="home-stats" hidden></div>
+        </div>
+      </section>
+
+      <section class="section section--tight" aria-labelledby="risk-title">
+        <div class="section__inner">
+          <div class="risk-callout">
+            <div class="stack stack--sm">
+              <h2 id="risk-title" data-i18n="home:risk.title">Before you invest</h2>
+              <p data-i18n="home:risk.text">The value of crypto assets can fall sharply and you can lose the money you invest. Past results do not predict future ones. Only invest what you can afford to lose, and read the risk disclosure first.</p>
+            </div>
+            <div class="cluster">
+              <a class="btn" href="/risk-disclosure" data-i18n="home:risk.cta">Read the risk disclosure</a>
+              <a class="btn btn--primary" href="/register" data-i18n="home:hero.cta">Open an account</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <noscript><p class="noscript" data-i18n="common:noscript">Ledgerline needs JavaScript for your account pages. Public information pages work without it.</p></noscript>
+</body>
+</html>

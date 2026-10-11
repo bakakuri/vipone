@@ -1,0 +1,48 @@
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-ink);
+  background: var(--color-canvas);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color var(--duration-base) var(--ease-in-out), color var(--duration-base) var(--ease-in-out);
+}
+
+h1, h2, h3, h4 { font-weight: 600; line-height: var(--leading-tight); letter-spacing: -0.01em; color: var(--color-ink); }
+h1 { font-size: var(--text-2xl); }
+h2 { font-size: var(--text-xl); }
+h3 { font-size: var(--text-lg); }
+h4 { font-size: var(--text-md); }
+:lang(ar) h1, :lang(ar) h2, :lang(ar) h3 { letter-spacing: 0; }
+
+p { max-width: 72ch; }
+small, .text-small { font-size: var(--text-sm); }
+.text-xs { font-size: var(--text-xs); }
+.text-muted { color: var(--color-ink-muted); }
+.text-subtle { color: var(--color-ink-subtle); }
+
+a { color: var(--color-accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--color-accent-hover); }
+
+/* Money and identifiers */
+.num { font-variant-numeric: tabular-nums lining-nums; }
+.mono { font-family: var(--font-mono); font-size: 0.92em; letter-spacing: 0; }
+.ltr-isolate { direction: ltr; unicode-bidi: isolate; }
+.amount { font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; direction: ltr; unicode-bidi: isolate; }
+.amount--positive { color: var(--color-positive); }
+.amount--negative { color: var(--color-negative); }
+
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: fixed; inset-block-start: var(--space-2); inset-inline-start: var(--space-2); z-index: 100;
+  padding: var(--space-2) var(--space-4); background: var(--color-accent); color: var(--color-accent-ink);
+  border-radius: var(--radius-control); transform: translateY(-200%); transition: transform var(--duration-fast);
+}
+.skip-link:focus { transform: translateY(0); }
+
+::selection { background: var(--color-accent-soft); color: var(--color-ink); }

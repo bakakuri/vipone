@@ -1,0 +1,8 @@
+<!-- Supabase Auth → Emails → "Reset password". The link goes to our page, which verifies the token on the server. -->
+<h2>Reset your password</h2>
+<p>Click the button to choose a new password. The link works once and expires soon.</p>
+<p><a href="{{ .SiteURL }}/reset-password?token_hash={{ .TokenHash }}&type=recovery">Choose a new password</a></p>
+<p>If you did not ask for this, ignore this email — your password stays the same.</p>
+<hr>
+<p lang="ru">Сброс пароля: <a href="{{ .SiteURL }}/reset-password?token_hash={{ .TokenHash }}&type=recovery">выбрать новый пароль</a>. Если вы не запрашивали сброс, проигнорируйте письмо — пароль не изменится.</p>
+<p lang="ar" dir="rtl">إعادة تعيين كلمة المرور: <a href="{{ .SiteURL }}/reset-password?token_hash={{ .TokenHash }}&type=recovery">اختر كلمة مرور جديدة</a>. إذا لم تطلب ذلك، فتجاهل هذه الرسالة وستبقى كلمة مرورك كما هي.</p>

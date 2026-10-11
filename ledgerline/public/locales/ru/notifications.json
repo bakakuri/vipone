@@ -1,0 +1,43 @@
+{
+  "title": "Уведомления",
+  "subtitle": "Новости вашего аккаунта, сначала новые.",
+  "all": "Все",
+  "unread": "Непрочитанные",
+  "filter": "Показать",
+  "markAll": "Отметить все как прочитанные",
+  "empty": "Уведомлений пока нет",
+  "noneUnread": "Вы всё прочитали",
+  "emptyText": "Мы сообщим здесь, когда в вашем аккаунте что-то изменится.",
+  "securityKinds": {
+    "new_device": "Вход с нового устройства",
+    "password_changed": "Пароль изменён",
+    "mfa_enabled": "Двухфакторная аутентификация включена",
+    "mfa_disabled": "Двухфакторная аутентификация выключена",
+    "account_restricted": "Ваш аккаунт ограничен",
+    "account_frozen": "Ваш аккаунт заморожен",
+    "account_reinstated": "Ваш аккаунт восстановлен"
+  },
+  "types": {
+    "registration_completed": { "title": "Добро пожаловать в Ledgerline", "body": "Ваш аккаунт готов. Начните с пополнения или пройдите тур." },
+    "deposit_detected": { "title": "Пополнение обнаружено", "body": "{{amount}} {{asset}} ожидает подтверждений сети. Номер {{reference}}." },
+    "deposit_under_review": { "title": "Пополнение на проверке", "body": "{{amount}} {{asset}} проверяется отделом комплаенса. Номер {{reference}}." },
+    "deposit_credited": { "title": "Пополнение зачислено", "body": "{{amount}} {{asset}} добавлено на баланс. Вывести можно через {{holdDays}} дн." },
+    "deposit_rejected": { "title": "Пополнение не зачислено", "body": "Пополнение {{reference}} не зачислено. Обратитесь в поддержку за подробностями." },
+    "withdrawal_created": { "title": "Заявка на вывод создана", "body": "{{amount}} {{asset}} зарезервировано на время проверки заявки {{reference}}." },
+    "withdrawal_approved": { "title": "Вывод одобрен", "body": "Заявка {{reference}} одобрена и скоро будет отправлена." },
+    "withdrawal_completed": { "title": "Вывод отправлен", "body": "{{amount}} {{asset}} подтверждено в блокчейне. Номер {{reference}}." },
+    "withdrawal_rejected": { "title": "Вывод отклонён", "body": "Заявка {{reference}} отклонена, сумма снова на доступном балансе." },
+    "withdrawal_failed": { "title": "Вывод не выполнен", "body": "Заявку {{reference}} не удалось отправить. Сумма снова на доступном балансе." },
+    "withdrawal_cancelled": { "title": "Вывод отменён", "body": "Заявка {{reference}} отменена, сумма снова на доступном балансе." },
+    "investment_opened": { "title": "Позиция открыта", "body": "Инвестировано {{amount}} {{asset}}. Номер {{reference}}." },
+    "investment_result_posted": { "title": "Результат проведён", "body": "По позиции {{reference}} проведён реализованный результат {{amount}} {{asset}}." },
+    "investment_awaiting_settlement": { "title": "Срок окончен", "body": "Позиция {{reference}} будет высвобождена после проведения результата за последний период." },
+    "investment_matured": { "title": "Позиция высвобождена", "body": "{{amount}} {{asset}} из позиции {{reference}} снова на доступном балансе." },
+    "referral_reward_pending": { "title": "Реферальное вознаграждение в ожидании", "body": "{{amount}} {{asset}} будет зачислено после периода проверки." },
+    "referral_reward_credited": { "title": "Реферальное вознаграждение зачислено", "body": "{{amount}} {{asset}} добавлено на баланс." },
+    "wallet_added": { "title": "Добавлен адрес для вывода", "body": "Добавлен «{{label}}» в сети {{network}}. Если это были не вы, немедленно свяжитесь с поддержкой." },
+    "kyc_updated": { "title": "Статус проверки личности обновлён", "body": "Статус: {{status}}." },
+    "support_reply": { "title": "Ответ поддержки", "body": "В запросе {{reference}} новый ответ." },
+    "security_alert": { "title": "Оповещение безопасности", "body": "{{kind}}. Если это были не вы, смените пароль и обратитесь в поддержку." }
+  }
+}

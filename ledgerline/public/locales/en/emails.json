@@ -1,0 +1,75 @@
+{
+  "common": {
+    "footer": "You received this email because of activity on your {{appName}} account. If this wasn't you, contact support and change your password."
+  },
+  "templates": {
+    "confirm_email": {
+      "subject": "Confirm your email for {{appName}}",
+      "heading": "Confirm your email address",
+      "body": ["Select the button below to confirm this address and activate your account. The link expires in 24 hours."],
+      "action": "Confirm email"
+    },
+    "account_exists": {
+      "subject": "Sign-in attempt for your {{appName}} account",
+      "heading": "You already have an account",
+      "body": ["Someone tried to register with this email address. If it was you, sign in instead or reset your password."],
+      "action": "Sign in"
+    },
+    "reset_password": {
+      "subject": "Reset your {{appName}} password",
+      "heading": "Reset your password",
+      "body": ["Select the button below to choose a new password. The link expires in 24 hours. If you didn't ask for this, ignore this email."],
+      "action": "Choose a new password"
+    },
+    "password_changed": {
+      "subject": "Your {{appName}} password was changed",
+      "heading": "Password changed",
+      "body": ["Your password was just changed and other sessions were signed out. If you didn't do this, contact support immediately."]
+    },
+    "mfa_disabled": {
+      "subject": "Two-factor authentication was turned off",
+      "heading": "Two-factor authentication turned off",
+      "body": ["Two-factor authentication was turned off for your account. Withdrawals require it, so turn it back on before your next withdrawal. If you didn't do this, contact support immediately."]
+    },
+    "new_device_login": {
+      "subject": "New sign-in to your {{appName}} account",
+      "heading": "New sign-in detected",
+      "body": ["Your account was signed in to from a new network or device ({{userAgent}}).", "If this was you, no action is needed. If not, change your password and contact support."]
+    },
+    "wallet_confirmation": {
+      "subject": "Confirm your new withdrawal address",
+      "heading": "Your confirmation code: {{code}}",
+      "body": ["You added the withdrawal address “{{label}}” on {{network}}: {{address}}", "Enter this code to confirm it. It expires in {{minutes}} minutes. New addresses can receive withdrawals after a security waiting period.", "If you didn't add this address, don't share the code — change your password and contact support."]
+    },
+    "deposit_credited": {
+      "subject": "Deposit credited: {{amount}} {{asset}}",
+      "heading": "Your deposit was credited",
+      "body": ["{{amount}} {{asset}} (reference {{reference}}) is now in your balance.", "New deposits can be withdrawn after the holding period shown in your dashboard; they can be invested right away."],
+      "action": "Open deposits"
+    },
+    "withdrawal_created": {
+      "subject": "Withdrawal requested: {{reference}}",
+      "heading": "Withdrawal request received",
+      "body": ["You requested a withdrawal of {{amount}} {{asset}} to {{address}}. After fees you will receive {{netAmount}} {{asset}}.", "The amount is reserved while our team reviews the request. If you didn't request this, contact support immediately."],
+      "action": "View withdrawals"
+    },
+    "withdrawal_completed": {
+      "subject": "Withdrawal sent: {{reference}}",
+      "heading": "Your withdrawal was sent",
+      "body": ["{{amount}} {{asset}} was sent on the blockchain.", "Transaction: {{txHash}}"],
+      "action": "View withdrawals"
+    },
+    "withdrawal_rejected": {
+      "subject": "Withdrawal not approved: {{reference}}",
+      "heading": "Your withdrawal was not approved",
+      "body": ["Reason: {{reason}}", "The full amount has been returned to your available balance."],
+      "action": "View withdrawals"
+    },
+    "withdrawal_failed": {
+      "subject": "Withdrawal could not be sent: {{reference}}",
+      "heading": "Your withdrawal could not be sent",
+      "body": ["Reason: {{reason}}", "Nothing left the platform wallet, and the full amount has been returned to your available balance."],
+      "action": "View withdrawals"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+/* Home. The hero pairs the promise with its proof: the same four-part ledger
+   strip that every signed-in dashboard is built around, drawn on ruled
+   ledger paper. Its segments grow in once on load — the page's only
+   unprompted motion. */
+
+.hero { position: relative; isolation: isolate; padding-block: var(--space-16) var(--space-12); border-block-end: 1px solid var(--color-line); }
+/* Ruled ledger paper behind the hero, fading out towards the text column. */
+.hero::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: repeating-linear-gradient(to bottom, transparent 0 39px, var(--hero-grid) 39px 40px);
+  -webkit-mask-image: linear-gradient(to left, #000 25%, transparent 70%);
+  mask-image: linear-gradient(to left, #000 25%, transparent 70%);
+}
+[dir='rtl'] .hero::before {
+  -webkit-mask-image: linear-gradient(to right, #000 25%, transparent 70%);
+  mask-image: linear-gradient(to right, #000 25%, transparent 70%);
+}
+.hero__inner { max-width: var(--container); margin-inline: auto; padding-inline: var(--space-6); display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: var(--space-12); align-items: center; }
+.hero__text { display: flex; flex-direction: column; gap: var(--space-5); }
+.hero__title { font-size: clamp(2.25rem, 4.4vw, 3.4rem); line-height: 1.06; letter-spacing: -0.025em; font-weight: 600; max-width: 15ch; }
+:lang(ar) .hero__title { letter-spacing: 0; line-height: 1.25; }
+.hero__lead { font-size: var(--text-md); color: var(--color-ink-muted); max-width: 52ch; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.hero__note { font-size: var(--text-sm); color: var(--color-ink-subtle); }
+
+.hero-ledger {
+  margin: 0; padding: var(--space-6); border-radius: var(--radius-panel);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line); box-shadow: var(--shadow-raised);
+  display: flex; flex-direction: column; gap: var(--space-5);
+}
+.hero-ledger__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); }
+.hero-ledger__label { font-weight: 600; }
+.hero-ledger__asset { font-size: var(--text-sm); color: var(--color-ink-subtle); font-variant-numeric: tabular-nums; }
+.hero-ledger__strip { display: flex; gap: 3px; height: 28px; border-radius: var(--radius-round); overflow: hidden; background: var(--color-surface-sunken); }
+.hero-ledger__seg { display: block; height: 100%; flex-basis: 0; animation: strip-grow 900ms var(--ease-out) both; }
+.hero-ledger__seg--available { flex-grow: 46; background: var(--color-seg-available); }
+.hero-ledger__seg--deposit-hold { flex-grow: 14; background: var(--color-seg-deposit-hold); animation-delay: 120ms; }
+.hero-ledger__seg--withdrawal-hold { flex-grow: 8; background: var(--color-seg-withdrawal-hold); animation-delay: 240ms; }
+.hero-ledger__seg--invested { flex-grow: 32; background: var(--color-seg-invested); animation-delay: 360ms; }
+@keyframes strip-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.hero-ledger__seg { transform-origin: left center; }
+[dir='rtl'] .hero-ledger__seg { transform-origin: right center; }
+
+.hero-ledger__legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4) var(--space-5); margin: 0; }
+.hero-ledger__item dt { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); font-weight: 600; }
+.hero-ledger__item dd { margin: var(--space-1) 0 0; font-size: var(--text-sm); color: var(--color-ink-muted); }
+.hero-ledger__swatch { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.hero-ledger__swatch--available { background: var(--color-seg-available); }
+.hero-ledger__swatch--deposit-hold { background: var(--color-seg-deposit-hold); }
+.hero-ledger__swatch--withdrawal-hold { background: var(--color-seg-withdrawal-hold); }
+.hero-ledger__swatch--invested { background: var(--color-seg-invested); }
+.hero-ledger__caption { font-size: var(--text-xs); color: var(--color-ink-subtle); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ledger__seg { animation: none; }
+}
+@media (max-width: 960px) {
+  .hero { padding-block: var(--space-10) var(--space-8); }
+  .hero__inner { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); padding-inline: var(--space-4); }
+}
+@media (max-width: 480px) {
+  .hero-ledger { padding: var(--space-4); }
+  .hero-ledger__legend { grid-template-columns: minmax(0, 1fr); }
+}

@@ -1,0 +1,87 @@
+/* Tablet */
+@media (max-width: 1100px) {
+  .grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid--sidebar { grid-template-columns: minmax(0, 1fr); }
+  .public-footer__inner { grid-template-columns: 1fr 1fr; }
+}
+
+/* Mobile: sidebar collapses into a drawer + bottom navigation. */
+@media (max-width: 860px) {
+  .app-shell { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'topbar' 'main'; }
+  .sidebar { display: none; }
+  .topbar { padding-inline: var(--space-4); }
+  .topbar .topbar__menu, .topbar__brand { display: inline-flex; }
+  .topbar__title { display: none; }
+  .app-main { padding: var(--space-5) var(--space-4) calc(var(--mobile-nav-height) + var(--space-10) + env(safe-area-inset-bottom)); }
+
+  .mobile-nav {
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+    position: fixed; inset-inline: 0; inset-block-end: 0; z-index: var(--z-sticky);
+    height: calc(var(--mobile-nav-height) + env(safe-area-inset-bottom));
+    padding-block-end: env(safe-area-inset-bottom);
+    background: var(--color-surface); border-block-start: 1px solid var(--color-line);
+  }
+  .mobile-nav a, .mobile-nav button {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    font-size: 11px; color: var(--color-ink-muted); text-decoration: none; min-height: 44px;
+  }
+  .mobile-nav [aria-current='page'] { color: var(--color-accent); }
+
+  .grid--2, .grid--3 { grid-template-columns: minmax(0, 1fr); }
+  .form-row { grid-template-columns: minmax(0, 1fr); }
+  .ledger-legend { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .balance-card__total .stat__value { font-size: var(--text-2xl); }
+  .page-header { align-items: flex-start; }
+  h1 { font-size: var(--text-xl); }
+
+  /* Tables become stacked cards; the label comes from data-label. */
+  .table--responsive thead { display: none; }
+  .table--responsive, .table--responsive tbody, .table--responsive tr, .table--responsive td { display: block; width: 100%; }
+  .table--responsive tr { padding: var(--space-3) var(--space-4); border-block-end: 1px solid var(--color-line); }
+  .table--responsive tbody tr:last-child { border-block-end: 0; }
+  .table--responsive td { display: flex; justify-content: space-between; gap: var(--space-4); padding: 5px 0; border: 0; text-align: end; }
+  .table--responsive td::before { content: attr(data-label); color: var(--color-ink-muted); font-size: var(--text-xs); text-align: start; flex: none; max-width: 45%; }
+  .table--responsive td.col-primary { display: block; text-align: start; padding-block-end: var(--space-2); }
+  .table--responsive td.col-primary::before { display: none; }
+  .table--responsive .col-actions { justify-content: flex-end; }
+  .table--responsive .col-actions::before { display: none; }
+
+  .public-nav { display: none; }
+  .public-header .public-header__menu { display: inline-flex; }
+  .public-header__inner { padding-inline: var(--space-4); gap: var(--space-3); }
+  .public-header__actions .btn--hide-mobile { display: none; }
+  .section { padding-block: var(--space-12); }
+  .section__inner { padding-inline: var(--space-4); }
+  .public-footer__inner { grid-template-columns: 1fr; padding-inline: var(--space-4); }
+
+  .auth-shell { grid-template-columns: minmax(0, 1fr); }
+  .auth-shell__aside { display: none; }
+  .auth-shell__main { padding: var(--space-4); }
+
+  .modal-backdrop { align-items: flex-end; padding: 0; }
+  .modal { max-width: none; border-radius: var(--radius-panel) var(--radius-panel) 0 0; max-height: 92dvh; padding-block-end: env(safe-area-inset-bottom); }
+  .toast-region { inset-inline: var(--space-3); inset-block-end: calc(var(--mobile-nav-height) + var(--space-3) + env(safe-area-inset-bottom)); width: auto; }
+  .filter-bar .field { max-width: none; }
+  .mfa-setup { grid-template-columns: 1fr; justify-items: center; }
+  .hide-mobile { display: none !important; }
+  .show-mobile { display: initial !important; }
+}
+
+@media (max-width: 420px) {
+  .grid--4 { grid-template-columns: minmax(0, 1fr); }
+  .otp input { width: 40px; height: 48px; }
+}
+
+/* Compact top bar on phones: the live indicator keeps its coloured dot and
+   moves its words to screen readers only; the brand shows its mark only. */
+@media (max-width: 860px) {
+  .topbar .live-indicator { padding: 8px; gap: 0; }
+  .topbar .live-indicator > span:not(.live-indicator__dot) {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  .topbar__end { gap: 2px; }
+}
+@media (max-width: 420px) {
+  .topbar__brand .brand span { display: none; }
+  .topbar { gap: var(--space-2); }
+}

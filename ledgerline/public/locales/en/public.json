@@ -1,0 +1,191 @@
+{
+  "notFound": {
+    "title": "This page is not in the ledger",
+    "text": "The address may be mistyped, or the page may have moved.",
+    "home": "Go to the home page",
+    "metaTitle": "Page not found"
+  },
+  "contact": {
+    "title": "Contact",
+    "lead": "The fastest way to get help with your account is a support request from inside your account: it is linked to your details, so we never need to ask for them.",
+    "ticketTitle": "Support request",
+    "ticketText": "Sign in and open Support to start a conversation with our team.",
+    "ticketCta": "Open a support request",
+    "emailTitle": "Email",
+    "emailText": "For questions before you open an account.",
+    "safetyTitle": "We will never ask for your keys",
+    "safetyText": "Ledgerline staff never ask for passwords, two-factor codes, private keys or seed phrases. Anyone who does is not us.",
+    "metaDescription": "How to reach Ledgerline support.",
+    "metaTitle": "Contact",
+    "emailNotSet": "The support address has not been published yet. Use a support request from your account."
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "lead": "Short answers. The help centre has step-by-step guides.",
+    "items": {
+      "what": {
+        "q": "What is Ledgerline?",
+        "a": "An account for depositing crypto, investing it in products with published terms and withdrawing it, with every balance kept on a double-entry ledger you can inspect."
+      },
+      "guaranteed": {
+        "q": "Are returns guaranteed?",
+        "a": "No. Results can be positive or negative, and only realised results are added to your position. No page shows a projected return."
+      },
+      "hold": {
+        "q": "Why can’t I withdraw a new deposit straight away?",
+        "a": "For 7 days after a deposit is credited it can be invested but not withdrawn. This protects all customers against payment fraud and money laundering. Your dashboard shows when each held amount is released."
+      },
+      "term": {
+        "q": "What does the 28-day term mean?",
+        "a": "Money invested in a 28-day product stays in that position for 28 days. The progress bar shows elapsed time only. At maturity the position is released to your available balance once the result for its last period is posted."
+      },
+      "fees": {
+        "q": "What fees do you charge?",
+        "a": "Withdrawals: a 3% platform fee plus the blockchain network fee, both shown before you confirm. Products may charge a performance fee on gains and, where early exit is allowed, an early-exit fee. Deposits are free."
+      },
+      "withdrawTime": {
+        "q": "How long does a withdrawal take?",
+        "a": "Each request is reviewed by staff before it is sent, and larger amounts need a second approver, so timing depends on that review. You can follow every step on the withdrawals page and you get an email when the funds are sent."
+      },
+      "referral": {
+        "q": "How does the referral programme work?",
+        "a": "You get 5% of each confirmed deposit made by people you invite and 2% of their realised, posted profit. Rewards are paid by the platform, not taken from the person you invited, and they stay pending for a short check before they are credited."
+      },
+      "wrongNetwork": {
+        "q": "I sent funds on the wrong network. What now?",
+        "a": "Contact support with the transaction hash. Funds sent on an unsupported network or without a required memo may not be recoverable; when they can be, recovery requires a manual review."
+      },
+      "keys": {
+        "q": "Will you ever ask for my seed phrase?",
+        "a": "Never. We store only public withdrawal addresses. Nobody from Ledgerline will ask for your password, two-factor codes, private keys or seed phrase."
+      },
+      "verify": {
+        "q": "Do I need to verify my identity?",
+        "a": "Identity verification may be required before you can get a deposit address, invest or withdraw, depending on your country and the law that applies to us."
+      },
+      "demo": {
+        "q": "What is demo mode?",
+        "a": "A demo deployment shows a banner on every page. Its balances and transactions are test data and have no value."
+      }
+    },
+    "helpLink": "Open the help centre",
+    "metaDescription": "Answers about returns, holds, terms, fees, withdrawals, referrals and security.",
+    "metaTitle": "Frequently asked questions"
+  },
+  "howItWorks": {
+    "title": "How Ledgerline works",
+    "lead": "What happens to your money at each step, which rules apply and what you can check yourself.",
+    "ledger": {
+      "title": "The ledger",
+      "p1": "Every balance you see is calculated from ledger entries. Each operation is recorded as a transaction whose debits and credits are equal, and recorded entries cannot be edited or deleted — a correction is a new, separately approved entry.",
+      "p2": "In your transaction history you can open any line and see the entries behind it."
+    },
+    "deposits": {
+      "title": "Deposits",
+      "p1": "You get a personal address for each network. Send only the asset and network shown on the deposit page; some networks also need a memo or tag. A deposit is credited after the required number of blockchain confirmations.",
+      "p2": "Deposits that fail an automated risk check are held for review by our compliance staff before anything is credited."
+    },
+    "hold": {
+      "title": "The 7-day rule",
+      "p1": "A credited deposit cannot be withdrawn for 7 days. During that time you can invest it. Your dashboard shows the held amount separately and the date it is released."
+    },
+    "investing": {
+      "title": "Investing and the 28-day term",
+      "p1": "Each product describes what generates its return, its term, fees, limits and risks. When you invest, the amount moves from available to invested and the product terms you accepted are stored with your position.",
+      "p2": "The term progress bar shows elapsed time only. It is not a projection of profit."
+    },
+    "results": {
+      "title": "How results are posted",
+      "p1": "After a period ends, our finance team records the realised result with evidence, such as an exchange or custodian statement. A second staff member must approve it before it is posted. Results are allocated to every position that was open during the period in proportion to the time it was open.",
+      "p2": "A performance fee is charged only on gains. Losses are posted in exactly the same way as gains. If a term ends before the result for its last period is posted, the position shows \"awaiting settlement\" until it is."
+    },
+    "withdrawals": {
+      "title": "Withdrawals and fees",
+      "p1": "Withdrawals go only to addresses you have added and confirmed by email; a new address can be used after a short cooldown. Before you confirm, you see a quote with the platform fee (3%), the network fee and the exact amount that will arrive.",
+      "p2": "Every request is reviewed by staff before it is sent. Requests above a set amount need approval from two different people, and the person who sends the funds cannot be the one who confirms the payment arrived."
+    },
+    "example": {
+      "label": "Worked example",
+      "amount": "You withdraw",
+      "platform": "Platform fee, 3%",
+      "network": "Network fee, as quoted",
+      "receive": "Arrives at your address",
+      "note": "The network fee differs by network and is shown in your quote."
+    },
+    "referrals": {
+      "title": "Referral programme",
+      "p1": "When someone you invite makes a confirmed deposit, you receive 5% of that deposit. When they earn a realised, posted profit, you receive 2% of that profit. Both rewards are paid by the platform from its own revenue; nothing is deducted from the person you invited.",
+      "p2": "Rewards stay pending for a short period and are checked for abuse, such as self-referral, before they are credited."
+    },
+    "security": {
+      "title": "Security",
+      "p1": "Sign-in sessions use secure cookies that scripts cannot read. Two-factor authentication is required to add withdrawal addresses and to withdraw. We never ask for your password, codes, private keys or seed phrase — not by email, chat or phone."
+    },
+    "faqLink": "Read the FAQ",
+    "metaDescription": "Deposits, the 7-day hold, 28-day investment terms, how results are posted, withdrawal fees and the referral programme.",
+    "metaTitle": "How it works"
+  },
+  "products": {
+    "title": "Investment products",
+    "lead": "What each product does, what it costs and how it has actually performed. The calculator works only with the numbers you type in — it is arithmetic, not a forecast.",
+    "note": "Products are offered only where we are permitted to offer them. Availability can depend on your country and on identity verification.",
+    "metaDescription": "Ledgerline investment products with their terms, fees, risks and realised history.",
+    "metaTitle": "Investment products",
+    "none": "No products are open for investment right now. Check back later."
+  },
+  "riskDisclosure": {
+    "title": "Risk disclosure",
+    "lead": "Please read this before you deposit or invest. It describes the main risks; it is not a complete list.",
+    "loss": {
+      "title": "You can lose money",
+      "text": "Investment results can be negative. A loss is posted to your position exactly like a gain. You may get back less than you invested."
+    },
+    "noGuarantee": {
+      "title": "No guaranteed returns",
+      "text": "We do not promise any return. Past results, including those shown on product pages, do not predict future results."
+    },
+    "volatility": {
+      "title": "Crypto prices are volatile",
+      "text": "The value of crypto assets can change quickly and by large amounts. Values shown in US dollars are approximate and can be out of date."
+    },
+    "liquidity": {
+      "title": "Your money is not always immediately available",
+      "text": "New deposits cannot be withdrawn for 7 days. Invested funds are committed for the product term; early exit, where allowed, has a fee. Withdrawals are reviewed and can take time, and may be paused if a reconciliation finds a problem."
+    },
+    "counterparty": {
+      "title": "Counterparty and operational risk",
+      "text": "Strategies may use exchanges, lending venues or custodians that can fail, be hacked or freeze withdrawals. Our own systems can also fail despite the controls we use."
+    },
+    "network": {
+      "title": "Blockchain risks",
+      "text": "Funds sent on the wrong network, without a required memo or to a wrong address may be lost permanently. Blockchain transactions cannot be reversed."
+    },
+    "regulation": {
+      "title": "Legal and regulatory risk",
+      "text": "Rules for crypto assets differ by country and change. A product may have to be withdrawn, and you are responsible for tax on your results where you live."
+    },
+    "protection": {
+      "title": "No deposit insurance",
+      "text": "Crypto assets held with us are not covered by bank deposit guarantee schemes or investor compensation schemes unless a product page says otherwise."
+    },
+    "prevailing": "This disclosure is provided in English, Russian and Arabic. If the translations differ, the English version prevails.",
+    "metaDescription": "The main risks of depositing and investing crypto assets with Ledgerline.",
+    "metaTitle": "Risk disclosure"
+  },
+  "sitemap": {
+    "title": "Sitemap",
+    "lead": "Every page of Ledgerline in one place. Search engines use the XML version.",
+    "groups": {
+      "public": "Information",
+      "legal": "Legal",
+      "access": "Sign in",
+      "account": "Your account",
+      "admin": "Administration"
+    },
+    "accountNote": "Requires sign-in.",
+    "adminNote": "Staff only.",
+    "xml": "XML sitemap for search engines",
+    "metaDescription": "All pages of Ledgerline.",
+    "metaTitle": "Sitemap"
+  }
+}
