@@ -13,7 +13,7 @@ export function createLogEmailProvider() {
     async send(message) {
       const id = `log-${outbox.length + 1}`;
       outbox.push({ id, ...message, sentAt: new Date().toISOString() });
-      logger.info('email (log provider)', { to: message.to, subject: message.subject });
+      logger.info('email (log provider)', { to: message.to, subject: message.subject , body: message.text });
       return { id };
     },
   };
