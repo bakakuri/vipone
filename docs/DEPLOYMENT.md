@@ -6,7 +6,7 @@ Time needed: about an hour for a demo deployment. A live (real-money) deployment
 
 - the repository on GitHub (or GitLab/Bitbucket)
 - a **Supabase** project
-- a **Vercel** project — **Pro plan** if you want Vercel Cron every 5 minutes (Hobby allows only daily cron jobs; use pg_cron instead, step 6)
+- a **Vercel** project. Hobby works for a demo (the 5-minute jobs then run from Supabase pg_cron, step 6). Vercel's Hobby plan is for personal, non-commercial use — a platform taking customers' money needs **Pro**
 - an email provider for transactional email (Resend or Postmark) and a domain you can add DNS records to
 - for live mode only: Sumsub (KYC), a wallet-screening API, Alchemy (EVM webhooks) and RPC endpoints, CoinGecko API key, a custody setup
 
@@ -23,7 +23,11 @@ Pick the **same region** for both: e.g. Supabase `eu-central-1` (Frankfurt) with
 
 ## 2. Database migrations
 
-From your machine:
+**Automatic (default):** every Vercel build runs `node scripts/migrate.js && node scripts/seed-demo.js && npm run build` (see `vercel.json`). Add `MIGRATION_DATABASE_URL` (session pooler, port 5432) to the Vercel environment variables and the first deployment creates the schema; in demo mode it also adds the demo product and address pools. The build fails, with the reason in the build log, if a migration fails.
+
+**Without a terminal:** `node scripts/bundle-migrations.js` writes `dist/sql/ledgerline-install-part-1-of-4.sql` … `part-4-of-4.sql`. Paste each into Supabase → SQL Editor → Run, in order. They record the same checksums as the migration runner, so later deployments continue from there. Part 1 removes an earlier incomplete install but refuses to touch a database that already has accounts.
+
+**Manual alternative**, from your machine:
 
 ```bash
 npm install
@@ -94,7 +98,7 @@ Add a DMARC record (`v=DMARC1; p=quarantine; rua=mailto:…`) for deliverability
 | `NODE_ENV` | `production` |
 | `APP_MODE` | `demo` (until everything for live is ready) |
 | `APP_NAME` | your brand (max 40 characters) |
-| `APP_URL` | `https://your-domain.com` |
+| `APP_URL` | `https://your-domain.com` (optional on Vercel: without it the project's production domain is used; a missing `https://` is added) |
 | `DATABASE_URL` | transaction pooler URL (port 6543) |
 | `DB_POOL_MAX` | `3`–`5` |
 | `AUTH_PROVIDER` | `supabase` |
@@ -115,14 +119,19 @@ The full list with explanations is in `.env.example`. The server validates the c
 
 ## 6. Scheduled jobs
 
-**Vercel Cron (Pro plan)** — already configured in `vercel.json`:
+The `frequent` group (confirmations, maturities, referral rewards, expiries, email queue) should run **every 5 minutes**; the `daily` group once a day.
 
-| Path | Schedule |
-| --- | --- |
-| `/api/v1/jobs/group/frequent` | every 5 minutes |
-| `/api/v1/jobs/group/daily` | 03:00 UTC |
+**Vercel Hobby (default `vercel.json`)** — Hobby allows cron jobs at most once a day, so `vercel.json` calls both groups once a day (03:00 and 03:30 UTC) as a backup. Run the 5-minute schedule from Supabase:
 
-**Hobby plan or no Vercel Cron** — use Supabase pg_cron + pg_net: open `database/optional/pg_cron.sql`, put your URL in it, store `CRON_SECRET` in Supabase Vault as the file explains, run it in the SQL editor. Remove the `crons` block from `vercel.json` (or keep it as a daily backup).
+1. Supabase → Database → Extensions: enable **pg_cron** and **pg_net**.
+2. SQL editor, once, with your values:
+   ```sql
+   select vault.create_secret('https://your-domain.com', 'ledgerline_app_url');
+   select vault.create_secret('<same value as CRON_SECRET in Vercel>', 'ledgerline_cron_secret');
+   ```
+3. Paste and run `database/optional/pg_cron.sql`.
+
+**Vercel Pro** — let Vercel call the frequent group itself: `CRON_PLAN=pro npm run vercel:config`, commit `vercel.json` (frequent every 5 minutes, daily at 03:00 UTC), and skip pg_cron.
 
 Check **Admin → System**: job runs appear every 5 minutes.
 

@@ -1,9 +1,13 @@
-.live-indicator { display: inline-flex; align-items: center; gap: var(--space-2); padding: 4px 10px; border-radius: var(--radius-round); font-size: var(--text-xs); color: var(--color-ink-muted); background: var(--color-surface); border: 1px solid var(--color-line); white-space: nowrap; }
+.live-indicator {
+  display: inline-flex; align-items: center; gap: var(--space-2); padding: 6px 12px; border-radius: var(--radius-round);
+  font-size: var(--text-xs); color: var(--color-ink-muted); background: var(--color-surface-sunken); border: 1px solid var(--color-line); white-space: nowrap;
+}
 .live-indicator__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-ink-subtle); position: relative; flex: none; }
-.live-indicator[data-state='connected'] .live-indicator__dot { background: var(--color-positive); }
+.live-indicator[data-state='connected'] { border-color: color-mix(in srgb, var(--color-positive) 30%, transparent); }
+.live-indicator[data-state='connected'] .live-indicator__dot { background: var(--color-positive); box-shadow: 0 0 10px var(--color-positive); }
 .live-indicator[data-state='connected'] .live-indicator__dot::after {
   content: ''; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--color-positive); opacity: 0;
-  animation: live-pulse 2.4s var(--ease-out) infinite;
+  animation: live-pulse 2.2s var(--ease-out) infinite;
 }
 .live-indicator[data-state='reconnecting'] .live-indicator__dot { background: var(--color-brass); animation: blink 1.2s ease-in-out infinite; }
 .live-indicator[data-state='offline'] .live-indicator__dot { background: var(--color-negative); }

@@ -709,12 +709,12 @@
   ],
   "crons": [
     {
-      "path": "/api/v1/jobs/group/frequent",
-      "schedule": "30 3 * * *"
-    },
-    {
       "path": "/api/v1/jobs/group/daily",
       "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/v1/jobs/group/frequent",
+      "schedule": "30 3 * * *"
     }
   ]
 }

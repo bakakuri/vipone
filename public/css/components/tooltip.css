@@ -1,8 +1,10 @@
-.tooltip-trigger { display: inline-flex; color: var(--color-ink-subtle); vertical-align: middle; }
-.tooltip-trigger:hover { color: var(--color-ink); }
+.tooltip-trigger { display: inline-flex; color: var(--color-ink-subtle); vertical-align: middle; transition: color var(--duration-fast); }
+.tooltip-trigger:hover { color: var(--color-accent); }
 .tooltip {
-  position: fixed; z-index: var(--z-toast); max-width: 280px;
+  position: fixed; z-index: var(--z-toast); max-width: 290px;
   padding: var(--space-2) var(--space-3); border-radius: var(--radius-chip);
-  background: var(--color-ink); color: var(--color-canvas); font-size: var(--text-xs); line-height: 1.45;
-  pointer-events: none; animation: fade-in var(--duration-fast) var(--ease-out);
+  background: var(--glass-bg-strong); color: var(--color-ink); border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: var(--shadow-overlay);
+  font-size: var(--text-xs); line-height: 1.5;
+  pointer-events: none; animation: dropdown-in 220ms var(--ease-out);
 }

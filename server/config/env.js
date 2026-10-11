@@ -95,9 +95,29 @@ function fail(errors) {
   throw err;
 }
 
+// "vipone.vercel.app", " https://vipone.vercel.app/ " -> "https://vipone.vercel.app"
+export function normalizeUrl(value) {
+  if (value === undefined || value === null) return value;
+  let v = String(value).trim().replace(/\/+$/, '');
+  if (v && !/^[a-z][a-z0-9+.-]*:\/\//i.test(v)) v = `https://${v}`;
+  return v;
+}
+
+// Deployment URLs Vercel provides (system environment variables).
+function vercelOrigins(env) {
+  return ['VERCEL_PROJECT_PRODUCTION_URL', 'VERCEL_BRANCH_URL', 'VERCEL_URL']
+    .map((k) => (env[k] ? normalizeUrl(env[k]) : null))
+    .filter(Boolean);
+}
+
 export function loadConfig(env = process.env) {
   // An empty variable (KEY= in .env or an empty value in Vercel) means "not set".
   const present = Object.fromEntries(Object.entries(env).filter(([, v]) => v !== undefined && String(v).trim() !== ''));
+  // APP_URL: tolerate a missing scheme or trailing slash; on Vercel fall back
+  // to the project's production domain when it is not set.
+  if (!present.APP_URL && present.VERCEL_PROJECT_PRODUCTION_URL) present.APP_URL = present.VERCEL_PROJECT_PRODUCTION_URL;
+  if (present.APP_URL) present.APP_URL = normalizeUrl(present.APP_URL);
+  if (present.SUPABASE_URL) present.SUPABASE_URL = normalizeUrl(present.SUPABASE_URL);
   const parsed = schema.safeParse(present);
   if (!parsed.success) {
     fail(parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`));
@@ -161,7 +181,8 @@ export function loadConfig(env = process.env) {
     isLive: live,
     appName: e.APP_NAME,
     appUrl,
-    allowedOrigins: e.ALLOWED_ORIGINS.length ? e.ALLOWED_ORIGINS : [appUrl],
+    // The site's own URL plus this project's Vercel deployment URLs.
+    allowedOrigins: [...new Set([...(e.ALLOWED_ORIGINS.length ? e.ALLOWED_ORIGINS.map(normalizeUrl) : [appUrl]), ...vercelOrigins(present)])],
     port: e.PORT,
     db: {
       url: e.DATABASE_URL,

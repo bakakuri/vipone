@@ -23,8 +23,9 @@ import { encodeBase58Check } from '../server/utils/address-checksum.js';
 
 const config = getConfig();
 if (config.isLive || config.mode !== 'demo') {
-  console.error('Refusing to seed: demo data can only be created with APP_MODE=demo.');
-  process.exit(1);
+  // Also runs in every Vercel build, so outside demo mode it simply does nothing.
+  console.log('Demo data skipped: it is only created with APP_MODE=demo.');
+  process.exit(0);
 }
 const sql = getSql();
 const ctx = { ipHash: 'seed', userAgent: 'seed-demo script' };

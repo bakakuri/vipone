@@ -16,7 +16,7 @@ const DEV = ['localhost', '127.0.0.1'].includes(location.hostname);
 async function loadNamespace(locale, ns) {
   const key = `${locale}:${ns}`;
   if (cache.has(key)) return cache.get(key);
-  const promise = fetch(`/locales/${locale}/${ns}.json`, { credentials: 'omit' })
+  const promise = fetch(`/locales/${locale}/${ns}.json`, { credentials: 'same-origin' })
     .then((res) => (res.ok ? res.json() : {}))
     .catch(() => ({}));
   cache.set(key, promise);

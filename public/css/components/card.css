@@ -1,22 +1,51 @@
+/* Cards are glass: a translucent surface, a gradient hairline border and a
+   light that follows the pointer (--mx/--my from js/effects/pointer.js). */
 .card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-line);
+  position: relative; isolation: isolate;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-panel);
-  padding: var(--space-5);
+  padding: var(--space-6);
   display: flex; flex-direction: column; gap: var(--space-4);
   min-width: 0;
+  box-shadow: var(--shadow-raised);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
+.card::before, .stat-card::before, .product-card::before, .hero-ledger::before {
+  content: ''; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; pointer-events: none; z-index: 1;
+  background: var(--grad-border);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.card::after, .stat-card::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1; pointer-events: none;
+  background: radial-gradient(480px circle at var(--mx, 50%) var(--my, -20%), var(--spotlight), transparent 50%);
+  opacity: 0; transition: opacity var(--duration-slow) var(--ease-out);
+}
+.card:hover::after, .stat-card:hover::after { opacity: 1; }
 .card--flush { padding: 0; gap: 0; overflow: hidden; }
-.card--sunken { background: var(--color-surface-sunken); }
+.card--sunken { background: var(--color-surface-sunken); box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.card--sunken::before { display: none; }
 .card__header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
-.card--flush .card__header { padding: var(--space-4) var(--space-5); border-block-end: 1px solid var(--color-line); }
-.card__title { font-size: var(--text-md); font-weight: 600; }
+.card--flush .card__header { padding: var(--space-5) var(--space-6); border-block-end: 1px solid var(--color-line); }
+.card__title { font-size: var(--text-md); font-weight: 600; letter-spacing: -0.01em; }
 .card__subtitle { font-size: var(--text-sm); color: var(--color-ink-muted); }
 .card__footer { display: flex; justify-content: flex-end; gap: var(--space-2); }
-.card--flush .card__footer { padding: var(--space-3) var(--space-5); border-block-start: 1px solid var(--color-line); }
-.card--interactive { transition: border-color var(--duration-fast), box-shadow var(--duration-fast); text-decoration: none; color: inherit; }
-.card--interactive:hover { border-color: var(--color-line-strong); box-shadow: var(--shadow-raised); color: inherit; }
+.card--flush .card__footer { padding: var(--space-3) var(--space-6); border-block-start: 1px solid var(--color-line); }
+.card--interactive { transition: border-color var(--duration-base), box-shadow var(--duration-base), translate var(--duration-base) var(--ease-out); text-decoration: none; color: inherit; cursor: pointer; }
+.card--interactive:hover { border-color: color-mix(in srgb, var(--color-accent) 35%, transparent); box-shadow: var(--glow-accent); translate: 0 -3px; color: inherit; }
 
-.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: var(--space-2) var(--space-5); font-size: var(--text-sm); }
+/* Pointer tilt (desktop): elements lean towards the cursor. */
+.hero-ledger, .product-card, .stat-card, .feature-card, .flow__step, .rules__column, .position-card {
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition-property: transform, opacity, translate, scale, filter, border-color, box-shadow;
+  transition-duration: 700ms, 900ms, 900ms, 900ms, 900ms, 220ms, 220ms;
+  transition-timing-function: var(--ease-out);
+  will-change: transform;
+}
+.is-tilting { transition-duration: 120ms, 900ms, 900ms, 900ms, 900ms, 220ms, 220ms; }
+
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: var(--space-3) var(--space-6); font-size: var(--text-sm); }
 .kv dt { color: var(--color-ink-muted); }
 .kv dd { min-width: 0; overflow-wrap: anywhere; }

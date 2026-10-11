@@ -1,43 +1,60 @@
-/* Light theme (default). Every colour used by components is a token here. */
-:root,
+/* Aurora Light. Applied when <html data-theme="light">. */
 [data-theme='light'] {
   color-scheme: light;
-  --color-canvas: #f4f6f5;
-  --color-surface: #ffffff;
+  --color-canvas: #f4f6fb;
+  --color-surface: rgba(255, 255, 255, 0.72);
+  --color-surface-solid: #ffffff;
   --color-surface-raised: #ffffff;
-  --color-surface-sunken: #eef2f0;
-  --color-surface-hover: #f1f5f3;
-  --color-ink: #15211d;
-  --color-ink-muted: #56655f;
-  --color-ink-subtle: #7a8a83;
+  --color-surface-sunken: rgba(15, 23, 42, 0.035);
+  --color-surface-hover: rgba(15, 23, 42, 0.05);
+  --color-ink: #0b1020;
+  --color-ink-muted: #4b5568;
+  --color-ink-subtle: #7a8497;
   --color-ink-inverse: #ffffff;
-  --color-line: #d9e1dd;
-  --color-line-strong: #bccac4;
+  --color-line: rgba(15, 23, 42, 0.09);
+  --color-line-strong: rgba(15, 23, 42, 0.16);
 
-  --color-accent: #1f6f63;
-  --color-accent-hover: #185a50;
-  --color-accent-soft: #e2f0ed;
+  --color-accent: #078266;
+  --color-accent-hover: #05694f;
+  --color-accent-soft: rgba(7, 130, 102, 0.1);
   --color-accent-ink: #ffffff;
+  --color-accent-2: #6a4bff;
+  --color-accent-2-soft: rgba(106, 75, 255, 0.1);
 
-  --color-brass: #8a5f12;
-  --color-brass-soft: #f6ecd6;
-  --color-positive: #1e7a4c;
-  --color-positive-soft: #e3f3ea;
-  --color-negative: #b4382e;
-  --color-negative-soft: #fbe9e7;
-  --color-info: #2f5d8a;
-  --color-info-soft: #e6eef7;
-  --color-neutral-soft: #edf0ef;
+  --color-brass: #a16207;
+  --color-brass-soft: rgba(234, 179, 8, 0.12);
+  --color-positive: #0f8a5f;
+  --color-positive-soft: rgba(16, 185, 129, 0.12);
+  --color-negative: #d1334f;
+  --color-negative-soft: rgba(225, 29, 72, 0.09);
+  --color-info: #2563eb;
+  --color-info-soft: rgba(37, 99, 235, 0.09);
+  --color-neutral-soft: rgba(15, 23, 42, 0.06);
 
-  /* Ledger strip segments */
-  --color-seg-available: #1f6f63;
-  --color-seg-deposit-hold: #c99a3a;
-  --color-seg-withdrawal-hold: #8c6bb5;
-  --color-seg-invested: #2f5d8a;
+  --color-seg-available: #12b38f;
+  --color-seg-deposit-hold: #e6a23c;
+  --color-seg-withdrawal-hold: #8b6cf0;
+  --color-seg-invested: #3b82f6;
 
-  --color-focus: rgba(31, 111, 99, 0.35);
-  --color-overlay: rgba(14, 22, 19, 0.45);
-  --shadow-raised: 0 1px 2px rgba(21, 33, 29, 0.06), 0 8px 24px rgba(21, 33, 29, 0.08);
-  --shadow-overlay: 0 20px 60px rgba(14, 22, 19, 0.22);
-  --hero-grid: rgba(31, 111, 99, 0.07);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-bg-strong: rgba(255, 255, 255, 0.86);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --glass-highlight: rgba(255, 255, 255, 0.9);
+  --grad-border: linear-gradient(140deg, rgba(255, 255, 255, 0.95), rgba(15, 23, 42, 0.05) 45%, rgba(106, 75, 255, 0.22) 100%);
+  --glow-accent: 0 0 0 1px rgba(10, 158, 124, 0.25), 0 10px 30px -10px rgba(10, 158, 124, 0.45), 0 6px 24px -8px rgba(106, 75, 255, 0.35);
+  --spotlight: rgba(106, 75, 255, 0.1);
+  --spotlight-2: rgba(10, 158, 124, 0.08);
+
+  --aurora-1: rgba(34, 227, 181, 0.28);
+  --aurora-2: rgba(124, 92, 255, 0.22);
+  --aurora-3: rgba(59, 168, 255, 0.2);
+  --aurora-opacity: 0.9;
+  --particle-rgb: 80, 90, 160;
+  --grid-line: rgba(15, 23, 42, 0.045);
+
+  --color-focus: rgba(10, 158, 124, 0.35);
+  --color-overlay: rgba(15, 20, 35, 0.4);
+  --shadow-raised: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 1px 2px rgba(15, 23, 42, 0.05), 0 14px 40px -16px rgba(15, 23, 42, 0.2);
+  --shadow-overlay: 0 30px 80px -20px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(15, 23, 42, 0.06);
+  --hero-grid: rgba(15, 23, 42, 0.05);
 }

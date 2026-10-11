@@ -14,6 +14,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DEFAULT_LOCALE, LOCALES, SITE_ROUTES, localizedPath } from '../server/config/site-routes.js';
 import { checkI18n, loadLocale } from './check-i18n.js';
+import { normalizeUrl } from '../server/config/env.js';
 import { flattenCss, localizeHtml, robotsTxt, sitemapXml } from './lib/prerender.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -22,9 +23,9 @@ const OUT = path.join(ROOT, 'dist');
 const DIR = { en: 'ltr', ru: 'ltr', ar: 'rtl' };
 
 function siteUrl() {
-  const explicit = process.env.APP_URL?.replace(/\/$/, '');
-  if (explicit) return explicit;
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  const explicit = process.env.APP_URL?.trim();
+  if (explicit) return normalizeUrl(explicit);
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return normalizeUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL);
   return null;
 }
 

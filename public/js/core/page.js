@@ -17,6 +17,7 @@ import { applyTranslations } from '../i18n/apply-translations.js';
 import { initI18n, setLocale, t } from '../i18n/i18n.js';
 import { startLive } from '../services/live-connection.js';
 import { initTheme } from '../themes/theme.js';
+import { initEffects } from '../effects/index.js';
 import { h, replace } from './dom.js';
 import { installErrorReporter } from './error-reporter.js';
 import { listen } from './events.js';
@@ -98,6 +99,9 @@ export async function definePage(spec) {
   }
   if ((area === 'app' || area === 'admin') && session.mfaRequired) page.prepend(mfaBanner());
   page.classList.add('page-enter');
+  // The entrance cascade plays once; later re-renders (live updates) do not replay it.
+  setTimeout(() => page.classList.remove('page-enter'), 1800);
+  initEffects({ area });
 
   // Switching language re-renders the whole page in the new language. Signed-in
   // users' choice is saved to the profile (emails use it too). Public pages

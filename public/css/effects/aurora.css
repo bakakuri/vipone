@@ -1,0 +1,52 @@
+/* Aurora background: slow-drifting light, a fading grid, a faint grain and a
+   particle network (canvas). Mounted once per page by js/effects/aurora.js,
+   fixed behind everything, never intercepting clicks. */
+.aurora {
+  position: fixed; inset: 0; z-index: var(--z-background);
+  pointer-events: none; overflow: hidden; contain: strict;
+  opacity: var(--aurora-opacity);
+  view-transition-name: aurora;
+}
+.aurora__blob {
+  position: absolute; width: 72vmax; height: 72vmax; border-radius: 50%;
+  will-change: transform;
+}
+.aurora__blob--1 { inset-block-start: -38vmax; inset-inline-start: -24vmax; background: radial-gradient(closest-side, var(--aurora-1), transparent 72%); animation: aurora-drift-1 26s var(--ease-in-out) infinite alternate; }
+.aurora__blob--2 { inset-block-start: -30vmax; inset-inline-end: -30vmax; background: radial-gradient(closest-side, var(--aurora-2), transparent 72%); animation: aurora-drift-2 32s var(--ease-in-out) infinite alternate; }
+.aurora__blob--3 { inset-block-end: -46vmax; inset-inline-start: 10vw; background: radial-gradient(closest-side, var(--aurora-3), transparent 70%); animation: aurora-drift-3 38s var(--ease-in-out) infinite alternate; }
+.aurora__grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 20%, transparent 72%);
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 20%, transparent 72%);
+}
+.aurora__grain {
+  position: absolute; inset: -50%; opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+[data-theme='light'] .aurora__grain { opacity: 0.035; }
+.aurora__particles { position: absolute; inset: 0; width: 100%; height: 100%; }
+.aurora--quiet { opacity: calc(var(--aurora-opacity) * 0.6); }
+.aurora--quiet .aurora__grid { display: none; }
+
+/* A soft light that follows the pointer on large screens. */
+.cursor-glow {
+  position: fixed; inset-block-start: 0; inset-inline-start: 0; z-index: var(--z-background);
+  width: 640px; height: 640px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, var(--spotlight), transparent 70%);
+  transform: translate3d(calc(var(--cx, -1000px) - 50%), calc(var(--cy, -1000px) - 50%), 0);
+  transition: opacity var(--duration-slow) var(--ease-out);
+  opacity: 0;
+}
+[dir='rtl'] .cursor-glow { inset-inline-start: auto; left: 0; }
+.cursor-glow.is-active { opacity: 1; }
+
+@media (max-width: 860px) {
+  .aurora__blob { width: 110vmax; height: 110vmax; }
+  .aurora__grid { background-size: 44px 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aurora__blob { animation: none; }
+  .cursor-glow { display: none; }
+}

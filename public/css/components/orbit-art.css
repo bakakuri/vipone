@@ -1,0 +1,48 @@
+/* Decorative orbit with floating coins (home hero, sign-in panel).
+   Pure CSS; generic currency glyphs, no brand artwork. */
+.orbit-art { position: relative; aspect-ratio: 1; width: 100%; pointer-events: none; }
+.orbit-art__glow {
+  position: absolute; inset: 18%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(124, 92, 255, 0.55), rgba(34, 227, 181, 0.25) 55%, transparent 75%);
+  filter: blur(10px); animation: glow-pulse 6s var(--ease-in-out) infinite;
+}
+.orbit-art__ring {
+  position: absolute; border-radius: 50%; border: 1px solid var(--color-line-strong);
+  animation: orbit 30s linear infinite;
+}
+.orbit-art__ring--1 { inset: 8%; border-style: dashed; border-color: color-mix(in srgb, var(--color-accent) 35%, transparent); }
+.orbit-art__ring--2 { inset: 22%; animation-duration: 22s; animation-direction: reverse; border-color: color-mix(in srgb, var(--color-accent-2) 40%, transparent); }
+.orbit-art__ring--3 { inset: 36%; animation-duration: 40s; border-color: var(--color-line); }
+.orbit-art__sat {
+  position: absolute; inset-block-start: -5px; inset-inline-start: 50%; width: 10px; height: 10px; margin-inline-start: -5px; border-radius: 50%;
+  background: var(--color-accent); box-shadow: 0 0 16px 2px var(--color-accent);
+}
+.orbit-art__sat--violet { background: var(--color-accent-2); box-shadow: 0 0 16px 2px var(--color-accent-2); inset-block-start: auto; inset-block-end: -5px; }
+
+.coin {
+  position: absolute; width: 22%; aspect-ratio: 1; border-radius: 50%;
+  display: grid; place-items: center; perspective: 600px;
+  animation: float-y 6s var(--ease-in-out) infinite;
+}
+.coin__face {
+  width: 100%; height: 100%; border-radius: 50%; display: grid; place-items: center;
+  font-weight: 600; font-size: clamp(1.2rem, 3vw, 2.2rem); color: #fff;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.55), transparent 32%),
+    radial-gradient(circle at 70% 80%, rgba(0, 0, 0, 0.35), transparent 50%),
+    var(--coin-bg);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12) inset, 0 0 0 6px var(--coin-rim) inset, 0 18px 40px -12px var(--coin-glow), 0 0 50px -10px var(--coin-glow);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  animation: coin-wobble 7s var(--ease-in-out) infinite;
+  transform-style: preserve-3d;
+}
+@keyframes coin-wobble { 0%, 100% { transform: rotateY(-28deg) rotateX(8deg); } 50% { transform: rotateY(28deg) rotateX(-6deg); } }
+.coin--a { inset-block-start: 10%; inset-inline-start: -3%; width: 19%; --coin-bg: linear-gradient(145deg, #2ff0bf, #0d9b7a); --coin-rim: rgba(10, 80, 64, 0.45); --coin-glow: rgba(34, 227, 181, 0.7); }
+.coin--b { inset-block-start: 0%; inset-inline-end: -4%; width: 22%; --coin-bg: linear-gradient(145deg, #ffc76b, #e08a1c); --coin-rim: rgba(120, 66, 6, 0.45); --coin-glow: rgba(255, 176, 60, 0.6); animation-delay: -2s; }
+.coin--b .coin__face { animation-delay: -3s; }
+.coin--c { inset-block-end: 2%; inset-inline-end: 4%; width: 15%; --coin-bg: linear-gradient(145deg, #a48bff, #5b3fe0); --coin-rim: rgba(40, 20, 120, 0.5); --coin-glow: rgba(124, 92, 255, 0.7); animation-delay: -4s; }
+.coin--c .coin__face { animation-delay: -1.5s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-art__ring, .coin, .coin__face, .orbit-art__glow { animation: none; }
+}

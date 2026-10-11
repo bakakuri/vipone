@@ -1,39 +1,64 @@
-/* Sign-in, registration and email-link pages. */
+/* Sign-in, registration and email-link pages: an art panel with orbiting
+   coins beside a glass form card, both floating on the aurora. */
 .auth-shell {
   min-height: 100vh; min-height: 100dvh;
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
 }
 .auth-shell__aside {
-  position: relative; overflow: hidden;
-  background: var(--color-surface-sunken);
-  border-inline-end: 1px solid var(--color-line);
+  position: relative; overflow: hidden; isolation: isolate;
+  margin: var(--space-4); border-radius: var(--radius-hero);
+  background: linear-gradient(160deg, rgba(34, 227, 181, 0.08), rgba(124, 92, 255, 0.12) 60%, rgba(5, 7, 13, 0.2));
+  border: 1px solid var(--glass-border);
   padding: var(--space-10);
   display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-8);
 }
+[data-theme='light'] .auth-shell__aside { background: linear-gradient(160deg, rgba(34, 227, 181, 0.16), rgba(124, 92, 255, 0.14) 60%, rgba(255, 255, 255, 0.5)); }
 .auth-shell__aside::before {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background-image: linear-gradient(var(--hero-grid) 1px, transparent 1px), linear-gradient(90deg, var(--hero-grid) 1px, transparent 1px);
-  background-size: 32px 32px;
-  mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: -1;
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  -webkit-mask-image: radial-gradient(ellipse at 60% 40%, #000 10%, transparent 70%);
+  mask-image: radial-gradient(ellipse at 60% 40%, #000 10%, transparent 70%);
 }
 .auth-shell__aside > * { position: relative; }
-.auth-shell__quote { display: flex; flex-direction: column; gap: var(--space-4); max-width: 44ch; }
-.auth-shell__quote h2 { font-size: var(--text-xl); }
-.auth-shell__quote p { color: var(--color-ink-muted); }
+.auth-shell__aside .orbit-art { position: absolute; inset-block-end: -12%; inset-inline-end: -16%; width: min(72%, 480px); opacity: 0.95; }
+.auth-shell__quote { display: flex; flex-direction: column; gap: var(--space-4); max-width: 40ch; margin-block-end: auto; margin-block-start: var(--space-16); }
+.auth-shell__quote h2 { font-size: clamp(2rem, 3.4vw, 3.2rem); letter-spacing: var(--tracking-display); line-height: 1.05; max-width: 14ch; background: var(--grad-text); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradient-pan 12s linear infinite; }
+[data-theme='light'] .auth-shell__quote h2 { background-image: linear-gradient(100deg, #0b1020 0%, #0b1020 35%, #078266 55%, #6a4bff 75%, #0b1020 100%); }
+.auth-shell__quote p { color: var(--color-ink-muted); font-size: var(--text-md); max-width: 44ch; }
 .auth-shell__main { display: flex; flex-direction: column; padding: var(--space-6) var(--space-8); }
 .auth-shell__top { display: flex; justify-content: flex-end; gap: var(--space-2); }
 .auth-shell__content { flex: 1; display: flex; align-items: center; justify-content: center; padding-block: var(--space-8); }
-.auth-card { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: var(--space-6); }
+.auth-card {
+  position: relative; isolation: isolate;
+  width: 100%; max-width: 460px; display: flex; flex-direction: column; gap: var(--space-6);
+  padding: var(--space-10) var(--space-8);
+  border-radius: var(--radius-hero);
+  background: var(--glass-bg);
+  backdrop-filter: blur(26px) saturate(160%); -webkit-backdrop-filter: blur(26px) saturate(160%);
+  box-shadow: var(--shadow-overlay);
+  animation: rise-in 800ms var(--ease-out) both;
+}
+.auth-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: conic-gradient(from var(--angle), rgba(34, 227, 181, 0.7), rgba(255, 255, 255, 0.06) 25%, rgba(124, 92, 255, 0.7) 50%, rgba(255, 255, 255, 0.06) 75%, rgba(34, 227, 181, 0.7));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: border-spin 8s linear infinite;
+}
 .auth-card__header { display: flex; flex-direction: column; gap: var(--space-2); }
+.auth-card__header h1 { font-size: clamp(1.75rem, 3vw, 2.25rem); letter-spacing: var(--tracking-display); }
 .auth-card__header p { color: var(--color-ink-muted); }
 .auth-card__footer { color: var(--color-ink-muted); font-size: var(--text-sm); text-align: center; }
 .auth-shell__legal { color: var(--color-ink-subtle); font-size: var(--text-xs); text-align: center; }
+.auth-shell__legal a { color: inherit; text-decoration: none; }
+.auth-shell__legal a:hover { color: var(--color-ink); }
 .auth-shell__legal.cluster { justify-content: center; gap: var(--space-4); }
 
 /* Confirmation states (email sent, verified) and consent boxes. */
-.auth-done { display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--color-accent-soft); color: var(--color-accent); }
-.auth-done .icon { width: 28px; height: 28px; }
+.auth-done { position: relative; display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--color-accent-soft); color: var(--color-accent); animation: pop-in 600ms var(--ease-spring) both; }
+.auth-done::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid currentColor; animation: ring-ping 1.8s var(--ease-out) infinite; }
+.auth-done .icon { width: 30px; height: 30px; }
 .auth-done--success { background: var(--color-positive-soft); color: var(--color-positive); }
 .consents { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-3); }
-.consents legend { margin-block-end: var(--space-2); }
+.consents legend { margin-block-end: var(--space-2); font-size: var(--text-sm); font-weight: 500; }

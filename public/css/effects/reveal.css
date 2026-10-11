@@ -1,0 +1,24 @@
+/* Scroll reveal. Only active once js/effects/reveal.js has added .fx to
+   <html>, so content is never hidden when scripts do not run. Uses the
+   individual translate/scale properties so that `transform` stays free for
+   the pointer tilt. */
+.fx [data-reveal] {
+  opacity: 0;
+  translate: 0 36px;
+  scale: 0.97;
+  filter: blur(8px);
+  transition-property: opacity, translate, scale, filter, transform, border-color, box-shadow, background-color;
+  transition-duration: 900ms, 900ms, 900ms, 900ms, 600ms, 220ms, 220ms, 220ms;
+  transition-timing-function: var(--ease-out);
+  transition-delay: calc(var(--reveal-i, 0) * 90ms), calc(var(--reveal-i, 0) * 90ms), calc(var(--reveal-i, 0) * 90ms), calc(var(--reveal-i, 0) * 90ms), 0ms, 0ms, 0ms, 0ms;
+}
+.fx [data-reveal='left'] { translate: -48px 0; }
+.fx [data-reveal='right'] { translate: 48px 0; }
+.fx [data-reveal='zoom'] { translate: none; scale: 0.9; }
+[dir='rtl'].fx [data-reveal='left'] { translate: 48px 0; }
+[dir='rtl'].fx [data-reveal='right'] { translate: -48px 0; }
+.fx [data-reveal].is-revealed { opacity: 1; translate: none; scale: none; filter: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx [data-reveal] { opacity: 1; translate: none; scale: none; filter: none; transition: none; }
+}
