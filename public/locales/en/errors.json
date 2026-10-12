@@ -121,7 +121,9 @@
     "invalid_completion_source": "That completion source is not allowed.",
     "deposit_method_unavailable": "This deposit method is no longer available. Reload the page and choose another one.",
     "too_many_pending": "You already have 5 payments waiting to be checked. Wait until they are processed.",
-    "duplicate_transaction": "This transaction has already been reported or credited."
+    "duplicate_transaction": "This transaction has already been reported or credited.",
+    "mfa_unavailable": "Two-factor authentication is switched off in the sign-in service. The site owner can turn it on in Supabase: Authentication → Multi-Factor → TOTP.",
+    "mfa_setup_failed": "Two-factor setup could not start. Close this window and try again in a minute."
   },
   "validation": {
     "required": "Fill in this field.",

@@ -54,7 +54,15 @@ function enrollDialog(onDone) {
         h('li', {}, t('security:mfa.step3'), otp.el, error)),
       alertBox({ tone: 'warning', text: t('security:mfa.backupWarning') }));
     otp.focus();
-  }).catch((err) => replace(body, alertBox({ tone: 'danger', text: errorMessage(err) })));
+  }).catch((err) => {
+    if (err.code === 'mfa_already_enabled') {
+      modal.close();
+      toast(t('security:mfa.enabled'));
+      onDone();
+      return;
+    }
+    replace(body, alertBox({ tone: 'danger', text: errorMessage(err) }));
+  });
 }
 
 function disableDialog(onDone) {
