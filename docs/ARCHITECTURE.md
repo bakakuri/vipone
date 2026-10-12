@@ -126,7 +126,7 @@ Folder map:
 
 `server/config/site-routes.js` is the single list of pages. From it:
 
-- `npm run build` copies `public/` to `dist/`, pre-renders every public page in English, Russian and Arabic (`/ru/...`, `/ar/...`) with translated text, `<title>`, description, canonical and `hreflang` links, and writes `sitemap.xml` and `robots.txt` (cabinet and admin are disallowed).
+- `npm run build` copies `public/` to `dist/`, pre-renders every public page in English, Russian, Arabic and Georgian (`/ru/...`, `/ar/...`, `/ka/...`) with translated text, `<title>`, description, canonical and `hreflang` links, and writes `sitemap.xml` and `robots.txt` (cabinet and admin are disallowed).
 - `npm run vercel:config` writes the rewrites in `vercel.json` (`/withdrawals` → `/pages/withdrawals.html`, `/api/*` → the function), the security headers for static files, and the cron schedule.
 - The local dev server serves the same routes.
 
@@ -135,7 +135,7 @@ Folder map:
 "Aurora" design system, dark-first (light theme and "follow system" are in the theme menu):
 
 - **Palette** — night `#05070D`, ink `#EEF2FF`, teal `#22E3B5` → sky `#3BA8FF` → violet `#7C5CFF` gradient, amber `#FFC266` for holds and warnings, rose `#FF5D7A` for losses. Every colour is a token in `css/themes/`.
-- **Type** — IBM Plex Sans / Sans Arabic / Mono, self-hosted; display headings with tight tracking and gradient text.
+- **Type** — IBM Plex Sans / Sans Arabic / Mono and Noto Sans Georgian (loaded only for Georgian text), self-hosted; display headings with tight tracking and gradient text.
 - **Surfaces** — glass: translucent panels with backdrop blur, gradient hairline borders and a light that follows the pointer.
 - **Background** — `css/effects/aurora.css` + `js/effects/aurora.js`: drifting aurora light, a fading grid, grain and a particle network that reacts to the pointer (static markup in every page, so it is there on first paint).
 - **Motion** — `js/effects/`: scroll reveal on public pages, card tilt and spotlight, magnetic primary buttons, a cursor glow, condensing headers and a scroll progress line; `css/animations/motion.css`: page-load cascade, cross-page View Transitions, word-by-word hero headline, coin orbit, ledger-strip sweep, chart line drawing, spring modals and toasts. Balances only ever move between real server values.

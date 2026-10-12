@@ -11,6 +11,12 @@
   .public-nav a { padding: 8px 10px; }
 }
 
+/* Georgian labels are longer: the public header switches to the menu button earlier. */
+@media (max-width: 1280px) {
+  :lang(ka) .public-nav { display: none; }
+  :lang(ka) .public-header .public-header__menu { display: inline-flex; }
+}
+
 /* Tablet: the sidebar becomes an icon rail; labels float out on hover/focus. */
 @media (min-width: 861px) and (max-width: 1180px) {
   .app-shell { grid-template-columns: var(--sidebar-rail) minmax(0, 1fr); }

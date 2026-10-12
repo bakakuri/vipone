@@ -83,7 +83,8 @@ export function has(fullKey) {
   return lookup(current, ns, path) !== undefined || lookup(DEFAULT_LOCALE, ns, path) !== undefined;
 }
 
-// Picks the right language from a {en, ru, ar} object (product texts, announcements).
+// Picks the right language from a {en, ru, ar, ka} object (product texts,
+// announcements, deposit instructions); missing languages fall back to English.
 export function localized(obj) {
   if (!obj || typeof obj !== 'object') return '';
   return obj[current] || obj[DEFAULT_LOCALE] || Object.values(obj)[0] || '';

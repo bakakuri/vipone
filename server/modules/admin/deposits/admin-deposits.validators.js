@@ -31,7 +31,7 @@ export const methodBody = z.object({
   memo: optionalText(100),
   qrImage: z.string().max(700000, 'too_large').regex(QR_DATA_URL, 'invalid').nullable().optional(),
   instructions: z
-    .object({ en: optionalText(4000), ru: optionalText(4000), ar: optionalText(4000) })
+    .object({ en: optionalText(4000), ru: optionalText(4000), ar: optionalText(4000), ka: optionalText(4000) })
     .default({})
     .transform((o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v))),
   minAmount: amount.nullable().optional(),

@@ -152,7 +152,7 @@
     "invalid_rate": "Enter a rate as a decimal between 0 and 1, for example 0.03.",
     "invalid_slug": "Use 3–60 lowercase letters, digits and hyphens.",
     "invalid_date": "Enter a valid date.",
-    "invalid_languages": "English must stay enabled; only en, ru and ar are supported.",
+    "invalid_languages": "English must stay enabled; only en, ru, ar and ka are supported.",
     "out_of_range": "This value is out of the allowed range.",
     "period_invalid": "The end must be after the start.",
     "period_in_future": "The period cannot end in the future.",

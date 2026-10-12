@@ -68,7 +68,7 @@ Check: in the SQL editor, `select * from app.verify_ledger_integrity();` returns
 <p>If you did not ask for this, ignore this email — your password stays the same.</p>
 ```
 
-(For Russian and Arabic users you can add the text in all three languages to the same template; the app's own emails — address codes, deposits, withdrawals — are sent in each user's language.)
+(For Russian, Arabic and Georgian users you can add the text in every language to the same template; the app's own emails — address codes, deposits, withdrawals — are sent in each user's language.)
 
 **Authentication → Multi-Factor**: TOTP enabled.
 

@@ -92,7 +92,7 @@ pending ──► under_review ──► approved ──► processing ──►
 
 ### Products
 
-A product has: name and summary in all three languages, a written **revenue model** (how returns are actually generated and where funds are held), a **risk disclosure** in every language, term in days (the demo product uses **28 days**), minimum and maximum per position, total capacity, performance fee rate, whether early exit is allowed and its fee, risk level, legal status and legal reference.
+A product has: name and summary in English, Russian and Arabic (Georgian optional — English is shown when it is missing), a written **revenue model** (how returns are actually generated and where funds are held), a **risk disclosure** in each of those languages, term in days (the demo product uses **28 days**), minimum and maximum per position, total capacity, performance fee rate, whether early exit is allowed and its fee, risk level, legal status and legal reference.
 
 A product **cannot be activated** unless its legal status is `approved` and all texts exist in every language. Every change to the terms creates a new immutable **product version**; a position always keeps the terms it was opened under. If terms changed while the user was looking at the old ones, opening fails with `terms_changed` and the new terms are shown.
 

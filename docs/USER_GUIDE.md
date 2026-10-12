@@ -80,4 +80,4 @@ Rewards are paid by the platform — never taken from your friend's money — an
 
 ## Languages and accessibility
 
-English, Russian and Arabic (right-to-left). Switch in the top bar; your choice is saved to your profile. The site works with a keyboard and screen readers, respects your system's reduced-motion setting and works on phones.
+English, Russian, Arabic (right-to-left) and Georgian. Switch in the top bar; your choice is saved to your profile. The site works with a keyboard and screen readers, respects your system's reduced-motion setting and works on phones.

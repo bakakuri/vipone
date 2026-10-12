@@ -24,7 +24,7 @@
 }
 .public-nav { display: flex; gap: var(--space-1); }
 .public-nav a {
-  position: relative; padding: 8px 14px; border-radius: var(--radius-round);
+  position: relative; padding: 8px 14px; border-radius: var(--radius-round); white-space: nowrap;
   color: var(--color-ink-muted); text-decoration: none; font-size: var(--text-sm); font-weight: 500;
   transition: color var(--duration-base), background-color var(--duration-base);
 }

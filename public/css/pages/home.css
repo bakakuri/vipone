@@ -19,6 +19,7 @@
 [data-theme='light'] .hero__title { background-image: linear-gradient(100deg, #0b1020 0%, #0b1020 35%, #078266 55%, #6a4bff 75%, #0b1020 100%); filter: none; }
 :lang(ar) .hero__title { line-height: 1.25; max-width: 16ch; }
 :lang(ru) .hero__title { font-size: clamp(2.3rem, 5.2vw, 4.4rem); max-width: 15ch; }
+:lang(ka) .hero__title { font-size: clamp(2.1rem, 4.8vw, 4.1rem); max-width: 17ch; line-height: 1.12; }
 /* Words are split by home.js; each one rises in after the previous and
    carries its own shimmer, so the gradient travels across the headline. */
 .hero__title.is-split { background: none; animation: none; color: var(--color-ink); }

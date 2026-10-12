@@ -14,7 +14,7 @@ export async function getPublicConfig() {
   return {
     appName: config.appName,
     mode: config.mode,
-    languages: settings['languages.enabled'] || ['en', 'ru', 'ar'],
+    languages: settings['languages.enabled'] || ['en', 'ru', 'ar', 'ka'],
     supportEmail: settings['support.contact_email'] || null,
     depositHoldDays: settings['funds.deposit_hold_days'] ?? 7,
     live: { enabled: settings['live.enabled'] !== false, transport: config.live.transport },

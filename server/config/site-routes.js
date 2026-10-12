@@ -3,7 +3,7 @@
 // pages, sitemap.xml) and the sitemap page.
 //
 // access: public | guest (only signed-out users) | user | admin
-// localized: pre-rendered in /ru and /ar for search engines (public pages)
+// localized: pre-rendered in /ru, /ar and /ka for search engines (public pages)
 
 export const SITE_ROUTES = [
   { path: '/', page: 'home', access: 'public', sitemap: true, localized: true, priority: '1.0' },
@@ -53,7 +53,7 @@ export const SITE_ROUTES = [
   { path: '/admin/system', page: 'admin/system', access: 'admin' },
 ];
 
-export const LOCALES = ['en', 'ru', 'ar'];
+export const LOCALES = ['en', 'ru', 'ar', 'ka'];
 export const DEFAULT_LOCALE = 'en';
 
 export const pageFile = (route) => `/pages/${route.page}.html`;

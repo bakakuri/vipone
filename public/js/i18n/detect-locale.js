@@ -1,4 +1,4 @@
-// Language choice: URL prefix (/ru, /ar) > saved preference > browser
+// Language choice: URL prefix (/ru, /ar, /ka) > saved preference > browser
 // languages > English. Never inferred from IP or country.
 import { getPref } from '../core/storage.js';
 import { localePrefix } from '../core/url.js';

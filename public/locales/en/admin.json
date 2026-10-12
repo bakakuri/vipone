@@ -258,7 +258,7 @@
     "edit": "Edit product",
     "saved": "Product saved. Changing terms creates a new terms version.",
     "none": "No products yet.",
-    "activationRules": "A product can be activated only with approved legal status, a legal reference, a source of return and texts in all three languages. Changing terms creates a new version; open positions keep theirs.",
+    "activationRules": "A product can be activated only with approved legal status, a legal reference, a source of return and texts in English, Russian and Arabic (Georgian is optional). Changing terms creates a new version; open positions keep theirs.",
     "slug": "URL name",
     "slugHint": "Lowercase letters, digits and hyphens. Cannot be changed later.",
     "name": "Name",
@@ -503,7 +503,7 @@
   "announcements": {
     "title": "Announcements",
     "subtitle": "Messages delivered to every active account as a notification.",
-    "rules": "Write all three languages. Never announce returns, promotions with guaranteed gains or anything that could be read as investment advice.",
+    "rules": "Write English, Russian and Arabic; Georgian is optional (without it, Georgian readers see the English text). Never announce returns, promotions with guaranteed gains or anything that could be read as investment advice.",
     "new": "New announcement",
     "titleIn": "Title ({{lang}})",
     "bodyIn": "Message ({{lang}})",

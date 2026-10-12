@@ -46,7 +46,7 @@ export const PUBLIC_NAV = [
 ];
 
 export function isCurrent(href) {
-  const path = location.pathname.replace(/^\/(ru|ar)(?=\/|$)/, '') || '/';
+  const path = location.pathname.replace(/^\/(ru|ar|ka)(?=\/|$)/, '') || '/';
   if (href === '/admin') return path === '/admin';
   return path === href || (href !== '/' && path.startsWith(`${href}/`));
 }

@@ -1,6 +1,6 @@
 /* Aurora design tokens that do not change between themes. Colours live in themes/. */
 :root {
-  --font-sans: 'Plex Sans', 'Plex Sans Arabic', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Plex Sans', 'Noto Sans Georgian', 'Plex Sans Arabic', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-arabic: 'Plex Sans Arabic', 'Plex Sans', system-ui, sans-serif;
   --font-mono: 'Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
@@ -69,6 +69,11 @@
   --z-tour: 80;
 
   --focus-ring: 0 0 0 3px var(--color-focus);
+}
+
+:lang(ka) {
+  --tracking-tight: -0.01em;
+  --tracking-display: -0.02em;
 }
 
 :lang(ar) {

@@ -53,26 +53,45 @@ async function seedAddressPools() {
   }
 }
 
+// Georgian texts of the demo product (also added to a product seeded before Georgian existed).
+const KA = {
+  name: '[დემო] ბაზარზე ნეიტრალური სტრატეგია',
+  summary: 'სადემონსტრაციო პროდუქტი პლატფორმის გამოსაცდელად. ეს არ არის შეთავაზება; ბალანსებს ღირებულება არ აქვს.',
+  risk: 'მხოლოდ დემო. რეალურ პროდუქტში ეს განყოფილება აღწერს სტრატეგიის რისკებს: საბაზრო, კონტრაგენტის, ლიკვიდობისა და ოპერაციულ რისკებს.',
+  revenue: 'მხოლოდ დემო. რეალური პროდუქტი აქ ზუსტად განმარტავს, როგორ იქმნება შემოსავალი და სად ინახება სახსრები.',
+};
+
 async function seedProduct() {
-  const [existing] = await sql`select id from app.investment_products where slug = 'demo-market-neutral'`;
-  if (existing) return existing.id;
-  const text = (en, ru, ar) => sql.json({ en, ru, ar });
+  const [existing] = await sql`select id, name from app.investment_products where slug = 'demo-market-neutral'`;
+  if (existing) {
+    if (!existing.name?.ka) {
+      await sql`
+        update app.investment_products
+        set name = name || ${sql.json({ ka: KA.name })}, summary = summary || ${sql.json({ ka: KA.summary })},
+            risk_disclosure = risk_disclosure || ${sql.json({ ka: KA.risk })},
+            revenue_model_description = revenue_model_description || ${sql.json({ ka: KA.revenue })}
+        where id = ${existing.id}`;
+      console.log('product: Georgian texts added');
+    }
+    return existing.id;
+  }
+  const text = (en, ru, ar, ka) => sql.json({ en, ru, ar, ka });
   const [p] = await sql`
     insert into app.investment_products (slug, name, summary, risk_disclosure, revenue_model, revenue_model_description,
       term_days, min_amount, max_amount, capacity, performance_fee_rate, early_exit_allowed, early_exit_fee_rate,
       risk_level, legal_status, legal_reference, status)
     values ('demo-market-neutral',
-      ${text('[DEMO] Market-neutral strategy', '[ДЕМО] Рыночно-нейтральная стратегия', '[تجريبي] استراتيجية محايدة للسوق')},
+      ${text('[DEMO] Market-neutral strategy', '[ДЕМО] Рыночно-нейтральная стратегия', '[تجريبي] استراتيجية محايدة للسوق', KA.name)},
       ${text('Demo product for testing the platform. Not an offer; balances have no value.',
              'Демо-продукт для тестирования платформы. Не является предложением; балансы не имеют ценности.',
-             'منتج تجريبي لاختبار المنصة. ليس عرضًا؛ والأرصدة لا قيمة لها.')},
+             'منتج تجريبي لاختبار المنصة. ليس عرضًا؛ والأرصدة لا قيمة لها.', KA.summary)},
       ${text('Demo only. In a real product this section describes the strategy risks: market, counterparty, liquidity and operational risk.',
              'Только демо. В реальном продукте здесь описываются риски стратегии: рыночный, контрагента, ликвидности и операционный.',
-             'تجريبي فقط. في المنتج الحقيقي يصف هذا القسم مخاطر الاستراتيجية: السوق والطرف المقابل والسيولة والتشغيل.')},
+             'تجريبي فقط. في المنتج الحقيقي يصف هذا القسم مخاطر الاستراتيجية: السوق والطرف المقابل والسيولة والتشغيل.', KA.risk)},
       'trading',
       ${text('Demo only. A real product explains here exactly how returns are generated and where the funds are held.',
              'Только демо. Реальный продукт объясняет здесь, как именно формируется доход и где хранятся средства.',
-             'تجريبي فقط. يشرح المنتج الحقيقي هنا كيف يتحقق العائد بالضبط وأين تُحفظ الأموال.')},
+             'تجريبي فقط. يشرح المنتج الحقيقي هنا كيف يتحقق العائد بالضبط وأين تُحفظ الأموال.', KA.revenue)},
       28, 50, 100000, 1000000, 0.2, true, 0.02, 'high', 'approved', 'DEMO-ONLY — not an offer', 'active')
     returning id`;
   await sql`insert into app.investment_product_assets (product_id, asset_code) values (${p.id}, 'USDT'), (${p.id}, 'USDC') on conflict do nothing`;

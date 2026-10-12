@@ -17,6 +17,7 @@ PostgreSQL 15+ (Supabase). Everything lives in the schema `app`. Migrations are 
 | `…001100_rls` | Row Level Security on every table, grants, Realtime channel authorisation |
 | `…001200_reference_data` | default assets, networks, limits, fees, settings and legal document rows |
 | `20261012000100_deposit_methods` | deposit methods published by staff (address, memo, QR image, instructions), payments reported by users and their approval, settings `withdrawal.address_email_confirmation` and `deposits.page_notice` |
+| `20261012000200_georgian` | Georgian (`ka`) allowed as profile, email and legal-document language; Georgian legal document rows; `ka` added to `languages.enabled` |
 
 `database/local/supabase-shim.sql` recreates the few Supabase objects the migrations reference (`auth.users`, `auth.uid()`, roles `anon`/`authenticated`/`service_role`, `realtime.messages`, `realtime.send`) so the same migrations run on plain PostgreSQL for local development and tests. It also holds `local_auth` (password hashes, refresh tokens, TOTP factors) for `AUTH_PROVIDER=local`. It is never applied to a real Supabase project.
 

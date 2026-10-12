@@ -3,7 +3,7 @@
 //   - copies every static file
 //   - inlines the CSS @imports into one stylesheet (fewer requests)
 //   - pre-renders the public pages in English, Russian and Arabic
-//     (/ru/..., /ar/...) with canonical and hreflang links
+//     (/ru/..., /ar/..., /ka/...) with canonical and hreflang links
 //   - writes sitemap.xml and robots.txt from server/config/site-routes.js
 //   - copies the 404 page to dist/404.html (served by Vercel for unknown URLs)
 // The site's absolute URL comes from APP_URL (or, on Vercel, the production
@@ -20,7 +20,7 @@ import { flattenCss, localizeHtml, robotsTxt, sitemapXml } from './lib/prerender
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'public');
 const OUT = path.join(ROOT, 'dist');
-const DIR = { en: 'ltr', ru: 'ltr', ar: 'rtl' };
+const DIR = { en: 'ltr', ru: 'ltr', ar: 'rtl', ka: 'ltr' };
 
 function siteUrl() {
   const explicit = process.env.APP_URL?.trim();

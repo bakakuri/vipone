@@ -116,7 +116,7 @@ async function ensureProfile(session, ctx) {
       provisionProfile(tx, {
         userId: session.user.id,
         email: session.user.email,
-        locale: ['en', 'ru', 'ar'].includes(meta.locale) ? meta.locale : 'en',
+        locale: ['en', 'ru', 'ar', 'ka'].includes(meta.locale) ? meta.locale : 'en',
         countryCode: /^[A-Z]{2}$/.test(meta.country_code || '') ? meta.country_code : null,
         referralCode: meta.referral_code || null,
         ipHash: ctx.ipHash,

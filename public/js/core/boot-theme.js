@@ -18,8 +18,8 @@
   }
   root.setAttribute('data-theme', theme);
 
-  var supported = ['en', 'ru', 'ar'];
-  var fromPath = (location.pathname.match(/^\/(ru|ar)(\/|$)/) || [])[1];
+  var supported = ['en', 'ru', 'ar', 'ka'];
+  var fromPath = (location.pathname.match(/^\/(ru|ar|ka)(\/|$)/) || [])[1];
   var locale = fromPath || (supported.indexOf(store.locale) >= 0 ? store.locale : null);
   if (!locale) {
     var langs = navigator.languages || [navigator.language || 'en'];

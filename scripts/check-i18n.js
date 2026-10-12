@@ -1,7 +1,7 @@
 // Translation checks (run in CI and by `npm run check:i18n`):
 //   1. every literal key used in JS/HTML exists in English
 //   2. every dynamic key family (t(`ns:prefix.${x}`)) exists in English
-//   3. ru and ar have exactly the same keys as en, with the same
+//   3. ru, ar and ka have exactly the same keys as en, with the same
 //      {{placeholders}} and the same array/object shapes
 //   4. the English text in public HTML equals locales/en (no drift)
 import { readdirSync, readFileSync } from 'node:fs';
@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { flatten, isPlural, scanHtml, scanJs, walk } from './lib/i18n-scan.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const LOCALES = ['en', 'ru', 'ar'];
+const LOCALES = ['en', 'ru', 'ar', 'ka'];
 const IGNORE_LITERALS = new Set(['auth:required', 'notifications:read']); // event names, not keys
 
 export function loadLocale(locale) {

@@ -69,7 +69,7 @@ Pending ─► (Review) Under review ─► Approve ─► Process ─► Record
 - the receiving address and, if the network needs one, a memo/tag;
 - a QR image — upload a QR code or a screenshot from your wallet or exchange (it is re-encoded in the browser, at most about 500 kB); without an image a QR code is generated from the address;
 - an optional name ("Main wallet"), minimum amount and display order;
-- instructions in English, Russian and Arabic (one paragraph per line; an empty language shows the English text);
+- instructions in English, Russian, Arabic and Georgian (one paragraph per line; an empty language shows the English text);
 - *Show on the deposit page* — hidden methods stay in the admin list.
 
 The box under the methods sets a **notice** shown at the top of the deposit page in each language (setting `deposits.page_notice`; leave it empty to hide it).
@@ -93,7 +93,7 @@ Keep at least a few hundred free addresses per active network and check the coun
 
 ## Investment products
 
-**Investments → Products** (super_admin). A product needs, in English, Russian and Arabic: name, summary, revenue model description and risk disclosure; plus term in days, min/max per position, capacity, performance fee, early-exit rules, risk level, legal reference and legal status. It can be **activated only with legal status *approved***. Editing terms creates a new version; open positions keep their original terms. Pause a product to stop new positions without affecting existing ones.
+**Investments → Products** (super_admin). A product needs, in English, Russian and Arabic: name, summary, revenue model description and risk disclosure (Georgian is optional; without it Georgian readers see English); plus term in days, min/max per position, capacity, performance fee, early-exit rules, risk level, legal reference and legal status. It can be **activated only with legal status *approved***. Editing terms creates a new version; open positions keep their original terms. Pause a product to stop new positions without affecting existing ones.
 
 ## Recording realised results
 
@@ -150,7 +150,7 @@ Search by email, reference or id. The user page shows balances, deposits, withdr
 
 ## Announcements
 
-Publish a title and message in all three languages (e.g. a maintenance window). It is delivered as a notification to every active and restricted user and recorded in the audit log.
+Publish a title and message in English, Russian and Arabic (Georgian optional) (e.g. a maintenance window). It is delivered as a notification to every active and restricted user and recorded in the audit log.
 
 ## Audit log
 

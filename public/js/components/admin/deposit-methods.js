@@ -21,7 +21,7 @@ import { openModal } from '../modals/modal.js';
 import { toast } from '../notifications/toast.js';
 import { section } from './admin-ui.js';
 
-const LANGS = ['en', 'ru', 'ar'];
+const LANGS = ['en', 'ru', 'ar', 'ka'];
 const MAX_DATA_URL = 690000;
 
 function loadImage(file) {
