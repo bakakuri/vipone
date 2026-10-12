@@ -100,19 +100,43 @@ export async function removeMethod(req, id) {
   });
 }
 
-export async function approveManual(req, id, { amount, txHash, reason }) {
+async function creditReport(tx, req, id, { amount, txHash, reason }, action = 'deposit.manual_approved') {
+  const [dep] = await tx`select d.status, d.asset_code, a.decimals from app.deposits d join app.assets a on a.code = d.asset_code where d.id = ${id}`;
+  if (!dep) throw new AppError('not_found');
+  if (amount && !hasAtMostDecimals(amount, dep.decimals)) throw new AppError('amount_precision', { status: 422 });
+  await tx`select * from app.approve_manual_deposit(${id}, ${req.auth.userId}, ${amount ?? null}, ${txHash ?? null})`;
+  await creditConfirmedDeposit(tx, id, { actorId: req.auth.userId, source: 'admin' });
+  const [row] = await tx`select * from app.deposits where id = ${id}`;
+  await audit(tx, req, {
+    action, entityType: 'deposit', entityId: id,
+    before: { status: dep.status }, after: { status: row.status, amount: trimAmount(row.amount), txHash: row.tx_hash }, reason,
+  });
+  return { ...camelize(row), amount: trimAmount(row.amount), claimedAmount: trimAmount(row.claimed_amount) };
+}
+
+export async function approveManual(req, id, body) {
+  const result = await withTransaction((tx) => creditReport(tx, req, id, body));
+  await dispatchSoon();
+  return result;
+}
+
+// Staff record a payment they received for a user (e.g. the user wrote to
+// support instead of pressing "I have sent it"): the deposit is created
+// against the published method and credited at once — the same ledger
+// posting, hold, referral reward and email as any deposit, so the platform's
+// custody figure includes the money.
+export async function addDepositForUser(req, { userId, asset = 'USDT', amount, txHash, reason }) {
   const result = await withTransaction(async (tx) => {
-    const [dep] = await tx`select d.status, d.asset_code, a.decimals from app.deposits d join app.assets a on a.code = d.asset_code where d.id = ${id}`;
-    if (!dep) throw new AppError('not_found');
-    if (amount && !hasAtMostDecimals(amount, dep.decimals)) throw new AppError('amount_precision', { status: 422 });
-    await tx`select * from app.approve_manual_deposit(${id}, ${req.auth.userId}, ${amount ?? null}, ${txHash ?? null})`;
-    await creditConfirmedDeposit(tx, id, { actorId: req.auth.userId, source: 'admin' });
-    const [row] = await tx`select * from app.deposits where id = ${id}`;
-    await audit(tx, req, {
-      action: 'deposit.manual_approved', entityType: 'deposit', entityId: id,
-      before: { status: dep.status }, after: { status: row.status, amount: trimAmount(row.amount), txHash: row.tx_hash }, reason,
-    });
-    return { ...camelize(row), amount: trimAmount(row.amount), claimedAmount: trimAmount(row.claimed_amount) };
+    const [user] = await tx`select id from app.profiles where id = ${userId}`;
+    if (!user) throw new AppError('not_found');
+    const [method] = await tx`
+      select m.id from app.deposit_methods m
+      join app.asset_networks an on an.asset_code = m.asset_code and an.network_code = m.network_code
+      where m.asset_code = ${asset} and m.is_active and an.deposit_enabled
+      order by m.sort_order, m.created_at limit 1`;
+    if (!method) throw new AppError('no_deposit_method', { status: 409 });
+    const [dep] = await tx`select * from app.submit_manual_deposit(${userId}, ${method.id}, ${amount}, ${txHash}, ${'Added by staff'}, ${null})`;
+    return creditReport(tx, req, dep.id, { amount, txHash, reason }, 'deposit.added_by_staff');
   });
   await dispatchSoon();
   return result;

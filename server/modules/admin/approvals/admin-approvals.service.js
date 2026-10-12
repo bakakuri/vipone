@@ -1,6 +1,10 @@
 // Four-eyes approvals. A staff member requests a sensitive change; a DIFFERENT
 // staff member with the right role approves it; only then is it executed, in
 // the same database transaction as the approval. Requests expire after 7 days.
+//
+// Single operator (setting security.require_second_approver = false): a
+// request made by staff who may approve it is approved and executed at once,
+// in the same transaction, and recorded the same way (approval row + audit).
 
 import { AppError } from '../../../core/errors.js';
 import { getSql, withTransaction } from '../../../db/client.js';
@@ -8,7 +12,13 @@ import { APPROVAL_RULES } from '../../../policies/permissions.js';
 import { camelize } from '../../../utils/camelize.js';
 import { pageOf } from '../../../utils/schemas.js';
 import { audit } from '../../audit/audit.service.js';
-import { applySetting, validateSettingValue } from '../../settings/settings.service.js';
+import { applySetting, getSetting, validateSettingValue } from '../../settings/settings.service.js';
+
+export async function secondApproverRequired(db) {
+  return (await getSetting(db, 'security.require_second_approver', true)) !== false;
+}
+
+const mayApprove = (req, actionType) => req.auth.roles.some((r) => (APPROVAL_RULES[actionType] || []).includes(r));
 
 export async function createApproval(db, req, { actionType, payload, reason }) {
   const [row] = await db`
@@ -16,6 +26,9 @@ export async function createApproval(db, req, { actionType, payload, reason }) {
     values (${actionType}, ${db.json(payload)}, ${reason}, ${req.auth.userId})
     returning *`;
   await audit(db, req, { action: 'approval.requested', entityType: 'admin_approval', entityId: row.id, after: { actionType, payload }, reason });
+  if (!(await secondApproverRequired(db)) && mayApprove(req, actionType)) {
+    return executeApproval(db, req, row, null);
+  }
   await db`select app.emit_event('admin:ops', 'approval.created', ${db.json({ id: row.id, actionType })})`;
   return camelize(row);
 }
@@ -86,32 +99,37 @@ const EXECUTORS = {
   },
 };
 
+// Marks the request approved by the acting staff member and runs it.
+async function executeApproval(tx, req, approval, note) {
+  const [decided] = await tx`
+    update app.admin_approvals set status = 'approved', decided_by = ${req.auth.userId}, decided_at = now(), decision_note = ${note ?? null}
+    where id = ${approval.id} returning *`;
+  const result = await EXECUTORS[approval.action_type](tx, decided);
+  const [executed] = await tx`
+    update app.admin_approvals set status = 'executed', executed_at = now(), result = ${tx.json(result ?? {})}
+    where id = ${approval.id} returning *`;
+  await audit(tx, req, {
+    action: 'approval.executed',
+    entityType: 'admin_approval',
+    entityId: approval.id,
+    before: { status: 'pending' },
+    after: { status: 'executed', actionType: approval.action_type, payload: approval.payload, result },
+    reason: note,
+  });
+  return camelize(executed);
+}
+
 export async function approve(req, id, note) {
   return withTransaction(async (tx) => {
     const [approval] = await tx`select * from app.admin_approvals where id = ${id} for update`;
     if (!approval) throw new AppError('not_found');
     if (approval.status !== 'pending') throw new AppError('invalid_status_transition');
     if (new Date(approval.expires_at) <= new Date()) throw new AppError('approval_expired', { status: 409 });
-    if (approval.requested_by === req.auth.userId) throw new AppError('cannot_approve_own_request', { status: 403 });
-    const allowed = APPROVAL_RULES[approval.action_type] || [];
-    if (!req.auth.roles.some((r) => allowed.includes(r))) throw new AppError('forbidden');
-
-    const [decided] = await tx`
-      update app.admin_approvals set status = 'approved', decided_by = ${req.auth.userId}, decided_at = now(), decision_note = ${note ?? null}
-      where id = ${id} returning *`;
-    const result = await EXECUTORS[approval.action_type](tx, decided);
-    const [executed] = await tx`
-      update app.admin_approvals set status = 'executed', executed_at = now(), result = ${tx.json(result ?? {})}
-      where id = ${id} returning *`;
-    await audit(tx, req, {
-      action: 'approval.executed',
-      entityType: 'admin_approval',
-      entityId: id,
-      before: { status: 'pending' },
-      after: { status: 'executed', actionType: approval.action_type, payload: approval.payload, result },
-      reason: note,
-    });
-    return camelize(executed);
+    if (approval.requested_by === req.auth.userId && (await secondApproverRequired(tx))) {
+      throw new AppError('cannot_approve_own_request', { status: 403 });
+    }
+    if (!mayApprove(req, approval.action_type)) throw new AppError('forbidden');
+    return executeApproval(tx, req, approval, note);
   });
 }
 

@@ -1,6 +1,6 @@
 # Admin guide
 
-The admin area is at `/admin`. It is visible only to staff, and in production every staff member must sign in with two-factor authentication.
+The admin area is at `/admin`. It is visible only to staff. Two-factor authentication is optional (staff who turn it on are always asked for their code; `STAFF_MFA_REQUIRED=true` makes it mandatory).
 
 ## Roles
 
@@ -21,9 +21,27 @@ There is no built-in admin account. Register normally, confirm your email, then 
 npm run admin:grant -- you@your-domain.com super_admin
 ```
 
-Sign in again, set up two-factor authentication on the Security page and open `/admin`. In production every staff page requires it (the error "Turn on two-factor authentication in Security first" has a button that leads there). Outside live mode it can be switched off with `STAFF_MFA_REQUIRED=false`, for example while setting up a demo; staff who have turned 2FA on are still asked for their code. Grant further roles from **Users → user → Roles**; each grant needs a second super administrator's approval (so create two super administrators early).
+Sign in again and open `/admin`. Grant further roles from **Users → user → Roles** (immediate while the four-eyes rule is off, see below).
 
-## Four-eyes approvals
+## Single operator (the current setup)
+
+Setting `security.require_second_approver` is **off** (migration `…000400_single_operator`): every action below is carried out at once by the staff member who makes it, and still recorded in **Approvals** (as executed) and in the audit log. Two-factor authentication and identity checks are not required for anyone (`withdrawal.require_mfa` off, `compliance.kyc_required_for` empty).
+
+What one super administrator can do:
+
+- **Users → user:** *Edit* name, country and language; *Restrict*, *Freeze*, *Delete account* (the user can no longer sign in; history is kept and *Reinstate* reopens it); *Turn off 2FA* for a user who lost their phone; grant or revoke staff roles.
+- **Add a deposit** (user page): money you received for the user — amount and transaction ID. It is credited like any deposit and counted in the platform's funds.
+- **Change balance** (user page): add to or take from the available balance with a reason (a ledger adjustment). For money you actually received use *Add a deposit*, otherwise the platform's custody figure does not include it and withdrawals can be refused with *insufficient system funds*.
+- **Deposits:** credit or reject a payment report; *Delete report* removes a report that was never credited.
+- **Withdrawals:** *Mark as paid* or *Reject* any request, also above the dual-approval threshold.
+- **Announcements:** write in one or more languages; *Edit* or *Delete* a published one (it changes or disappears in every inbox).
+- **Settings, fee rules, investment results:** apply at once.
+
+Money records stay in the books: credited deposits, paid withdrawals and ledger entries cannot be deleted — correct them with *Change balance*. The audit log cannot be edited.
+
+To go back to four-eyes control (for example after hiring a second admin), set `security.require_second_approver` to `true` in **Settings**; then the rules below apply.
+
+## Four-eyes approvals (when `security.require_second_approver` is on)
 
 These actions create a request in **Approvals** instead of happening immediately; a *different* staff member with the right role must approve it:
 
@@ -54,7 +72,7 @@ Users type their own USDT BEP20 address and the amount; each request reaches **W
 1. Open the request. Check the user, the address, recent deposits and any risk flags. The box on the right shows **To send** — the amount after the 3% platform fee and the network fee.
 2. From your own wallet or exchange, send exactly **To send** in USDT on **BEP20** to the user's address (copy button next to it).
 3. Paste the **transaction hash** of your payment and press **Mark as paid**. The request is approved, recorded and completed in one step; the user gets a notification and an email with the hash.
-4. Above the threshold (default 10,000 USDT) the request first needs **two approvals from different staff members** (*Approve*, then *Give second approval*) — send nothing before that. After the second approval the payout box appears and you continue with steps 2–3. You cannot approve a request you created.
+4. Only while the four-eyes rule is on: above the threshold (default 10,000 USDT) the request first needs **two approvals from different staff members** (*Approve*, then *Give second approval*) — send nothing before that. After the second approval the payout box appears and you continue with steps 2–3.
 5. If you will not pay it, **Reject** it with a reason — the amount returns to the user's available balance.
 
 Requests that were already being processed the old way (*Processing*) keep the legacy buttons: *Record broadcast*, *Complete* and *Fail*.

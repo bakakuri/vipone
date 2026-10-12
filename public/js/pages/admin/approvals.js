@@ -36,7 +36,7 @@ definePage({
   permission: 'approvals.read',
   namespaces: ['admin'],
   title: 'admin:approvals.title',
-  async render({ page }) {
+  async render({ page, config }) {
     const me = currentUser();
     let status = 'pending';
     const table = dataTable({
@@ -49,7 +49,7 @@ definePage({
         { key: 'details', label: t('admin:flags.details'), render: (a) => h('details', {}, h('summary', {}, t('admin:show')), jsonBlock(a.payload)) },
         { key: 'actions', label: '', actions: true, render: (a) => {
           if (a.status !== 'pending' || !can('approvals.decide')) return null;
-          if (a.requestedBy === me.id) return h('span', { class: 'text-xs text-subtle' }, t('admin:approvals.own'));
+          if (a.requestedBy === me.id && config.secondApprover !== false) return h('span', { class: 'text-xs text-subtle' }, t('admin:approvals.own'));
           return h('div', { class: 'cluster' },
             actionButton(t('admin:approvals.approve'), { tone: 'primary', confirm: t('admin:approvals.approveText'), run: () => adminApi.approve(a.id), onDone: load }),
             actionButton(t('admin:approvals.reject'), { tone: 'danger', reason: true, run: (note) => adminApi.reject(a.id, note), onDone: load }));

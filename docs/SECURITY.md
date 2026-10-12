@@ -11,7 +11,7 @@
 | Cross-site request forgery | `SameSite=Strict` + double-submit CSRF token + `Origin` allow-list on every state-changing request |
 | Credential stuffing, brute force | rate limits per IP and per account (stored in Postgres in production); generic sign-in errors; two-factor authentication |
 | Account takeover → withdrawal | TOTP two-factor sign-in required for withdrawals and new addresses; email code + 24-hour cooldown on new addresses; new-device sign-in email; password change revokes other sessions |
-| Insider abuse | role-based permissions; four-eyes approval for large withdrawals, results, settings, fees, role changes, adjustments, reinstatements; nobody approves their own request; append-only audit log; mandatory 2FA for staff in production |
+| Insider abuse | role-based permissions; append-only audit log; four-eyes approval for large withdrawals, results, settings, fees, role changes, adjustments, reinstatements when `security.require_second_approver` is on (off for a single operator, who acts alone); optional 2FA for staff (`STAFF_MFA_REQUIRED=true` makes it mandatory) |
 | Fake deposits | only signed blockchain webhooks (HMAC, constant-time compare, timestamp tolerance) create deposits; required confirmations; screening |
 | Fake or inflated profits | results only from recorded, evidenced, second-approved realised performance; no client-side or scheduled "accrual" |
 | Insolvency hidden by the books | reconciliation against observed wallet balances pauses withdrawals on mismatch; referral rewards only from platform equity; integrity check endpoint |
@@ -31,9 +31,9 @@
 ## Authorisation
 
 - Customers have no role; staff roles are `support`, `finance`, `compliance`, `super_admin`, mapped to fine-grained permissions in `server/policies/permissions.js`.
-- Every admin route checks its own permission. Staff need 2FA (`aal2`) in production and live mode.
+- Every admin route checks its own permission. Staff who turned 2FA on must use it (`aal2`); `STAFF_MFA_REQUIRED=true` makes it mandatory for all staff in production.
 - The first super administrator is created from the command line (`npm run admin:grant`). There is **no default admin account and no hard-coded password** anywhere.
-- Further role changes go through the admin panel and a second approver.
+- Further role changes go through the admin panel (with a second approver while `security.require_second_approver` is on).
 
 ## Data protection
 

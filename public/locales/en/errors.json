@@ -123,7 +123,10 @@
     "too_many_pending": "You already have 5 payments waiting to be checked. Wait until they are processed.",
     "duplicate_transaction": "This transaction has already been reported or credited.",
     "mfa_unavailable": "Two-factor authentication is switched off in the sign-in service. The site owner can turn it on in Supabase: Authentication → Multi-Factor → TOTP.",
-    "mfa_setup_failed": "Two-factor setup could not start. Close this window and try again in a minute."
+    "mfa_setup_failed": "Two-factor setup could not start. Close this window and try again in a minute.",
+    "deposit_not_deletable": "Only a report that was never credited can be deleted. Correct a credited deposit with a balance change.",
+    "mfa_reset_unavailable": "Two-factor could not be turned off from here. Remove the factor in Supabase → Authentication → Users.",
+    "no_deposit_method": "Add a deposit method first (Deposits → Deposit methods)."
   },
   "validation": {
     "required": "Fill in this field.",

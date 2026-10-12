@@ -36,7 +36,7 @@ definePage({
   permission: 'investments.read',
   namespaces: ['admin', 'investments'],
   title: 'admin:investments.title',
-  async render({ page }) {
+  async render({ page, config }) {
     const assets = await publicApi.assets();
     registerAssets(assets);
     const me = currentUser();
@@ -93,8 +93,8 @@ definePage({
         { key: 'by', label: t('admin:results.recordedBy'), render: (r) => h('span', { class: 'text-xs' }, r.createdByEmail, r.approvedByEmail ? h('span', { class: 'text-subtle' }, ` · ${t('admin:results.approvedBy', { email: r.approvedByEmail })}`) : null) },
         { key: 'actions', label: '', actions: true, render: (r) => h('div', { class: 'cluster' },
           r.status !== 'rejected' ? h('button', { class: 'btn btn--sm btn--ghost', type: 'button', on: { click: () => previewDialog(r) } }, t('admin:results.preview')) : null,
-          r.status === 'draft' && can('investments.results.approve') && r.createdBy !== me.id ? actionButton(t('admin:results.approve'), { tone: 'primary', confirm: t('admin:results.approveText'), run: () => adminApi.resultAction(r.id, 'approve'), onDone: loadResults }) : null,
-          r.status === 'draft' && r.createdBy === me.id ? h('span', { class: 'text-xs text-subtle' }, t('admin:results.needsOther')) : null,
+          r.status === 'draft' && can('investments.results.approve') && (r.createdBy !== me.id || config.secondApprover === false) ? actionButton(t('admin:results.approve'), { tone: 'primary', confirm: t('admin:results.approveText'), run: () => adminApi.resultAction(r.id, 'approve'), onDone: loadResults }) : null,
+          r.status === 'draft' && r.createdBy === me.id && config.secondApprover !== false ? h('span', { class: 'text-xs text-subtle' }, t('admin:results.needsOther')) : null,
           ['draft', 'approved'].includes(r.status) && can('investments.results.approve') ? actionButton(t('admin:results.reject'), { tone: 'danger', reason: true, run: (reason) => adminApi.resultAction(r.id, 'reject', { reason }), onDone: loadResults }) : null,
           r.status === 'approved' && can('investments.results.approve') ? actionButton(t('admin:results.post'), { tone: 'primary', confirm: t('admin:results.postText'), run: () => adminApi.resultAction(r.id, 'post'), onDone: loadResults }) : null) },
       ],

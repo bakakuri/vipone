@@ -28,16 +28,24 @@ export const nonNegativeAmount = z
     if (error) ctx.addIssue({ code: z.ZodIssueCode.custom, message: error });
   });
 
+// Text in the site languages. One language is enough: an empty English,
+// Russian or Arabic text is filled with the first one written (English,
+// Georgian, Russian, Arabic), so every reader sees something. An empty
+// Georgian text is left out (Georgian readers then see the English text).
 export const localizedText = (max = 2000) =>
   z
     .object({
-      en: z.string().trim().min(1, 'required').max(max),
-      ru: z.string().trim().min(1, 'required').max(max),
-      ar: z.string().trim().min(1, 'required').max(max),
-      // Georgian is optional: a missing or empty text falls back to English.
-      ka: z.string().trim().max(max).optional(),
+      en: z.string().trim().max(max).optional().default(''),
+      ru: z.string().trim().max(max).optional().default(''),
+      ar: z.string().trim().max(max).optional().default(''),
+      ka: z.string().trim().max(max).optional().default(''),
     })
-    .transform(({ ka, ...rest }) => (ka ? { ...rest, ka } : rest));
+    .refine((v) => Boolean(v.en || v.ru || v.ar || v.ka), { message: 'required', path: ['en'] })
+    .transform(({ en, ru, ar, ka }) => {
+      const first = en || ka || ru || ar;
+      const out = { en: en || first, ru: ru || first, ar: ar || first };
+      return ka ? { ...out, ka } : out;
+    });
 
 export const pagination = {
   limit: z.coerce.number().int().min(1).max(100).default(25),

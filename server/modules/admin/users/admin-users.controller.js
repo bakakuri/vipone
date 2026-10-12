@@ -16,6 +16,14 @@ export async function setStatus(req, res) {
   sendData(res, result, { status: result.applied ? 200 : 202 });
 }
 
+export async function updateProfile(req, res) {
+  sendData(res, await service.updateProfile(req, req.params.id, req.body));
+}
+
+export async function resetMfa(req, res) {
+  sendData(res, await service.resetMfa(req, req.params.id, req.body));
+}
+
 export async function decideKyc(req, res) {
   sendData(res, await service.decideKyc(req, req.params.id, req.body));
 }

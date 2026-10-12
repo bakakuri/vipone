@@ -10,6 +10,8 @@ export function adminUsersRoutes() {
   r.get('/risk-flags', requirePermission('users.read'), validate({ query: v.flagsQuery }), c.riskFlags);
   r.post('/risk-flags/:id/resolve', requirePermission('risk.manage'), validate({ params: v.idParams, body: v.resolveBody }), c.resolveFlag);
   r.get('/:id', requirePermission('users.read'), validate({ params: v.idParams }), c.getOne);
+  r.patch('/:id', requirePermission('users.restrict'), validate({ params: v.idParams, body: v.profileBody }), c.updateProfile);
+  r.post('/:id/mfa-reset', requirePermission('users.restrict'), validate({ params: v.idParams, body: v.reasonBody }), c.resetMfa);
   r.post('/:id/status', requirePermission('users.restrict'), validate({ params: v.idParams, body: v.statusBody }), c.setStatus);
   r.post('/:id/kyc', requirePermission('kyc.review'), validate({ params: v.idParams, body: v.kycBody }), c.decideKyc);
   r.post('/:id/roles', requirePermission('users.roles.manage'), validate({ params: v.idParams, body: v.roleBody }), c.requestRole);

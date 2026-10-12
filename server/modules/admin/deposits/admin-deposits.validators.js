@@ -39,3 +39,4 @@ export const methodBody = z.object({
   sortOrder: z.number().int().min(0).max(1000).default(0),
 });
 export const approveManualBody = z.object({ amount: amount.optional(), txHash: txHash.optional(), reason });
+export const addDepositBody = z.object({ userId: uuid, asset: assetCode.optional(), amount, txHash, reason });

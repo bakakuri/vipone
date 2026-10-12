@@ -19,7 +19,6 @@ import { openTransactionDetail } from '../components/modals/transaction-detail.j
 function accountAlerts(user) {
   const alerts = [];
   if (user.status !== 'active') alerts.push(alertBox({ tone: 'danger', title: t('dashboard:alerts.restrictedTitle'), action: h('a', { class: 'btn btn--sm', href: '/support' }, t('navigation:support')) }));
-  if (!user.mfaEnabled) alerts.push(alertBox({ tone: 'info', title: t('dashboard:alerts.mfaShort'), action: h('a', { class: 'btn btn--sm', href: '/security' }, t('dashboard:alerts.mfaAction')) }));
   return alerts;
 }
 

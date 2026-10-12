@@ -1,8 +1,10 @@
-// Announcements are written in all three languages and delivered to every
-// active account as an in-app notification.
+// Announcements are delivered to every active account as an in-app
+// notification. Staff can correct one later (the delivered notifications
+// show the new text) or delete it (it disappears from every inbox).
 
 import { Router } from 'express';
 import { z } from 'zod';
+import { AppError } from '../../../core/errors.js';
 import { sendCreated, sendData } from '../../../core/respond.js';
 import { getSql, withTransaction } from '../../../db/client.js';
 import { requirePermission } from '../../../middleware/authenticate.js';
@@ -34,6 +36,38 @@ export function adminAnnouncementsRoutes() {
       return { ...camelize(a), recipients: delivered.length };
     });
     sendCreated(res, result);
+  });
+  const idParams = z.object({ id: z.string().uuid() });
+  const textBody = z.object({ title: localizedText(140), body: localizedText(2000) });
+  r.patch('/:id', validate({ params: idParams, body: textBody }), async (req, res) => {
+    const result = await withTransaction(async (tx) => {
+      const [before] = await tx`select * from app.announcements where id = ${req.params.id} for update`;
+      if (!before) throw new AppError('not_found');
+      const [a] = await tx`
+        update app.announcements set title = ${tx.json(req.body.title)}, body = ${tx.json(req.body.body)}
+        where id = ${req.params.id} returning *`;
+      await tx`
+        update app.notifications
+        set params = params || ${tx.json({ title: req.body.title, body: req.body.body })}
+        where type = 'announcement' and params->>'announcementId' = ${a.id}::text`;
+      await audit(tx, req, { action: 'announcement.updated', entityType: 'announcement', entityId: a.id,
+        before: { title: before.title, body: before.body }, after: { title: a.title, body: a.body } });
+      return camelize(a);
+    });
+    sendData(res, result);
+  });
+  r.delete('/:id', validate({ params: idParams }), async (req, res) => {
+    const result = await withTransaction(async (tx) => {
+      const [before] = await tx`select * from app.announcements where id = ${req.params.id} for update`;
+      if (!before) throw new AppError('not_found');
+      const removed = await tx`
+        delete from app.notifications where type = 'announcement' and params->>'announcementId' = ${before.id}::text returning id`;
+      await tx`delete from app.announcements where id = ${before.id}`;
+      await audit(tx, req, { action: 'announcement.deleted', entityType: 'announcement', entityId: before.id,
+        before: { title: before.title, body: before.body }, after: { notificationsRemoved: removed.length } });
+      return { deleted: true, id: before.id };
+    });
+    sendData(res, result);
   });
   return r;
 }

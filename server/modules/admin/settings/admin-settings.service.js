@@ -33,7 +33,7 @@ export async function changeSetting(req, key, value, reason) {
     if (JSON.stringify(setting.value) === JSON.stringify(value)) throw new AppError('no_change', { status: 409 });
     if (requiresApproval(setting, value)) {
       const approval = await createApproval(tx, req, { actionType: 'settings.update', payload: { key, value }, reason });
-      return { applied: false, approval };
+      return { applied: approval.status === 'executed', approval };
     }
     const row = await applySetting(tx, { key, value, actorId: req.auth.userId, reason });
     await audit(tx, req, { action: 'settings.updated', entityType: 'system_setting', entityId: key, before: setting.value, after: value, reason });

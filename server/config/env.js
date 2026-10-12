@@ -89,7 +89,7 @@ const schema = z.object({
   LEGAL_APPROVAL_CONFIRMED: bool(false),
   // Staff must use two-factor authentication in production. The owner may
   // switch it off (not recommended); it is then reported in Admin → System.
-  STAFF_MFA_REQUIRED: bool(true),
+  STAFF_MFA_REQUIRED: bool(false),
 });
 
 function fail(errors) {
@@ -170,7 +170,6 @@ export function loadConfig(env = process.env) {
     if (!e.LEGAL_APPROVAL_CONFIRMED) errors.push('APP_MODE=live requires LEGAL_APPROVAL_CONFIRMED=true (licensing and legal review completed)');
     if (!appUrl.startsWith('https://')) errors.push('APP_MODE=live requires an https APP_URL');
     if (e.DEMO_TOOLS_ENABLED) warnings.push('DEMO_TOOLS_ENABLED is ignored in live mode');
-    if (!e.STAFF_MFA_REQUIRED) warnings.push('Staff two-factor authentication is switched off (STAFF_MFA_REQUIRED=false)');
     if (e.EMAIL_PROVIDER === 'log') warnings.push('Emails are only logged (EMAIL_PROVIDER=log)');
   }
   if (errors.length) fail(errors);
@@ -238,7 +237,7 @@ export function loadConfig(env = process.env) {
     logLevel: e.LOG_LEVEL,
     errorWebhookUrl: e.ERROR_WEBHOOK_URL,
     demoToolsEnabled: e.DEMO_TOOLS_ENABLED && !live,
-    // Staff 2FA: required in production (and live) unless STAFF_MFA_REQUIRED=false.
+    // Staff 2FA is optional unless STAFF_MFA_REQUIRED=true (staff who turned it on always use it).
     staffMfaRequired: (production || live) && e.STAFF_MFA_REQUIRED,
     warnings,
     legalApprovalConfirmed: e.LEGAL_APPROVAL_CONFIRMED,

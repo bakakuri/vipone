@@ -160,9 +160,10 @@ definePage({
       const [asset, network] = scope.control.value.split('|');
       setBusy(feeBtn, true);
       try {
-        await withMfa(() => adminApi.requestFeeRule({ asset: asset || null, network: network || null, rate: rate.control.value.trim(), minFee: minFee.control.value.trim() || '0', reason }));
-        toast(t('admin:approvalCreated'), { tone: 'info' });
+        const res = await withMfa(() => adminApi.requestFeeRule({ asset: asset || null, network: network || null, rate: rate.control.value.trim(), minFee: minFee.control.value.trim() || '0', reason }));
+        toast(res?.status === 'executed' ? t('admin:done') : t('admin:approvalCreated'), { tone: res?.status === 'executed' ? 'success' : 'info' });
         feeForm.reset();
+        load();
       } catch (err) {
         rate.setError(errorMessage(err));
       } finally {

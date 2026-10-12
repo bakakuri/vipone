@@ -8,3 +8,5 @@ update app.asset_networks set deposit_enabled = true, withdrawal_enabled = true;
 update app.system_settings set value = '["deposit_address", "withdrawal", "investment"]'::jsonb where key = 'compliance.kyc_required_for';
 update app.system_settings set value = '24'::jsonb where key = 'withdrawal.new_address_cooldown_hours';
 update app.deposit_address_pool set status = 'available' where status = 'retired';
+-- Four-eyes rules and withdrawal 2FA, which the single-operator migration switches off.
+update app.system_settings set value = 'true'::jsonb where key in ('security.require_second_approver', 'withdrawal.require_mfa');

@@ -13,7 +13,9 @@ export function adminDepositsRoutes() {
   r.post('/methods', requirePermission('deposit_methods.manage'), validate({ body: v.methodBody }), c.createMethod);
   r.patch('/methods/:id', requirePermission('deposit_methods.manage'), validate({ params: v.idParams, body: v.methodBody }), c.updateMethod);
   r.delete('/methods/:id', requirePermission('deposit_methods.manage'), validate({ params: v.idParams }), c.removeMethod);
+  r.post('/add', requirePermission('deposits.review'), validate({ body: v.addDepositBody }), c.addDeposit);
   r.get('/:id', requirePermission('deposits.read'), validate({ params: v.idParams }), c.getOne);
+  r.delete('/:id', requirePermission('deposits.review'), validate({ params: v.idParams }), c.deleteReport);
   r.post('/:id/review', requirePermission('deposits.review'), validate({ params: v.idParams, body: v.reviewBody }), c.review);
   r.post('/:id/approve-manual', requirePermission('deposits.review'), validate({ params: v.idParams, body: v.approveManualBody }), c.approveManual);
   r.post('/:id/return', requirePermission('deposits.return'), validate({ params: v.idParams, body: v.returnBody }), c.returnFunds);

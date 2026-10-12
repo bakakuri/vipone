@@ -84,6 +84,7 @@ export const SETTING_TYPES = {
   'withdrawal.address_email_confirmation': 'boolean',
   'deposits.page_notice': 'localizedText',
   'deposits.automatic': 'boolean',
+  'security.require_second_approver': 'boolean',
 };
 
 export function validateSettingValue(key, value) {

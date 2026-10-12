@@ -2,7 +2,7 @@
 
 This is the rulebook. Every rule here is enforced on the server — most of them inside the SQL functions in `supabase/migrations/` — and covered by tests. The browser only explains the rules and shows previews; it never decides an amount.
 
-Default values below come from `supabase/migrations/20261011001200_reference_data.sql` and can be changed in **Admin → Settings** (changes that relax a safeguard need a second approver).
+Default values below come from `supabase/migrations/20261011001200_reference_data.sql` and can be changed in **Admin → Settings** (changes that relax a safeguard need a second approver while `security.require_second_approver` is on; it is off for a single operator).
 
 ## Balances
 
@@ -146,7 +146,7 @@ The calculator on the products page is a **scenario tool**: the user types a hyp
 - Finance staff record the balances actually observed in platform wallets and strategy venues. A reconciliation run compares them with the ledger (`custody`, `strategy`) per asset; a difference beyond tolerance (default 1 USDT/USDC, 0.0001 BTC, 0.001 ETH) **pauses withdrawals of that asset** and alerts staff.
 - Moving funds between custody and strategy is a treasury transfer (recorded, idempotent).
 - The operator's own money (e.g. a referral budget) enters as a capital contribution.
-- Manual corrections are **adjustments**: they need a reason and a second approver, and they are ordinary balanced ledger transactions — balances are never edited.
+- Manual corrections are **adjustments**: they need a reason (and a second approver while the four-eyes rule is on), and they are ordinary balanced ledger transactions — balances are never edited.
 - `GET /admin/treasury/integrity` runs `app.verify_ledger_integrity()`: cache vs entries, every transaction balanced, trial balance per asset, solvency (platform assets vs. what is owed to users).
 
 ## Accounts and compliance
@@ -155,7 +155,7 @@ The calculator on the products page is a **scenario tool**: the user types a hyp
 - Passwords: 12–128 characters with lower and upper case, a digit and a symbol; not the email name; common passwords refused. Supabase Auth stores the hash.
 - Two-factor authentication (TOTP) is required for withdrawals and new addresses by default.
 - KYC: manual review or Sumsub. In live mode, deposit addresses, withdrawals and investments require approved KYC.
-- Account statuses: **active**; **restricted** and **frozen** (the user can sign in and see everything but cannot deposit, withdraw or invest; incoming deposits to a frozen account wait for compliance review); **closed** (cannot sign in). Reinstating an account needs a second approver.
+- Account statuses: **active**; **restricted** and **frozen** (the user can sign in and see everything but cannot deposit, withdraw or invest; incoming deposits to a frozen account wait for compliance review); **closed** (cannot sign in). Reinstating an account needs a second approver while the four-eyes rule is on. Staff *Delete account* sets **closed**.
 
 ## Demo mode
 

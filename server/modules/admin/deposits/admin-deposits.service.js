@@ -122,3 +122,20 @@ export async function importAddresses(req, { network, addresses, sharedAddress, 
     return { submitted: rows.length, inserted, skipped: rows.length - inserted };
   });
 }
+
+// A payment report that was never credited (nothing in the ledger) can be
+// removed completely — e.g. a duplicate or a test report. Credited deposits
+// are part of the books and are corrected with a balance adjustment instead.
+export async function deleteReport(req, id) {
+  return withTransaction(async (tx) => {
+    const [dep] = await tx`select * from app.deposits where id = ${id} for update`;
+    if (!dep) throw new AppError('not_found');
+    if (dep.source !== 'manual' || dep.status === 'credited' || dep.ledger_transaction_id || dep.suspense_transaction_id) {
+      throw new AppError('deposit_not_deletable', { status: 409 });
+    }
+    await tx`delete from app.deposits where id = ${id}`;
+    await audit(tx, req, { action: 'deposit.report_deleted', entityType: 'deposit', entityId: id,
+      before: { reference: dep.reference, status: dep.status, claimedAmount: trimAmount(dep.claimed_amount), userId: dep.user_id } });
+    return { deleted: true, id };
+  });
+}

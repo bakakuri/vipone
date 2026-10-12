@@ -50,7 +50,7 @@ definePage({
         const rejectButton = can('withdrawals.review') ? actionButton(t('admin:withdrawals.reject'), { tone: 'danger', reason: t('admin:withdrawals.rejectText'), run: act('reject'), onDone: after }) : null;
         const open = ['pending', 'under_review'].includes(w.status);
         // Large requests: two different approvers first, nothing is sent yet.
-        if (open && w.requiresDualApproval) {
+        if (open && w.requiresDualApproval && config.secondApprover !== false) {
           const second = w.statusReason === 'awaiting_second_approval';
           actions.push(h('div', { class: 'stack stack--sm w-full payout-box' },
             h('p', { class: 'payout-box__title' }, t(second ? 'admin:payout.dualSecond' : 'admin:payout.dualFirst')),

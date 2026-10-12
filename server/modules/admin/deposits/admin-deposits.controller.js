@@ -47,3 +47,11 @@ export async function removeMethod(req, res) {
 export async function approveManual(req, res) {
   sendData(res, await methods.approveManual(req, req.params.id, req.body));
 }
+
+export async function deleteReport(req, res) {
+  sendData(res, await service.deleteReport(req, req.params.id));
+}
+
+export async function addDeposit(req, res) {
+  sendCreated(res, await methods.addDepositForUser(req, req.body));
+}

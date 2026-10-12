@@ -1,6 +1,7 @@
 // User administration: search, full account view, restrictions, KYC
 // decisions, staff roles (through approvals) and risk flags.
 
+import { getConfig } from '../../../config/env.js';
 import { AppError } from '../../../core/errors.js';
 import { getSql, withTransaction } from '../../../db/client.js';
 import { camelize, trimAmount } from '../../../utils/camelize.js';
@@ -78,12 +79,56 @@ export async function setStatus(req, id, { status, reason }) {
     if (status === 'active') {
       // Lifting a restriction is a relaxation: second approver required.
       const approval = await createApproval(tx, req, { actionType: 'user.reinstate', payload: { userId: id }, reason });
-      return { applied: false, approval };
+      return { applied: approval.status === 'executed', approval };
     }
     await tx`update app.profiles set status = ${status}, status_reason = ${reason} where id = ${id}`;
     await tx`select app.notify(${id}, 'security_alert', ${tx.json({ kind: 'account_' + status })}, '/support')`;
     await audit(tx, req, { action: 'user.status_changed', entityType: 'profile', entityId: id, before: { status: user.status }, after: { status }, reason });
     return { applied: true, status };
+  });
+}
+
+// Staff correct a user's name, country or language. Email and password stay
+// with the user (they belong to the sign-in provider).
+export async function updateProfile(req, id, changes) {
+  return withTransaction(async (tx) => {
+    const [user] = await tx`select id, display_name, country_code, locale from app.profiles where id = ${id} for update`;
+    if (!user) throw new AppError('not_found');
+    const next = {
+      display_name: changes.displayName === undefined ? user.display_name : changes.displayName,
+      country_code: changes.countryCode ?? user.country_code,
+      locale: changes.locale ?? user.locale,
+    };
+    const [row] = await tx`
+      update app.profiles set display_name = ${next.display_name}, country_code = ${next.country_code}, locale = ${next.locale}
+      where id = ${id} returning id, display_name, country_code, locale`;
+    await audit(tx, req, { action: 'user.profile_updated', entityType: 'profile', entityId: id,
+      before: { displayName: user.display_name, countryCode: user.country_code, locale: user.locale },
+      after: { displayName: row.display_name, countryCode: row.country_code, locale: row.locale } });
+    return camelize(row);
+  });
+}
+
+// For a user who lost their authenticator: removes their two-factor factors
+// so they can sign in with the password alone (they can set 2FA up again).
+export async function resetMfa(req, id, { reason }) {
+  return withTransaction(async (tx) => {
+    const [user] = await tx`select id, mfa_enabled from app.profiles where id = ${id} for update`;
+    if (!user) throw new AppError('not_found');
+    try {
+      if (getConfig().auth.provider === 'supabase') await tx`delete from auth.mfa_factors where user_id = ${id}`;
+      else await tx`delete from local_auth.mfa_factors where user_id = ${id}`;
+    } catch (err) {
+      if (err.code === '42501' || err.code === '42P01') throw new AppError('mfa_reset_unavailable', { status: 409 });
+      throw err;
+    }
+    await tx`update app.profiles set mfa_enabled = false where id = ${id}`;
+    await tx`
+      insert into app.security_events (user_id, event_type, metadata)
+      values (${id}, 'mfa_disabled', ${tx.json({ by: 'staff' })})`;
+    await tx`select app.notify(${id}, 'security_alert', ${tx.json({ kind: 'mfa_disabled' })}, '/security')`;
+    await audit(tx, req, { action: 'user.mfa_reset', entityType: 'profile', entityId: id, before: { mfaEnabled: user.mfa_enabled }, after: { mfaEnabled: false }, reason });
+    return { mfaEnabled: false };
   });
 }
 

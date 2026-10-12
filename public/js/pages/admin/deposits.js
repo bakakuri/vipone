@@ -79,6 +79,10 @@ definePage({
           const hash = formField({ label: t('admin:deposits.refundHash'), control: input({ dir: 'ltr', class: 'input input--mono' }), id: 'refund-hash', hint: t('admin:deposits.refundHint') });
           actions.push(h('div', { class: 'stack stack--sm' }, hash.el, actionButton(t('admin:deposits.markReturned'), { confirm: t('admin:deposits.returnText'), run: () => adminApi.returnDeposit(id, { txHash: hash.control.value.trim() }), onDone: after })));
         }
+        // A report that never reached the ledger (duplicate, test, mistake) can be deleted.
+        if (manual && d.status !== 'credited' && can('deposits.review')) {
+          actions.push(actionButton(t('admin:manual.delete'), { tone: 'danger', confirm: t('admin:manual.deleteText'), done: t('admin:manual.deleted'), run: () => adminApi.deleteDepositReport(id), onDone: after }));
+        }
         if (config.demoTools && can('demo.tools') && ['detected', 'confirming'].includes(d.status)) {
           actions.push(actionButton(t('admin:demo.addConfirmations'), { run: () => adminApi.advanceConfirmations({ depositId: id, confirmations: d.requiredConfirmations }), onDone: after }));
         }
@@ -95,7 +99,7 @@ definePage({
             manual ? null : [h('dt', {}, t('deposit:confirmationsLabel')), h('dd', {}, confirmationProgress(d.confirmations, d.requiredConfirmations))],
             manual ? null : [h('dt', {}, t('admin:deposits.risk')), h('dd', {}, d.riskResult ? t(`admin:deposits.riskResults.${d.riskResult}`) : '—')],
             h('dt', {}, t('transactions:txHash')), h('dd', {}, inlineHash(d.txHash, { href: d.explorerUrl })),
-            manual ? null : [h('dt', {}, t('admin:deposits.from')), h('dd', {}, d.fromAddress ? inlineHash(d.fromAddress) : '—')],
+            manual && !d.fromAddress ? null : [h('dt', {}, t('admin:deposits.from')), h('dd', {}, d.fromAddress ? inlineHash(d.fromAddress) : '—')],
             h('dt', {}, t('admin:date')), h('dd', {}, formatDateTime(d.createdAt))),
           d.address ? h('div', { class: 'stack stack--sm' }, h('span', { class: 'field__label' }, t('admin:deposits.toAddress')), addressBox(d.address), d.memo ? h('span', { class: 'text-small' }, `${t('deposit:memo')}: ${d.memo}`) : null) : null,
           manualBox,

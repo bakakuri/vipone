@@ -35,15 +35,14 @@ test('production still refuses to start without its secrets', () => {
   assert.throws(() => loadConfig({ ...base, APP_URL: 'site.org', CRON_SECRET: 'short' }), /CRON_SECRET/);
 });
 
-test('staff two-factor authentication is required in production unless the owner switches it off', () => {
-  assert.equal(loadConfig({ ...base, APP_URL: 'site.org' }).staffMfaRequired, true);
-  assert.equal(loadConfig({ ...base, APP_URL: 'site.org', STAFF_MFA_REQUIRED: 'false' }).staffMfaRequired, false);
-  assert.equal(loadConfig({ ...base, NODE_ENV: 'development', AUTH_PROVIDER: 'supabase', APP_URL: 'http://localhost:3000' }).staffMfaRequired, false);
+test('staff two-factor authentication is optional unless the owner requires it', () => {
+  assert.equal(loadConfig({ ...base, APP_URL: 'site.org' }).staffMfaRequired, false);
+  assert.equal(loadConfig({ ...base, APP_URL: 'site.org', STAFF_MFA_REQUIRED: 'true' }).staffMfaRequired, true);
+  assert.equal(loadConfig({ ...base, NODE_ENV: 'development', AUTH_PROVIDER: 'supabase', APP_URL: 'http://localhost:3000', STAFF_MFA_REQUIRED: 'true' }).staffMfaRequired, false);
   const live = { ...base, APP_URL: 'site.org', APP_MODE: 'live', AUTH_PROVIDER: 'supabase', LEGAL_APPROVAL_CONFIRMED: 'true' };
-  assert.equal(loadConfig(live).staffMfaRequired, true);
-  const relaxed = loadConfig({ ...live, STAFF_MFA_REQUIRED: 'false' });
-  assert.equal(relaxed.staffMfaRequired, false);
-  assert.ok(relaxed.warnings.some((w) => /two-factor/.test(w)), 'the relaxation is reported');
+  assert.equal(loadConfig(live).staffMfaRequired, false);
+  assert.equal(loadConfig({ ...live, STAFF_MFA_REQUIRED: 'true' }).staffMfaRequired, true);
+  assert.deepEqual(loadConfig(live).warnings.filter((w) => /two-factor/.test(w)), []);
 });
 
 test('live mode with manual operations needs only the legal confirmation, Supabase Auth and https', () => {

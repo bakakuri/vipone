@@ -112,7 +112,7 @@ Add a DMARC record (`v=DMARC1; p=quarantine; rua=mailto:…`) for deliverability
 | `ERROR_WEBHOOK_URL` | optional Slack/Teams incoming webhook for error alerts |
 | `DEMO_TOOLS_ENABLED` | remove it, or `true` only for a demo deployment (ignored in live mode) |
 | `LEGAL_APPROVAL_CONFIRMED` | `true` once licensing and legal review are done — required by `APP_MODE=live` |
-| `STAFF_MFA_REQUIRED` | leave unset (staff need 2FA in production); `false` only outside live mode, e.g. while setting up a demo |
+| `STAFF_MFA_REQUIRED` | leave unset (2FA optional for staff); `true` makes it mandatory |
 
 The full list with explanations is in `.env.example`. The build starts with `node scripts/check-config.js`, which validates the combination: an unsafe or incomplete one stops the build with the reason in the **Build Logs** (and the server refuses it at start-up too).
 

@@ -138,7 +138,7 @@
     "freeze": "Freeze",
     "freezeText": "All account actions stop until the account is reinstated. Use for suspected compromise or legal holds.",
     "reinstate": "Reinstate",
-    "reinstateText": "Lifting a restriction needs approval from a second staff member.",
+    "reinstateText": "The user can use the account again.",
     "kycApprove": "Mark verified",
     "kycApproveText": "Record why the identity is considered verified (documents checked, provider reference).",
     "kycReject": "Reject verification",
@@ -149,13 +149,28 @@
       "text": "Role: {{role}}. A second super administrator must approve the change."
     },
     "adjust": {
-      "title": "Balance adjustment",
-      "hint": "Only to correct a documented error. It creates an approval request; the entry is posted only after a second person approves it.",
+      "title": "Change balance",
+      "hint": "Adds to or takes from the user’s available balance. It is recorded in the ledger and the audit log. For money you received, use “Add a deposit”. A balance change does not add to the platform’s funds.",
       "direction": "Direction",
       "credit": "Credit the user",
       "debit": "Debit the user",
-      "request": "Request adjustment",
-      "text": "Explain the error being corrected and where the evidence is."
+      "request": "Change balance",
+      "text": "Write why the balance changes (for example, the payment it corrects).",
+      "done": "Balance changed"
+    },
+    "close": "Delete account",
+    "closeText": "The user can no longer sign in. Balances and history stay on record, and you can reinstate the account later.",
+    "edit": "Edit",
+    "displayName": "Name",
+    "mfaReset": "Turn off 2FA",
+    "mfaResetText": "Removes the user’s authenticator so they can sign in with their password alone. Use it when they lost their phone.",
+    "addDeposit": {
+      "title": "Add a deposit",
+      "hint": "Money you received for this user. It is credited like any deposit and counted in the platform’s funds.",
+      "hash": "Transaction ID (hash)",
+      "button": "Add deposit",
+      "text": "Where did you check the payment? (e.g. BscScan)",
+      "done": "Deposit added"
     }
   },
   "deposits": {
@@ -211,7 +226,7 @@
   "withdrawals": {
     "title": "Withdrawals",
     "subtitle": "Pay requests from your own wallet and record the hash.",
-    "rules": "Open a request, send the amount shown under “To send” to the user’s address, then press “Mark as paid” with the transaction hash. Large requests need a second approver.",
+    "rules": "Open a request, send the amount shown under “To send” to the user’s address, then press “Mark as paid” with the transaction hash.",
     "searchHint": "Reference, transaction hash or email",
     "none": "No withdrawals match these filters.",
     "detail": "Withdrawal",
@@ -470,7 +485,8 @@
       "support_contact_email": "Support email shown to users.",
       "withdrawal_address_email_confirmation": "Email a code to confirm each new withdrawal address (needs working email).",
       "deposits_page_notice": "Notice at the top of the deposit page (edit it in Deposits → Deposit methods).",
-      "deposits_automatic": "Personal deposit addresses with automatic crediting. Off: users pay to the address you publish and staff credit each payment."
+      "deposits_automatic": "Personal deposit addresses with automatic crediting. Off: users pay to the address you publish and staff credit each payment.",
+      "security_require_second_approver": "Four-eyes rule: setting changes, balance changes, roles, large withdrawals and investment results need a second staff member. Off: whoever acts carries them out (all recorded in the audit log)."
     }
   },
   "fees": {
@@ -504,7 +520,7 @@
   "announcements": {
     "title": "Announcements",
     "subtitle": "Messages delivered to every active account as a notification.",
-    "rules": "Write English, Russian and Arabic; Georgian is optional (without it, Georgian readers see the English text). Never announce returns, promotions with guaranteed gains or anything that could be read as investment advice.",
+    "rules": "Write in at least one language; an empty language shows the first text written. Never announce returns, promotions with guaranteed gains or anything that could be read as investment advice.",
     "new": "New announcement",
     "titleIn": "Title ({{lang}})",
     "bodyIn": "Message ({{lang}})",
@@ -512,7 +528,13 @@
     "confirm": "This is sent to every active account and cannot be recalled.",
     "sent": "Published to {{count}} accounts.",
     "published": "Published",
-    "none": "Nothing published yet."
+    "none": "Nothing published yet.",
+    "edit": "Edit",
+    "save": "Save changes",
+    "saved": "Announcement updated",
+    "delete": "Delete",
+    "deleteText": "The announcement disappears from every user’s notifications.",
+    "deleted": "Announcement deleted"
   },
   "audit": {
     "title": "Audit log",
@@ -619,7 +641,10 @@
     "sourceChain": "Blockchain",
     "reported": "Reported",
     "claimed": "Amount reported",
-    "userNote": "User's note"
+    "userNote": "User's note",
+    "delete": "Delete report",
+    "deleteText": "The report is removed completely. Nothing was credited, so no balance changes.",
+    "deleted": "Report deleted"
   },
   "payout": {
     "title": "Send {{amount}} to this address from your wallet, then record it here.",

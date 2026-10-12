@@ -10,7 +10,7 @@ import { getSettings } from '../settings/settings.service.js';
 
 export async function getPublicConfig() {
   const config = getConfig();
-  const settings = await getSettings(getSql(), ['languages.enabled', 'support.contact_email', 'live.enabled', 'funds.deposit_hold_days', 'withdrawal.require_mfa']);
+  const settings = await getSettings(getSql(), ['languages.enabled', 'support.contact_email', 'live.enabled', 'funds.deposit_hold_days', 'withdrawal.require_mfa', 'security.require_second_approver']);
   return {
     appName: config.appName,
     mode: config.mode,
@@ -18,6 +18,7 @@ export async function getPublicConfig() {
     supportEmail: settings['support.contact_email'] || null,
     depositHoldDays: settings['funds.deposit_hold_days'] ?? 7,
     withdrawalMfa: settings['withdrawal.require_mfa'] !== false,
+    secondApprover: settings['security.require_second_approver'] !== false,
     live: { enabled: settings['live.enabled'] !== false, transport: config.live.transport },
     demoTools: config.demoToolsEnabled,
   };
