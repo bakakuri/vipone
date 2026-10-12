@@ -1,7 +1,8 @@
 // External withdrawal addresses. The platform stores only public addresses —
 // never private keys or seed phrases — and adding an address gives the
 // platform no control over it. New addresses need an emailed confirmation
-// code and then wait out a cooldown before they can receive funds.
+// code (unless switched off in settings) and then wait out a cooldown before
+// they can receive funds.
 
 import { getConfig } from '../../config/env.js';
 import { AppError } from '../../core/errors.js';
@@ -14,6 +15,7 @@ import { getAssetNetwork } from '../assets/assets.repository.js';
 import { assertAccountActive } from '../compliance/compliance.service.js';
 import { dispatchSoon, queueEmail } from '../notifications/email-outbox.js';
 import { recordSecurityEvent } from '../profile/profile.repository.js';
+import { getSetting } from '../settings/settings.service.js';
 
 const CODE_TTL_MINUTES = 15;
 
@@ -75,6 +77,15 @@ export async function addWallet(auth, { label, asset, network, address, memo }, 
       where r.referred_user_id = ${auth.userId}
       limit 1`;
     await recordSecurityEvent(tx, { userId: auth.userId, type: 'wallet_added', ipHash: ctx.ipHash, userAgent: ctx.userAgent, metadata: { walletId: row.id, network } });
+    await tx`select app.notify(${auth.userId}, 'wallet_added', ${tx.json({ label, network })}, '/wallets')`;
+    // Email codes can be switched off (Admin → Settings) when the platform has
+    // no working email: the address is then confirmed at once and still waits
+    // out the new-address cooldown before it can be used.
+    if ((await getSetting(tx, 'withdrawal.address_email_confirmation', true)) === false) {
+      const [active] = await tx`select * from app.confirm_withdrawal_wallet(${auth.userId}, ${row.id}, ${ctx.ipHash})`;
+      await recordSecurityEvent(tx, { userId: auth.userId, type: 'wallet_confirmed', ipHash: ctx.ipHash, userAgent: ctx.userAgent, metadata: { walletId: row.id, emailCode: false } });
+      return { wallet: active, code: null };
+    }
     const c = await sendCode(tx, auth, row.id);
     await queueEmail(tx, {
       to: auth.email,
@@ -82,13 +93,12 @@ export async function addWallet(auth, { label, asset, network, address, memo }, 
       locale: auth.profile.locale,
       params: { code: c, label, network, address: row.address, minutes: CODE_TTL_MINUTES },
     });
-    await tx`select app.notify(${auth.userId}, 'wallet_added', ${tx.json({ label, network })}, '/wallets')`;
     return { wallet: row, code: c };
   });
   await dispatchSoon();
   const result = toApi(wallet);
   // Development helper so local testing works without an inbox.
-  if (getConfig().email.provider === 'log' && !getConfig().isProduction) result.devCode = code;
+  if (code && getConfig().email.provider === 'log' && !getConfig().isProduction) result.devCode = code;
   return result;
 }
 

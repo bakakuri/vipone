@@ -18,6 +18,14 @@ export function depositsRoutes() {
     idempotency('deposit-request'),
     c.createRequest,
   );
+  r.get('/methods', c.listMethods);
+  r.post(
+    '/manual',
+    rateLimit({ name: 'deposit-manual', max: 20, windowSeconds: 3600, key: byUser }),
+    validate({ body: v.manualBody }),
+    idempotency('deposit-manual'),
+    c.reportManual,
+  );
   r.get('/:id', validate({ params: v.idParams }), c.getOne);
   return r;
 }

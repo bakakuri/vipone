@@ -52,6 +52,9 @@ const VALIDATORS = {
   stringList: (v) => Array.isArray(v) && v.every((x) => typeof x === 'string' && x.length <= 40),
   email: (v) => v === null || (typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)),
   scope: (v) => v === 'all_deposits' || v === 'first_deposit',
+  // {"en": "...", "ru": "...", "ar": "..."}; empty object hides the text.
+  localizedText: (v) => v !== null && typeof v === 'object' && !Array.isArray(v)
+    && Object.entries(v).every(([k, x]) => ['en', 'ru', 'ar'].includes(k) && typeof x === 'string' && x.length <= 2000),
 };
 
 export const SETTING_TYPES = {
@@ -78,6 +81,8 @@ export const SETTING_TYPES = {
   'languages.enabled': 'stringList',
   'public_stats.enabled': 'boolean',
   'support.contact_email': 'email',
+  'withdrawal.address_email_confirmation': 'boolean',
+  'deposits.page_notice': 'localizedText',
 };
 
 export function validateSettingValue(key, value) {

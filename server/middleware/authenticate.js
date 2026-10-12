@@ -68,14 +68,18 @@ export function requireActiveAccount() {
   };
 }
 
-// Staff routes: permission check, plus mandatory 2FA for staff in production.
+// Staff routes: permission check, plus mandatory 2FA for staff in production
+// (STAFF_MFA_REQUIRED=false relaxes this outside live mode). Staff who have
+// turned 2FA on must always use it.
 export function requirePermission(permission) {
   return (req, res, next) => {
     if (!req.auth || !hasPermission(req.auth.roles, permission)) return next(new AppError('forbidden'));
     const config = getConfig();
-    if (config.isProduction || config.isLive) {
+    if (config.staffMfaRequired ?? (config.isProduction || config.isLive)) {
       if (!req.auth.profile.mfa_enabled) return next(new AppError('mfa_setup_required', { status: 403 }));
       if (req.auth.aal !== 'aal2') return next(new AppError('mfa_required'));
+    } else if (req.auth.profile.mfa_enabled && config.isProduction && req.auth.aal !== 'aal2') {
+      return next(new AppError('mfa_required'));
     }
     next();
   };

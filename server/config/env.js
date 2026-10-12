@@ -87,6 +87,9 @@ const schema = z.object({
   ERROR_WEBHOOK_URL: z.string().url().optional(),
   DEMO_TOOLS_ENABLED: bool(false),
   LEGAL_APPROVAL_CONFIRMED: bool(false),
+  // Staff must use two-factor authentication in production. May be switched
+  // off only outside live mode (e.g. while setting up a demo).
+  STAFF_MFA_REQUIRED: bool(true),
 });
 
 function fail(errors) {
@@ -169,6 +172,7 @@ export function loadConfig(env = process.env) {
     if (!e.LEGAL_APPROVAL_CONFIRMED) errors.push('APP_MODE=live requires LEGAL_APPROVAL_CONFIRMED=true (licensing and legal review completed)');
     if (!appUrl.startsWith('https://')) errors.push('APP_MODE=live requires an https APP_URL');
     if (!e.BLOCKCHAIN_WEBHOOK_SECRET && e.ALCHEMY_WEBHOOK_SIGNING_KEYS.length === 0) errors.push('APP_MODE=live requires a blockchain webhook secret');
+    if (!e.STAFF_MFA_REQUIRED) errors.push('APP_MODE=live requires STAFF_MFA_REQUIRED=true (two-factor authentication for staff)');
   }
   if (e.DEMO_TOOLS_ENABLED && live) errors.push('Demo tools cannot run with real money');
   if (errors.length) fail(errors);
@@ -236,6 +240,8 @@ export function loadConfig(env = process.env) {
     logLevel: e.LOG_LEVEL,
     errorWebhookUrl: e.ERROR_WEBHOOK_URL,
     demoToolsEnabled: e.DEMO_TOOLS_ENABLED && !live,
+    // Staff 2FA: always in live mode; in production unless STAFF_MFA_REQUIRED=false.
+    staffMfaRequired: live || (production && e.STAFF_MFA_REQUIRED),
     legalApprovalConfirmed: e.LEGAL_APPROVAL_CONFIRMED,
   });
 }

@@ -5,13 +5,15 @@ import { definePage } from '../core/page.js';
 import { h, replace } from '../core/dom.js';
 import { formatAmount, registerAssets } from '../formatting/format-currency.js';
 import { formatDateTime } from '../formatting/format-date.js';
-import { t } from '../i18n/i18n.js';
+import { localized, t } from '../i18n/i18n.js';
 import { liveRefresh } from '../services/live-refresh.js';
+import { alertBox } from '../components/feedback/alert.js';
 import { emptyState } from '../components/feedback/empty-state.js';
 import { statusBadge } from '../components/feedback/status-badge.js';
 import { confirmationProgress } from '../components/finance/confirmation-progress.js';
 import { statusTimeline } from '../components/finance/status-timeline.js';
 import { depositForm } from '../components/forms/deposit-form.js';
+import { instructionText, manualDepositForm } from '../components/finance/manual-deposit.js';
 import { inlineHash } from '../components/misc/address-display.js';
 import { pageHeader } from '../components/misc/page-header.js';
 import { openDepositDetail } from '../components/modals/deposit-detail.js';
@@ -28,15 +30,22 @@ definePage({
   namespaces: ['deposit', 'transactions'],
   title: 'deposit:title',
   async render({ page, config }) {
-    const assets = await publicApi.assets();
+    // Methods published by staff (Admin → Deposits → Deposit methods) replace
+    // the automatic personal-address flow when at least one is active.
+    const [assets, published] = await Promise.all([
+      publicApi.assets(),
+      depositsApi.methods().catch(() => ({ methods: [], notice: {} })),
+    ]);
     registerAssets(assets);
+    const manual = published.methods.length > 0;
+    const noticeText = localized(published.notice);
     const holdDays = config.depositHoldDays ?? 7;
 
     const table = dataTable({
       columns: [
         { key: 'asset', label: t('common:fields.asset'), primary: true, render: (d) => h('span', {}, h('strong', {}, d.assetCode), ' ', h('span', { class: 'text-subtle text-xs' }, d.networkCode)) },
         { key: 'amount', label: t('common:fields.amount'), align: 'end', render: (d) => (d.amount ? h('bdi', { class: 'num', dir: 'ltr' }, formatAmount(d.amount, d.assetCode)) : h('span', { class: 'text-subtle' }, '—')) },
-        { key: 'status', label: t('transactions:status'), render: (d) => (['detected', 'confirming'].includes(d.status) ? confirmationProgress(d.confirmations, d.requiredConfirmations) : statusBadge(d.status)) },
+        { key: 'status', label: t('transactions:status'), render: (d) => (['detected', 'confirming'].includes(d.status) ? confirmationProgress(d.confirmations, d.requiredConfirmations) : d.source === 'manual' && d.status === 'under_review' ? h('span', { class: 'badge badge--pending' }, t('deposit:manual.checking')) : statusBadge(d.status)) },
         { key: 'tx', label: t('transactions:txHash'), render: (d) => inlineHash(d.txHash, { href: d.explorerUrl }) },
         { key: 'date', label: t('transactions:date'), render: (d) => formatDateTime(d.createdAt) },
       ],
@@ -69,13 +78,21 @@ definePage({
     });
     filters = bar.values();
 
-    const form = depositForm({ assets, holdDays, onRequested: () => loadList() });
-    const how = statusTimeline(['send', 'detected', 'confirmations', 'credited', 'hold'].map((k) => ({ label: t(`deposit:how.${k}.title`), note: t(`deposit:how.${k}.text`, { count: holdDays }) })));
+    const form = manual
+      ? manualDepositForm({ methods: published.methods, assets, holdDays, onReported: () => loadList() })
+      : depositForm({ assets, holdDays, onRequested: () => loadList() });
+    const steps = manual ? ['send', 'report', 'check', 'credited', 'hold'] : ['send', 'detected', 'confirmations', 'credited', 'hold'];
+    const how = statusTimeline(steps.filter((k) => k !== 'hold' || holdDays > 0).map((k) => ({
+      label: t(manual ? `deposit:manualHow.${k}.title` : `deposit:how.${k}.title`),
+      note: t(manual ? `deposit:manualHow.${k}.text` : `deposit:how.${k}.text`, { count: holdDays }),
+    })));
+    const notice = noticeText ? alertBox({ tone: 'info', children: instructionText(noticeText) }) : null;
 
     replace(page,
-      pageHeader({ title: t('deposit:title'), subtitle: t('deposit:subtitle'), actions: helpButton('deposit') }),
+      pageHeader({ title: t('deposit:title'), subtitle: t(manual ? 'deposit:manual.subtitle' : 'deposit:subtitle'), actions: helpButton('deposit') }),
+      notice,
       h('div', { class: 'grid grid--sidebar' },
-        h('section', { class: 'card', 'aria-labelledby': 'deposit-form-title' }, h('h2', { class: 'card__title', id: 'deposit-form-title' }, t('deposit:formTitle')), form.el),
+        h('section', { class: 'card', 'aria-labelledby': 'deposit-form-title' }, h('h2', { class: 'card__title', id: 'deposit-form-title' }, t(manual ? 'deposit:manual.formTitle' : 'deposit:formTitle')), form.el),
         h('aside', { class: 'card card--sunken', 'aria-labelledby': 'deposit-how-title' }, h('h2', { class: 'card__title', id: 'deposit-how-title' }, t('deposit:howTitle')), how)),
       h('section', { class: 'stack', 'aria-labelledby': 'deposit-history-title' },
         h('h2', { class: 'section-title', id: 'deposit-history-title' }, t('deposit:historyTitle')),

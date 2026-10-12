@@ -104,7 +104,7 @@
     "insufficient_confirmations": "لا توجد تأكيدات كافية بعد.",
     "tx_hash_already_recorded": "معرّف المعاملة هذا مسجَّل بالفعل.",
     "tx_hash_in_use": "معرّف المعاملة هذا يخص عملية أخرى.",
-    "tx_hash_required": "أدخل معرّف المعاملة.",
+    "tx_hash_required": "أدخل معرّف المعاملة (hash) الخاص بالدفعة.",
     "nothing_to_return": "لا يوجد ما يُعاد لهذا الإيداع.",
     "allocation_exceeds_position_value": "التوزيع أكبر من قيمة المركز.",
     "allocation_incomplete": "التوزيع لا يغطي كل المراكز المؤهلة.",
@@ -118,7 +118,10 @@
     "invalid_direction": "هذا الاتجاه غير مسموح به.",
     "invalid_event_direction": "حدث سلسلة الكتل هذا غير مسموح به هنا.",
     "invalid_initial_status": "هذه الحالة غير مسموح بها.",
-    "invalid_completion_source": "مصدر الإتمام هذا غير مسموح به."
+    "invalid_completion_source": "مصدر الإتمام هذا غير مسموح به.",
+    "deposit_method_unavailable": "طريقة الإيداع هذه لم تعد متاحة. أعد تحميل الصفحة واختر طريقة أخرى.",
+    "too_many_pending": "لديك بالفعل 5 دفعات قيد التحقق. انتظر حتى تتم معالجتها.",
+    "duplicate_transaction": "تم الإبلاغ عن هذه المعاملة أو إضافتها من قبل."
   },
   "validation": {
     "required": "املأ هذا الحقل.",
@@ -160,5 +163,6 @@
     "expected_stringList": "أدخل قائمة مفصولة بفواصل.",
     "expected_email": "أدخل عنوان بريد إلكتروني.",
     "expected_scope": "اختر أحد الخيارات."
-  }
+  },
+  "setupMfa": "إعداد المصادقة الثنائية"
 }

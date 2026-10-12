@@ -27,13 +27,18 @@ export function openDepositDetail(id) {
   depositsApi.get(id).then((d) => {
     const reached = ORDER.indexOf(d.status === 'under_review' ? 'confirmed' : d.status);
     const failed = ['failed', 'rejected'].includes(d.status);
-    const steps = [
+    const manual = d.source === 'manual';
+    const steps = manual ? [
+      { label: t('deposit:manualTimeline.reported'), at: d.createdAt, done: true },
+      { label: t('deposit:manualTimeline.checking'), note: d.status === 'under_review' ? t('deposit:manual.checkingNote') : null, at: d.reviewedAt, done: ['confirmed', 'credited'].includes(d.status) },
+      { label: t('deposit:timeline.credited'), at: d.creditedAt, done: d.status === 'credited' },
+    ] : [
       { key: 'detected', at: d.detectedAt },
       { key: 'confirming', note: d.requiredConfirmations ? t('deposit:confirmationsShort', { done: Math.min(d.confirmations, d.requiredConfirmations), required: d.requiredConfirmations }) : null },
       { key: 'confirmed', at: d.confirmedAt },
       { key: 'credited', at: d.creditedAt },
     ].map((s) => ({ label: t(`deposit:timeline.${s.key}`), at: s.at, note: s.note, done: reached >= ORDER.indexOf(s.key) }));
-    if (d.status === 'under_review') steps.splice(3, 0, { label: t('deposit:timeline.review'), note: t('deposit:reviewNote') });
+    if (!manual && d.status === 'under_review') steps.splice(3, 0, { label: t('deposit:timeline.review'), note: t('deposit:reviewNote') });
     if (failed) steps.push({ label: t(`common:status.${d.status}`), failed: true, note: reasonText(d.statusReason) });
 
     replace(body,
@@ -42,6 +47,8 @@ export function openDepositDetail(id) {
         h('dt', {}, t('transactions:status')), h('dd', {}, statusBadge(d.status)),
         h('dt', {}, t('common:fields.amount')), h('dd', { class: 'num' }, d.amount ? formatAmount(d.amount, d.assetCode) : t('deposit:notReceivedYet')),
         d.expectedAmount ? [h('dt', {}, t('deposit:expectedAmount')), h('dd', { class: 'num' }, formatAmount(d.expectedAmount, d.assetCode))] : null,
+        manual && d.claimedAmount && d.claimedAmount !== d.amount ? [h('dt', {}, t('deposit:manual.amountReported')), h('dd', { class: 'num' }, formatAmount(d.claimedAmount, d.assetCode))] : null,
+        manual && d.userNote ? [h('dt', {}, t('deposit:manual.note')), h('dd', {}, d.userNote)] : null,
         h('dt', {}, t('common:fields.network')), h('dd', {}, `${d.assetCode} · ${d.networkCode}`),
         ['detected', 'confirming'].includes(d.status) ? [h('dt', {}, t('deposit:confirmationsLabel')), h('dd', {}, confirmationProgress(d.confirmations, d.requiredConfirmations))] : null,
         h('dt', {}, t('transactions:txHash')), h('dd', {}, inlineHash(d.txHash, { href: d.explorerUrl })),

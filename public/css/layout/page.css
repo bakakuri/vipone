@@ -14,6 +14,7 @@
 .stack--sm { gap: var(--space-3); }
 .stack--lg { gap: var(--space-8); }
 .cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.cluster--tight { gap: var(--space-2); }
 .cluster--between { justify-content: space-between; }
 .section-title { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-block-end: var(--space-3); }
 .section-title h2 { font-size: var(--text-lg); }

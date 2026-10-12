@@ -23,7 +23,7 @@ The dashboard's ledger strip shows exactly these four parts. All of them are com
 
 1. The user picks an asset and a network (for example USDT on TRON). The server assigns a deposit address from the **address pool** — addresses are generated offline or by a custody provider and imported by finance staff; the server never holds private keys or seed phrases. For memo networks a shared address is combined with a unique memo.
 2. A deposit request lives for 24 hours (`deposits.request_ttl_hours`); the address stays assigned to the user.
-3. A deposit is **detected** only from a signed blockchain event (Alchemy webhook or a generic HMAC-signed source). A transaction hash typed by the user never credits anything.
+3. A deposit is **detected** only from a signed blockchain event (Alchemy webhook or a generic HMAC-signed source). A transaction hash typed by the user never credits anything by itself (see *Deposit methods* below: staff credit a reported payment after checking it).
 4. Confirmations are counted from the chain tip (job every 5 minutes, plus webhook updates). Required confirmations per network: Bitcoin 3, Ethereum 12, TRON 20.
 5. Wallet screening runs on the sender. A hit sends the deposit to **under review** and raises a high-severity risk flag.
 6. On enough confirmations and a clean screening the deposit is **credited**: `custody → user available`, in one transaction with the referral reward (if any), a notification and a live event.
@@ -31,6 +31,14 @@ The dashboard's ledger strip shows exactly these four parts. All of them are com
 8. A chain reorganisation before crediting marks the deposit **failed** (nothing was credited). A reorganisation after crediting raises a high-severity risk flag and alerts staff — the credit is never silently reversed; any correction is an approved adjustment.
 
 Minimum deposits: USDT-TRC20 10, USDT/USDC-ERC20 20, BTC 0.0005, ETH 0.005.
+
+### Deposit methods published by staff
+
+Instead of personal addresses, staff can publish **deposit methods** (`app.deposit_methods`): one asset/network each, with an address, optional memo, QR image, minimum and instructions per language. While at least one is active the deposit page shows them.
+
+1. The user sends funds and **reports** the payment: amount, optional transaction hash and note (`app.submit_manual_deposit`). The report is a deposit with source `manual` and status **under review**. It posts nothing to the ledger and does not change any balance. A user can have at most 5 open reports; a transaction hash already recorded is refused.
+2. Staff check the transaction on the blockchain and either **credit** it with the amount that actually arrived and the transaction hash (`app.approve_manual_deposit`, then `app.credit_deposit` — the same posting, 7-day hold, referral reward and notifications as an automatic deposit) or **reject** it with a reason (no ledger entry).
+3. A transaction hash can be credited only once per network (unique index), and the generic *approve* decision is refused for reported deposits, so a report can never be credited without a hash.
 
 ### The 7-day rule
 
@@ -41,7 +49,7 @@ Every credited deposit creates a **deposit hold** for 7 days (`funds.deposit_hol
 ### Addresses
 
 - Users save external addresses (never private keys). The address format is validated per network (Base58Check for TRON/Bitcoin legacy, bech32 for Bitcoin, EIP-55 checksum for Ethereum when mixed case).
-- A new address is confirmed with a 6-digit code sent by email, then waits a **24-hour cooldown** (`withdrawal.new_address_cooldown_hours`) before it can receive funds. Every change is kept in the address history and appears in the user's notifications and security log.
+- A new address is confirmed with a 6-digit code sent by email (setting `withdrawal.address_email_confirmation`; when it is off — the default until outgoing email works — the address is confirmed at once), then waits a **24-hour cooldown** (`withdrawal.new_address_cooldown_hours`) before it can receive funds. Every change is kept in the address history and appears in the user's notifications and security log.
 - Adding an address requires two-factor sign-in (while `withdrawal.require_mfa` is on).
 
 ### Fee quote

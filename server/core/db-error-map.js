@@ -44,6 +44,11 @@ const DOMAIN_STATUS = {
   too_many_open_deposit_requests: 409,
   too_many_wallets: 409,
   network_not_available: 422,
+  deposit_method_unavailable: 409,
+  too_many_pending: 409,
+  duplicate_transaction: 409,
+  tx_hash_required: 422,
+  feature_unavailable: 503,
 };
 
 // Detail strings that are safe to show (amounts, statuses, network codes).
@@ -51,6 +56,7 @@ const EXPOSE_DETAIL = new Set([
   'insufficient_withdrawable_balance', 'daily_limit_exceeded', 'amount_below_minimum', 'amount_above_maximum',
   'wallet_cooldown', 'product_capacity_reached', 'terms_changed', 'account_restricted', 'withdrawal_not_cancellable',
   'insufficient_funds', 'invalid_address_format', 'memo_required', 'asset_network_not_supported', 'withdrawals_paused',
+  'feature_unavailable',
 ]);
 
 export function mapDbError(err) {

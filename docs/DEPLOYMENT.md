@@ -43,6 +43,7 @@ Check: in the SQL editor, `select * from app.verify_ledger_integrity();` returns
 
 **Authentication → Sign In / Providers → Email**
 - Enable email provider, **Confirm email: on**, Secure email change: on, Secure password change: on
+- No working email yet (no Resend/Postmark, or Supabase's built-in mailer refuses your addresses)? Turn **Confirm email off**: new users are signed in straight after registering. Turn it back on once email works. The app's own address codes are controlled separately by the setting `withdrawal.address_email_confirmation` (off by default).
 - Minimum password length: 12 (the server enforces the full policy anyway)
 
 **Authentication → URL Configuration**
@@ -110,6 +111,7 @@ Add a DMARC record (`v=DMARC1; p=quarantine; rua=mailto:…`) for deliverability
 | `ALCHEMY_WEBHOOK_SIGNING_KEYS`, `ALCHEMY_NETWORK_MAP`, `CHAIN_RPC_URLS` | step 7 |
 | `ERROR_WEBHOOK_URL` | optional Slack/Teams incoming webhook for error alerts |
 | `DEMO_TOOLS_ENABLED` | `true` only for a demo deployment |
+| `STAFF_MFA_REQUIRED` | leave unset (staff need 2FA in production); `false` only outside live mode, e.g. while setting up a demo |
 
 The full list with explanations is in `.env.example`. The server validates the combination at start-up and refuses unsafe ones (the error appears in the function log).
 

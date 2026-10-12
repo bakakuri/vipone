@@ -34,3 +34,10 @@ test('on Vercel the production domain is used when APP_URL is missing, and deplo
 test('production still refuses to start without its secrets', () => {
   assert.throws(() => loadConfig({ ...base, APP_URL: 'site.org', CRON_SECRET: 'short' }), /CRON_SECRET/);
 });
+
+test('staff two-factor authentication is required in production unless switched off outside live mode', () => {
+  assert.equal(loadConfig({ ...base, APP_URL: 'site.org' }).staffMfaRequired, true);
+  assert.equal(loadConfig({ ...base, APP_URL: 'site.org', STAFF_MFA_REQUIRED: 'false' }).staffMfaRequired, false);
+  assert.equal(loadConfig({ ...base, NODE_ENV: 'development', AUTH_PROVIDER: 'supabase', APP_URL: 'http://localhost:3000' }).staffMfaRequired, false);
+  assert.throws(() => loadConfig({ ...base, APP_URL: 'site.org', APP_MODE: 'live', STAFF_MFA_REQUIRED: 'false' }), /STAFF_MFA_REQUIRED/);
+});
