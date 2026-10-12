@@ -2,7 +2,12 @@
   "title": "Withdrawals",
   "subtitle": "Send funds to one of your confirmed addresses. You see every fee before you confirm.",
   "formTitle": "New withdrawal",
-  "steps": { "label": "Withdrawal steps", "details": "Details", "review": "Review", "done": "Requested" },
+  "steps": {
+    "label": "Withdrawal steps",
+    "details": "Details",
+    "review": "Review",
+    "done": "Requested"
+  },
   "destination": "Send to",
   "addWallet": "Add an address",
   "noWalletTitle": "Add a withdrawal address first",
@@ -35,12 +40,30 @@
   "another": "New withdrawal",
   "rulesTitle": "Before you withdraw",
   "rules": {
-    "fee": { "title": "3% platform fee", "text": "Deducted from the amount you withdraw and shown before you confirm." },
-    "network": { "title": "Network fee", "text": "Set per network and shown in your quote." },
-    "hold": { "title": "7-day hold on new deposits", "text": "Deposited funds become withdrawable {{count}} days after they are credited." },
-    "cooldown": { "title": "New addresses wait", "text": "An address can be used a short time after you confirm it, which protects you if your email is compromised." },
-    "review": { "title": "Reviewed by staff", "text": "Large amounts need two approvers. You are notified when the funds are sent." },
-    "cancel": { "title": "Change your mind", "text": "You can cancel a request while it is pending; the reserved amount returns to your balance." }
+    "fee": {
+      "title": "3% platform fee",
+      "text": "Deducted from the amount you withdraw and shown before you confirm."
+    },
+    "network": {
+      "title": "Network fee",
+      "text": "Set per network and shown in your quote."
+    },
+    "hold": {
+      "title": "7-day hold on new deposits",
+      "text": "Deposited funds become withdrawable {{count}} days after they are credited."
+    },
+    "cooldown": {
+      "title": "New addresses wait",
+      "text": "An address can be used a short time after you confirm it, which protects you if your email is compromised."
+    },
+    "review": {
+      "title": "Reviewed by staff",
+      "text": "Large amounts need two approvers. You are notified when the funds are sent."
+    },
+    "cancel": {
+      "title": "Change your mind",
+      "text": "You can cancel a request while it is pending; the reserved amount returns to your balance."
+    }
   },
   "historyTitle": "Your withdrawals",
   "emptyTitle": "No withdrawals yet",
@@ -64,5 +87,16 @@
   "reasons": {
     "cancelled_by_user": "You cancelled this request.",
     "awaiting_second_approval": "Waiting for a second approver."
+  },
+  "simple": {
+    "addressPlaceholder": "0x…",
+    "addressLabel": "Your {{asset}} address ({{network}})",
+    "continue": "Continue",
+    "feeLine": "Minimum {{min}}. Network fee {{fee}} plus the platform fee, shown before you confirm.",
+    "mfa": "Turn on two-factor authentication to withdraw.",
+    "reviewTitle": "Check and confirm",
+    "sentToStaff": "Our team sends it after review.",
+    "requested": "Reference {{reference}}. We will send {{amount}} to your wallet after review.",
+    "unavailable": "Withdrawals are not available right now."
   }
 }

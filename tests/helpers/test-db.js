@@ -30,6 +30,7 @@ async function migrationsFingerprint() {
   const dir = path.join(ROOT, 'supabase/migrations');
   for (const f of (await readdir(dir)).sort()) hash.update(f).update(await readFile(path.join(dir, f)));
   hash.update(await readFile(path.join(ROOT, 'database/local/supabase-shim.sql')));
+  hash.update(await readFile(path.join(ROOT, 'tests/fixtures/engine-defaults.sql')));
   return hash.digest('hex').slice(0, 16);
 }
 
@@ -46,6 +47,12 @@ export async function ensureTemplate() {
     }
     await admin.unsafe(`create database ${TEMPLATE}`);
     await migrate({ url: withDatabase(adminUrl(), TEMPLATE), withShim: true, log: () => {} });
+    const db = postgres(withDatabase(adminUrl(), TEMPLATE), { max: 1, onnotice: () => {} });
+    try {
+      await db.unsafe(await readFile(path.join(ROOT, 'tests/fixtures/engine-defaults.sql'), 'utf8'));
+    } finally {
+      await db.end({ timeout: 5 });
+    }
     await admin.unsafe(`comment on database ${TEMPLATE} is '${fingerprint}'`);
     await admin.unsafe(`update pg_database set datistemplate = true where datname = '${TEMPLATE}'`);
   } finally {

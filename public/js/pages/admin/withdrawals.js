@@ -1,6 +1,7 @@
-// Withdrawal queue. Four-eyes rules are enforced by the database: large
-// requests need two approvers, and the person who sends the funds cannot be
-// the one who confirms completion.
+// Withdrawal queue. Staff pay each request from their own wallet and record
+// the payout hash ("Mark as paid"); large requests need two approvers
+// (enforced by the database). Requests left in processing by the older
+// step-by-step flow keep their broadcast / complete / fail actions.
 import { adminApi } from '../../api/admin-endpoints.js';
 import { publicApi } from '../../api/endpoints.js';
 import { definePage } from '../../core/page.js';
@@ -46,11 +47,40 @@ definePage({
         const after = () => { modal.close(); load(); };
         const act = (action, extra = {}) => (input) => adminApi.withdrawalAction(id, action, typeof input === 'string' ? { reason: input, ...extra } : extra);
         const actions = [];
+        const rejectButton = can('withdrawals.review') ? actionButton(t('admin:withdrawals.reject'), { tone: 'danger', reason: t('admin:withdrawals.rejectText'), run: act('reject'), onDone: after }) : null;
         const open = ['pending', 'under_review'].includes(w.status);
-        if (open && can('withdrawals.review') && w.status === 'pending') actions.push(actionButton(t('admin:withdrawals.review'), { reason: t('admin:withdrawals.reviewText'), run: act('review'), onDone: after }));
-        if (open && can('withdrawals.approve')) actions.push(actionButton(w.statusReason === 'awaiting_second_approval' ? t('admin:withdrawals.secondApprove') : t('admin:withdrawals.approve'), { tone: 'primary', confirm: t('admin:withdrawals.approveText'), run: act('approve'), onDone: after }));
-        if (open && can('withdrawals.review')) actions.push(actionButton(t('admin:withdrawals.reject'), { tone: 'danger', reason: t('admin:withdrawals.rejectText'), run: act('reject'), onDone: after }));
-        if (w.status === 'approved' && can('withdrawals.process')) actions.push(actionButton(t('admin:withdrawals.process'), { confirm: t('admin:withdrawals.processText'), run: act('process'), onDone: after }));
+        // Large requests: two different approvers first, nothing is sent yet.
+        if (open && w.requiresDualApproval) {
+          const second = w.statusReason === 'awaiting_second_approval';
+          actions.push(h('div', { class: 'stack stack--sm w-full payout-box' },
+            h('p', { class: 'payout-box__title' }, t(second ? 'admin:payout.dualSecond' : 'admin:payout.dualFirst')),
+            h('div', { class: 'cluster' },
+              can('withdrawals.approve') ? actionButton(second ? t('admin:withdrawals.secondApprove') : t('admin:withdrawals.approve'), { tone: 'primary', confirm: t('admin:withdrawals.approveText'), run: act('approve'), onDone: after }) : null,
+              rejectButton)));
+        } else if ((open || w.status === 'approved') && can('withdrawals.process')) {
+          // Manual payout: send the net amount from your own wallet, then record
+          // the transaction hash here; the request is completed in one step.
+          const hash = formField({ label: t('admin:payout.hash'), control: input({ dir: 'ltr', class: 'input input--mono', spellcheck: false }), id: 'wd-hash', hint: t('admin:payout.hashHint') });
+          actions.push(h('div', { class: 'stack stack--sm w-full payout-box' },
+            h('p', { class: 'payout-box__title' }, t('admin:payout.title', { amount: formatAmount(w.netAmount, w.assetCode) })),
+            hash.el,
+            h('div', { class: 'cluster' },
+              actionButton(t('admin:payout.markPaid'), {
+                tone: 'primary', confirm: t('admin:payout.confirm'), done: t('admin:payout.done'),
+                check: () => {
+                  const value = hash.control.value.trim();
+                  const problem = value ? '' : t('errors:codes.tx_hash_required');
+                  hash.setError(problem);
+                  if (problem) hash.control.focus();
+                  return !problem;
+                },
+                run: () => adminApi.withdrawalAction(id, 'pay', { txHash: hash.control.value.trim() }),
+                onDone: after,
+              }),
+              rejectButton)));
+        } else if ((open || w.status === 'approved') && rejectButton) {
+          actions.push(rejectButton);
+        }
         if (w.status === 'processing' && can('withdrawals.process') && !w.txHash) {
           const hash = formField({ label: t('transactions:txHash'), control: input({ dir: 'ltr', class: 'input input--mono' }), id: 'wd-hash', hint: t('admin:withdrawals.hashHint') });
           const demoFill = config.demoTools ? h('button', { class: 'btn btn--ghost btn--sm', type: 'button', on: { click: () => { hash.control.value = demoTxHash(); } } }, t('admin:demo.fillHash')) : null;

@@ -23,14 +23,25 @@ function toApi(row) {
     ...d,
     amount: trimAmount(row.amount),
     expectedAmount: trimAmount(row.expected_amount),
+    claimedAmount: trimAmount(row.claimed_amount),
     explorerUrl: explorerTxUrl(row.explorer_tx_url, row.tx_hash),
     explorerTxUrl: undefined,
   };
 }
 
+// Personal addresses and payment references belong to automatic deposits,
+// which are off unless the setting deposits.automatic is on. With it off,
+// users deposit through the methods staff publish (deposit-methods.service).
+async function assertAutomaticDeposits(sql) {
+  if ((await getSetting(sql, 'deposits.automatic', false)) !== true) {
+    throw new AppError('feature_unavailable', { status: 409, details: { value: 'automatic_deposits' } });
+  }
+}
+
 export async function getDepositAddress(auth, networkCode) {
   const sql = getSql();
   assertAccountActive(auth);
+  await assertAutomaticDeposits(sql);
   await assertKycFor(sql, auth, 'deposit_address');
   return withTransaction(async (tx) => {
     const [row] = await tx`select * from app.assign_deposit_address(${auth.userId}, ${networkCode})`;
@@ -48,6 +59,7 @@ export async function getDepositAddress(auth, networkCode) {
 export async function createDepositRequest(auth, { asset, network, expectedAmount }) {
   const sql = getSql();
   assertAccountActive(auth);
+  await assertAutomaticDeposits(sql);
   await assertKycFor(sql, auth, 'deposit_address');
   const an = await getAssetNetwork(sql, asset, network);
   if (!an || !an.depositEnabled) throw new AppError('asset_network_not_supported', { status: 422 });
@@ -65,10 +77,12 @@ export async function listDeposits(userId, { status, asset, limit, cursor }) {
   const rows = await getSql()`
     select d.id, d.reference, d.asset_code, d.network_code, d.expected_amount, d.amount, d.tx_hash, d.confirmations,
            d.required_confirmations, d.status, d.status_reason, d.expires_at, d.detected_at, d.confirmed_at,
-           d.credited_at, d.created_at, d.updated_at, n.explorer_tx_url, a.address, a.memo
+           d.credited_at, d.created_at, d.updated_at, d.source, d.claimed_amount, n.explorer_tx_url,
+           coalesce(a.address, m.address) as address, coalesce(a.memo, m.memo) as memo
     from app.deposits d
     join app.networks n on n.code = d.network_code
     left join app.deposit_addresses a on a.id = d.deposit_address_id
+    left join app.deposit_methods m on m.id = d.method_id
     where d.user_id = ${userId}
       and (${status ?? null}::text is null or d.status = ${status ?? null})
       and (${asset ?? null}::text is null or d.asset_code = ${asset ?? null})
@@ -81,9 +95,10 @@ export async function listDeposits(userId, { status, asset, limit, cursor }) {
 
 export async function getDeposit(userId, id) {
   const [row] = await getSql()`
-    select d.*, n.explorer_tx_url, a.address, a.memo
+    select d.*, n.explorer_tx_url, coalesce(a.address, m.address) as address, coalesce(a.memo, m.memo) as memo
     from app.deposits d join app.networks n on n.code = d.network_code
     left join app.deposit_addresses a on a.id = d.deposit_address_id
+    left join app.deposit_methods m on m.id = d.method_id
     where d.id = ${id} and d.user_id = ${userId}`;
   if (!row) throw new AppError('not_found');
   const out = toApi(row);

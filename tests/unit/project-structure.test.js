@@ -83,7 +83,7 @@ test('no server secrets in browser code or committed configuration', () => {
 
 test('vercel.json is generated from the route table', () => {
   const current = JSON.parse(read('vercel.json'));
-  const expected = vercelConfig({ supabaseUrl: undefined });
+  const expected = vercelConfig({ supabaseUrl: undefined, cronPlan: 'hobby' });
   assert.deepEqual(current.rewrites, expected.rewrites);
   assert.deepEqual(current.crons, expected.crons);
   assert.deepEqual(current.functions, expected.functions);

@@ -116,7 +116,7 @@ async function ensureProfile(session, ctx) {
       provisionProfile(tx, {
         userId: session.user.id,
         email: session.user.email,
-        locale: ['en', 'ru', 'ar'].includes(meta.locale) ? meta.locale : 'en',
+        locale: ['en', 'ru', 'ar', 'ka'].includes(meta.locale) ? meta.locale : 'en',
         countryCode: /^[A-Z]{2}$/.test(meta.country_code || '') ? meta.country_code : null,
         referralCode: meta.referral_code || null,
         ipHash: ctx.ipHash,
@@ -252,7 +252,14 @@ async function afterPasswordChange(profile, ctx) {
 
 export async function enrollMfa(auth, accessToken) {
   if (auth.profile.mfa_enabled) throw new AppError('mfa_already_enabled', { status: 409 });
-  return getAuthProvider().mfa.enroll(accessToken, { friendlyName: `${getConfig().appName} authenticator` });
+  try {
+    return await getAuthProvider().mfa.enroll(accessToken, { friendlyName: `${getConfig().appName} authenticator`, issuer: getConfig().appName });
+  } catch (err) {
+    // The auth service already has a verified authenticator for this user
+    // (e.g. set up before the profile flag was saved): keep the flag in sync.
+    if (err.code === 'mfa_already_enabled') await profiles.setMfaEnabled(getSql(), auth.userId, true);
+    throw err;
+  }
 }
 
 export async function verifyMfaEnrollment(auth, accessToken, { factorId, code }, ctx) {

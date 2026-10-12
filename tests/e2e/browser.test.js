@@ -1,7 +1,8 @@
 // End-to-end tests in a real browser (Chromium via Playwright) against the
 // real server and database: languages and RTL, themes, phone layout, the
 // registration -> email confirmation -> dashboard flow, live balance updates,
-// and a complete withdrawal with two-factor sign-in.
+// the deposit page with a staff-published USDT BEP20 address, and a complete
+// withdrawal to the user's own address with two-factor sign-in.
 // Screenshots are written to test-results/screenshots/.
 import assert from 'node:assert/strict';
 import { mkdirSync } from 'node:fs';
@@ -12,10 +13,11 @@ import { chromium } from 'playwright';
 import { totp } from '../../server/security/totp.js';
 import { startTestApp } from '../helpers/test-app.js';
 import {
-  PASSWORD, addConfirmedWallet, depositFor, enableMfa, registerAndLogin, releaseHolds, seedAddressPool, uniqueEmail,
+  PASSWORD, depositFor, enableMfa, grantRoles, registerAndLogin, releaseHolds, seedAddressPool, uniqueEmail,
 } from '../helpers/scenario.js';
 import { resetRateLimits } from '../../server/middleware/rate-limit.js';
 
+const BSC_ADDRESS = '0x52908400098527886E0F7030069857D2E4169EE7';
 const SHOTS = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../test-results/screenshots');
 mkdirSync(SHOTS, { recursive: true });
 
@@ -67,9 +69,9 @@ test('public pages render in English, Russian and Arabic (right-to-left)', async
   await page.goto(`${app.baseUrl}/`);
   await page.waitForSelector('.public-header');
   assert.equal(await page.getAttribute('html', 'lang'), 'en');
-  assert.match(await page.textContent('h1'), /Every unit/);
+  assert.match(await page.textContent('h1'), /Deposit USDT/);
   await page.goto(`${app.baseUrl}/ru`);
-  await page.waitForFunction(() => document.querySelector('h1')?.textContent.includes('единицы'));
+  await page.waitForFunction(() => document.querySelector('h1')?.textContent.includes('Инвестируйте'));
   assert.equal(await page.getAttribute('html', 'lang'), 'ru');
   await page.goto(`${app.baseUrl}/ar/how-it-works`);
   await page.waitForFunction(() => document.documentElement.dir === 'rtl');
@@ -85,13 +87,13 @@ test('theme switcher and language switcher work and are remembered', async () =>
   const { context, page, errors } = await newPage({ colorScheme: 'light' });
   await page.goto(`${app.baseUrl}/faq`);
   await page.waitForSelector('.public-header');
-  assert.equal(await page.getAttribute('html', 'data-theme'), 'light');
+  assert.equal(await page.getAttribute('html', 'data-theme'), 'dark', 'dark is the default theme');
   await page.click('.public-header__prefs .dropdown:nth-of-type(2) > button');
-  await page.click('.dropdown__item:has-text("Dark")');
-  assert.equal(await page.getAttribute('html', 'data-theme'), 'dark');
+  await page.click('.dropdown__item:has-text("Light")');
+  assert.equal(await page.getAttribute('html', 'data-theme'), 'light');
   await page.reload();
-  assert.equal(await page.getAttribute('html', 'data-theme'), 'dark', 'theme remembered before first paint');
-  await page.screenshot({ path: path.join(SHOTS, 'faq-dark.png') });
+  assert.equal(await page.getAttribute('html', 'data-theme'), 'light', 'theme remembered before first paint');
+  await page.screenshot({ path: path.join(SHOTS, 'faq-light.png') });
   await page.click('.public-header__prefs .dropdown:nth-of-type(1) > button');
   await page.click('.dropdown__item[lang="ru"]');
   await page.waitForURL(/\/ru\/faq$/);
@@ -144,9 +146,7 @@ test('register -> confirm email -> dashboard, then a deposit appears live', asyn
   await page.waitForSelector('text=Email confirmed');
   await page.click('a[href="/dashboard"]');
   await page.waitForSelector('.ledger-strip');
-  await page.waitForSelector('.tour-card');
-  await page.screenshot({ path: path.join(SHOTS, 'onboarding-tour.png') });
-  await skipTour(page);
+  await page.waitForSelector('.quick-actions a[href="/deposit"]');
   await page.waitForSelector('.live-indicator[data-state="connected"]', { timeout: 10000 });
   const total = page.locator('.balance-card .stat__value');
   assert.match(await total.textContent(), /0\.00/);
@@ -162,36 +162,68 @@ test('register -> confirm email -> dashboard, then a deposit appears live', asyn
   await context.close();
 });
 
-test('withdrawal with two-factor sign-in shows the server quote: 3% + network fee', async () => {
+test('deposit page shows the published USDT BEP20 address and takes an "I have sent it" report', async () => {
+  resetRateLimits();
+  const staff = await registerAndLogin(app);
+  await grantRoles(app, staff.userId, ['finance', 'compliance']);
+  const created = await staff.client.post('/api/v1/admin/deposits/methods', { asset: 'USDT', network: 'BSC', address: BSC_ADDRESS, minAmount: '10' });
+  assert.equal(created.status, 201, JSON.stringify(created.body));
+
+  const user = await registerAndLogin(app);
+  const { context, page, errors } = await newPage();
+  await signIn(page, user.email);
+  await page.goto(`${app.baseUrl}/deposit`);
+  await page.waitForSelector('.deposit-address__qr svg');
+  assert.match(await page.textContent('.deposit-address'), new RegExp(BSC_ADDRESS));
+  assert.match(await page.textContent('.deposit-warning'), /BEP20/);
+  await page.fill('#man-amount', '250');
+  await page.fill('#man-from', '0x8894E0a0c962CB723c1976a4421c95949bE2D4E3');
+  await page.click('button:has-text("I have sent it")');
+  await page.waitForSelector('text=Payment reported');
+  await page.waitForSelector('td .badge:has-text("Being checked")');
+  const [d] = await app.sql`select source, status, claimed_amount, from_address from app.deposits where user_id = ${user.userId}`;
+  assert.equal(d.source, 'manual');
+  assert.equal(d.status, 'under_review');
+  assert.equal(d.claimed_amount, '250.000000000000000000');
+  assert.equal(d.from_address, '0x8894E0a0c962CB723c1976a4421c95949bE2D4E3');
+  const [b] = await app.sql`select count(*)::int as n from app.ledger_entries e join app.ledger_accounts a on a.id = e.account_id where a.user_id = ${user.userId}`;
+  assert.equal(b.n, 0, 'a report never changes the balance');
+  await page.screenshot({ path: path.join(SHOTS, 'deposit-manual.png'), fullPage: true });
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('withdrawal to the user\'s own BEP20 address shows the server quote: 3% + network fee', async () => {
   resetRateLimits();
   const user = await registerAndLogin(app);
   await depositFor(app, user.client, { amount: '500' });
   await releaseHolds(app, user.userId);
   const secret = await enableMfa(user.client);
-  const step = Math.floor(Date.now() / 30000);
-  while (Math.floor(Date.now() / 30000) === step) await new Promise((r) => setTimeout(r, 250));
-  await user.client.post('/api/v1/auth/mfa/challenge', { code: totp(secret) });
-  await addConfirmedWallet(app, user.client, { label: 'Hardware wallet' });
+  // As on the production site: an address typed into the form is usable at once.
+  await app.sql`update app.system_settings set value = '0'::jsonb where key = 'withdrawal.new_address_cooldown_hours'`;
 
   const { context, page, errors } = await newPage();
   await signIn(page, user.email, { secret });
-  await skipTour(page);
   await page.goto(`${app.baseUrl}/withdrawals`);
   await page.waitForSelector('#wd-amount');
+  const bep20 = page.locator('label.method-chip:has-text("BEP20")');
+  if (await bep20.count()) await bep20.click();
+  await page.fill('#wd-address', BSC_ADDRESS);
   await page.fill('#wd-amount', '100');
-  await page.click('button:has-text("Review withdrawal")');
+  await page.click('button:has-text("Continue")');
   await page.waitForSelector('.fee-summary');
   const summary = await page.textContent('.fee-summary');
   assert.match(summary, /3\.00 USDT/);
-  assert.match(summary, /1\.50 USDT/);
-  assert.match(summary, /95\.50 USDT/);
+  assert.match(summary, /1\.00 USDT/);
+  assert.match(summary, /96\.00 USDT/);
   await page.screenshot({ path: path.join(SHOTS, 'withdrawal-quote.png'), fullPage: true });
   await page.click('button:has-text("Confirm withdrawal")');
   await page.waitForSelector('text=Withdrawal requested');
   await page.waitForSelector('td .badge[data-status="pending"]');
-  const [w] = await app.sql`select amount, net_amount, status from app.withdrawal_requests where user_id = ${user.userId}`;
+  const [w] = await app.sql`select amount, net_amount, status, address from app.withdrawal_requests where user_id = ${user.userId}`;
   assert.equal(w.status, 'pending');
-  assert.equal(w.net_amount, '95.500000000000000000');
+  assert.equal(w.net_amount, '96.000000000000000000');
+  assert.equal(w.address.toLowerCase(), BSC_ADDRESS.toLowerCase());
   assert.deepEqual(errors, []);
   await context.close();
 });

@@ -12,7 +12,25 @@ import { DEFAULT_LOCALE, LOCALES, SITE_ROUTES, localizedPath } from '../server/c
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-export function vercelConfig({ supabaseUrl = process.env.SUPABASE_URL } = {}) {
+// Vercel Hobby runs cron jobs at most once a day, so the default schedule is
+// daily for both job groups and the 5-minute jobs run from Supabase pg_cron
+// (database/optional/pg_cron.sql). On Vercel Pro run
+//   CRON_PLAN=pro npm run vercel:config
+// to let Vercel Cron call the frequent group every 5 minutes instead.
+export function cronJobs(plan = process.env.CRON_PLAN) {
+  if (plan === 'pro') {
+    return [
+      { path: '/api/v1/jobs/group/frequent', schedule: '*/5 * * * *' },
+      { path: '/api/v1/jobs/group/daily', schedule: '0 3 * * *' },
+    ];
+  }
+  return [
+    { path: '/api/v1/jobs/group/daily', schedule: '0 3 * * *' },
+    { path: '/api/v1/jobs/group/frequent', schedule: '30 3 * * *' },
+  ];
+}
+
+export function vercelConfig({ supabaseUrl = process.env.SUPABASE_URL, cronPlan = process.env.CRON_PLAN } = {}) {
   const rewrites = [{ source: '/api/:path*', destination: '/api' }];
   for (const route of SITE_ROUTES) {
     rewrites.push({ source: route.path, destination: `/pages/${route.page}.html` });
@@ -27,7 +45,9 @@ export function vercelConfig({ supabaseUrl = process.env.SUPABASE_URL } = {}) {
   const privatePaths = SITE_ROUTES.filter((r) => r.access !== 'public').map((r) => r.path);
   return {
     $schema: 'https://openapi.vercel.sh/vercel.json',
-    buildCommand: 'npm run build',
+    // Each deployment first applies new database migrations and tops up the
+    // demo data (demo mode only), then builds the static site.
+    buildCommand: 'node scripts/check-config.js && node scripts/migrate.js && node scripts/seed-demo.js && npm run build',
     outputDirectory: 'dist',
     cleanUrls: false,
     trailingSlash: false,
@@ -42,12 +62,7 @@ export function vercelConfig({ supabaseUrl = process.env.SUPABASE_URL } = {}) {
       { source: '/assets/(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },
       ...privatePaths.map((p) => ({ source: p, headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }, { key: 'Cache-Control', value: 'no-store' }] })),
     ],
-    // Vercel Cron (Pro plan for 5-minute schedules; Hobby allows one run per day —
-    // see docs/DEPLOYMENT.md for the Supabase pg_cron alternative).
-    crons: [
-      { path: '/api/v1/jobs/group/frequent', schedule: '*/5 * * * *' },
-      { path: '/api/v1/jobs/group/daily', schedule: '0 3 * * *' },
-    ],
+    crons: cronJobs(cronPlan),
   };
 }
 

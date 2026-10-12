@@ -62,7 +62,7 @@ The schema is the source of truth for money rules. See [DATABASE.md](DATABASE.md
 
 ## Scheduled jobs
 
-`GET /api/v1/jobs/group/frequent` (every 5 minutes) and `/jobs/group/daily` (03:00 UTC) — called by Vercel Cron with `Authorization: Bearer $CRON_SECRET`, or by pg_cron + pg_net (`database/optional/pg_cron.sql`). Every run is recorded in `app.job_runs` and shown in Admin → System.
+`GET /api/v1/jobs/group/frequent` (every 5 minutes) and `/jobs/group/daily` (03:00 UTC), authenticated with `Authorization: Bearer $CRON_SECRET`. On Vercel Hobby the 5-minute schedule comes from Supabase pg_cron + pg_net (`database/optional/pg_cron.sql`) and Vercel Cron runs both groups once a day as a backup; on Vercel Pro, `CRON_PLAN=pro npm run vercel:config` makes Vercel Cron call the frequent group every 5 minutes. Every run is recorded in `app.job_runs` and shown in Admin → System.
 
 | Group | Jobs |
 | --- | --- |
@@ -126,10 +126,18 @@ Folder map:
 
 `server/config/site-routes.js` is the single list of pages. From it:
 
-- `npm run build` copies `public/` to `dist/`, pre-renders every public page in English, Russian and Arabic (`/ru/...`, `/ar/...`) with translated text, `<title>`, description, canonical and `hreflang` links, and writes `sitemap.xml` and `robots.txt` (cabinet and admin are disallowed).
+- `npm run build` copies `public/` to `dist/`, pre-renders every public page in English, Russian, Arabic and Georgian (`/ru/...`, `/ar/...`, `/ka/...`) with translated text, `<title>`, description, canonical and `hreflang` links, and writes `sitemap.xml` and `robots.txt` (cabinet and admin are disallowed).
 - `npm run vercel:config` writes the rewrites in `vercel.json` (`/withdrawals` → `/pages/withdrawals.html`, `/api/*` → the function), the security headers for static files, and the cron schedule.
 - The local dev server serves the same routes.
 
 ## Design
 
-"Ledgerline" design system: IBM Plex Sans / Sans Arabic / Mono, ink-blue neutrals, a verdigris accent (`#1f6f63`) and brass for warnings. The signature element is the **ledger strip** — one bar split into available funds, 7-day deposit hold, withdrawal hold and invested funds — shown on the dashboard and the home page. There is one load animation (the strip drawing in); everything else moves only in response to the user, and `prefers-reduced-motion` turns motion off.
+"Aurora" design system, dark-first (light theme and "follow system" are in the theme menu):
+
+- **Palette** — night `#05070D`, ink `#EEF2FF`, teal `#22E3B5` → sky `#3BA8FF` → violet `#7C5CFF` gradient, amber `#FFC266` for holds and warnings, rose `#FF5D7A` for losses. Every colour is a token in `css/themes/`.
+- **Type** — IBM Plex Sans / Sans Arabic / Mono and Noto Sans Georgian (loaded only for Georgian text), self-hosted; display headings with tight tracking and gradient text.
+- **Surfaces** — glass: translucent panels with backdrop blur, gradient hairline borders and a light that follows the pointer.
+- **Background** — `css/effects/aurora.css` + `js/effects/aurora.js`: drifting aurora light, a fading grid, grain and a particle network that reacts to the pointer (static markup in every page, so it is there on first paint).
+- **Motion** — `js/effects/`: scroll reveal on public pages, card tilt and spotlight, magnetic primary buttons, a cursor glow, condensing headers and a scroll progress line; `css/animations/motion.css`: page-load cascade, cross-page View Transitions, word-by-word hero headline, coin orbit, ledger-strip sweep, chart line drawing, spring modals and toasts. Balances only ever move between real server values.
+- **Responsive** — desktop: full sidebar; tablet (861–1180 px): icon rail with floating labels; phone: floating glass bottom bar, drawer and bottom-sheet modals.
+- **Accessibility** — everything decorative is `aria-hidden`; `prefers-reduced-motion` turns animation, particles and reveals off; effects that need a mouse do not run on touch screens.

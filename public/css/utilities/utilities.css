@@ -9,10 +9,10 @@
 .nowrap { white-space: nowrap; }
 .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .flex-1 { flex: 1; min-width: 0; }
-.divider { height: 1px; background: var(--color-line); border: 0; margin: 0; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--color-line-strong), transparent); border: 0; margin: 0; }
 .hide-mobile { }
 .show-mobile { display: none !important; }
-.card.is-updated { animation: card-flash 900ms var(--ease-out); }
+.card.is-updated { animation: card-flash 1200ms var(--ease-out); }
 .mt-8 { margin-block-start: var(--space-8); }
 .text-warning { color: var(--color-brass); }
 .text-negative { color: var(--color-negative); }

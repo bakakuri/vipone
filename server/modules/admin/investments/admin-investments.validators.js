@@ -22,7 +22,7 @@ const productFields = {
 };
 
 // Partial texts are allowed while drafting; activation requires all languages.
-const draftText = z.object({ en: z.string().max(4000), ru: z.string().max(4000), ar: z.string().max(4000) }).partial();
+const draftText = z.object({ en: z.string().max(4000), ru: z.string().max(4000), ar: z.string().max(4000), ka: z.string().max(4000) }).partial();
 
 export const createProductBody = z.object({
   slug: z.string().regex(/^[a-z0-9-]{3,60}$/, 'invalid_slug'),

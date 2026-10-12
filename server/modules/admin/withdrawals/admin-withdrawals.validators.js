@@ -11,5 +11,6 @@ export const listQuery = z.object({
 export const idParams = z.object({ id: uuid });
 export const reasonBody = z.object({ reason });
 export const broadcastBody = z.object({ txHash });
+export const payBody = z.object({ txHash, reason: z.string().trim().max(1000).optional() });
 export const completeBody = z.object({ actualNetworkFee: nonNegativeAmount.optional() });
 export const failBody = z.object({ reason, fundsNotSent: z.literal(true, { errorMap: () => ({ message: 'must_confirm' }) }) });

@@ -8,7 +8,6 @@ export const TOUR_STEPS = [
   { id: 'transactions', target: '[data-tour="transactions"]' },
   { id: 'investments', target: '[data-tour="investments"]' },
   { id: 'withdrawals', target: '[data-tour="withdrawals"]' },
-  { id: 'wallets', target: '[data-tour="wallets"]' },
   { id: 'referrals', target: '[data-tour="referrals"]' },
   { id: 'security', target: '[data-tour="security"]' },
   { id: 'help', target: '[data-tour="help"]' },

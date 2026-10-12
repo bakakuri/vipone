@@ -1,23 +1,25 @@
 /* Page scaffolding shared by app and admin pages. */
 .page-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-block-end: var(--space-6); }
-.page-header__text { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
-.page-header__text p { color: var(--color-ink-muted); }
+.page-header__text { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.page-header__text h1 { font-size: clamp(1.9rem, 3.2vw, 2.6rem); letter-spacing: var(--tracking-display); line-height: 1.05; }
+.page-header__text p { color: var(--color-ink-muted); font-size: var(--text-md); }
 .page-header__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 
 .grid { display: grid; gap: var(--space-5); }
 .grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.grid--sidebar { grid-template-columns: minmax(0, 1fr) 340px; align-items: start; }
+.grid--sidebar { grid-template-columns: minmax(0, 1fr) 360px; align-items: start; }
 .stack { display: flex; flex-direction: column; gap: var(--space-5); }
 .stack--sm { gap: var(--space-3); }
 .stack--lg { gap: var(--space-8); }
 .cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.cluster--tight { gap: var(--space-2); }
 .cluster--between { justify-content: space-between; }
 .section-title { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-block-end: var(--space-3); }
-.section-title h2 { font-size: var(--text-md); }
+.section-title h2 { font-size: var(--text-lg); }
 .section-title a { font-size: var(--text-sm); }
 
 /* #page in app and admin areas: one vertical rhythm for every section. */
-.page-stack { display: flex; flex-direction: column; gap: var(--space-5); }
-.page-stack > .page-header { margin-block-end: var(--space-1); }
+.page-stack { display: flex; flex-direction: column; gap: var(--space-6); }
+.page-stack > .page-header { margin-block-end: var(--space-2); }

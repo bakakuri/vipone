@@ -16,7 +16,7 @@ const DEV = ['localhost', '127.0.0.1'].includes(location.hostname);
 async function loadNamespace(locale, ns) {
   const key = `${locale}:${ns}`;
   if (cache.has(key)) return cache.get(key);
-  const promise = fetch(`/locales/${locale}/${ns}.json`, { credentials: 'omit' })
+  const promise = fetch(`/locales/${locale}/${ns}.json`, { credentials: 'same-origin' })
     .then((res) => (res.ok ? res.json() : {}))
     .catch(() => ({}));
   cache.set(key, promise);
@@ -83,7 +83,8 @@ export function has(fullKey) {
   return lookup(current, ns, path) !== undefined || lookup(DEFAULT_LOCALE, ns, path) !== undefined;
 }
 
-// Picks the right language from a {en, ru, ar} object (product texts, announcements).
+// Picks the right language from a {en, ru, ar, ka} object (product texts,
+// announcements, deposit instructions); missing languages fall back to English.
 export function localized(obj) {
   if (!obj || typeof obj !== 'object') return '';
   return obj[current] || obj[DEFAULT_LOCALE] || Object.values(obj)[0] || '';

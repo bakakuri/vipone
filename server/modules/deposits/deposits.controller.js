@@ -1,6 +1,7 @@
 import { sendCreated, sendData } from '../../core/respond.js';
 import { decodeCursor } from '../../utils/schemas.js';
 import * as service from './deposits.service.js';
+import * as methods from './deposit-methods.service.js';
 
 export async function list(req, res) {
   const q = req.validQuery;
@@ -17,4 +18,12 @@ export async function createRequest(req, res) {
 
 export async function getOne(req, res) {
   sendData(res, await service.getDeposit(req.auth.userId, req.params.id));
+}
+
+export async function listMethods(req, res) {
+  sendData(res, await methods.listActiveMethods());
+}
+
+export async function reportManual(req, res) {
+  sendCreated(res, await methods.submitManualDeposit(req.auth, req.body));
 }

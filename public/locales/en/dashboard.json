@@ -22,7 +22,8 @@
     "restrictedText": "Some actions are unavailable. Our support team can tell you why and what to do next.",
     "mfaTitle": "Turn on two-factor authentication",
     "mfaText": "It protects your account and is required before you can add withdrawal addresses or withdraw.",
-    "mfaAction": "Set it up"
+    "mfaAction": "Set it up",
+    "mfaShort": "Protect your account with two-factor authentication."
   },
   "balance": {
     "title": "Balances",
@@ -49,5 +50,6 @@
       "other": "{{count}} positions are waiting for their final result."
     },
     "note": "Only realised, posted results are counted. Nothing is estimated."
-  }
+  },
+  "valuationShort": "≈ {{value}} in total"
 }

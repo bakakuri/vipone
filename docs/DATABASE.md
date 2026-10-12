@@ -16,6 +16,9 @@ PostgreSQL 15+ (Supabase). Everything lives in the schema `app`. Migrations are 
 | `…001000_treasury` | reconciliation runs, treasury transfers, capital contributions, approved adjustments |
 | `…001100_rls` | Row Level Security on every table, grants, Realtime channel authorisation |
 | `…001200_reference_data` | default assets, networks, limits, fees, settings and legal document rows |
+| `20261012000100_deposit_methods` | deposit methods published by staff (address, memo, QR image, instructions), payments reported by users and their approval, settings `withdrawal.address_email_confirmation` and `deposits.page_notice` |
+| `20261012000200_georgian` | Georgian (`ka`) allowed as profile, email and legal-document language; Georgian legal document rows; `ka` added to `languages.enabled` |
+| `20261012000300_manual_operations` | network `BSC` and USDT BEP-20; only USDT/BEP20 enabled for deposits and withdrawals; setting `deposits.automatic` (false); KYC list emptied and address cooldown set to 0 when still at their defaults; demo product closed and demo address pool retired; `submit_manual_deposit` with the sender's wallet; `pay_withdrawal_manually`; execute on the new functions revoked from `public`/`anon`/`authenticated` |
 
 `database/local/supabase-shim.sql` recreates the few Supabase objects the migrations reference (`auth.users`, `auth.uid()`, roles `anon`/`authenticated`/`service_role`, `realtime.messages`, `realtime.send`) so the same migrations run on plain PostgreSQL for local development and tests. It also holds `local_auth` (password hashes, refresh tokens, TOTP factors) for `AUTH_PROVIDER=local`. It is never applied to a real Supabase project.
 
@@ -99,7 +102,9 @@ Allowed transitions are rows in `app.status_transitions`; a trigger rejects anyt
 | `assign_deposit_address`, `create_deposit_request` | address from the pool (or shared address + memo) |
 | `record_chain_event`, `apply_incoming_event`, `credit_deposit` | signed blockchain event → deposit status → credit after confirmations and screening |
 | `review_deposit`, `return_suspense_deposit` | compliance decisions |
-| `add_withdrawal_wallet`, `confirm_withdrawal_wallet`, … | address book with email code and cooldown |
+| `submit_manual_deposit`, `approve_manual_deposit` | payments reported against a staff-published method (`deposit_methods`); credited only by staff with a checked amount and a unique transaction hash |
+| `pay_withdrawal_manually(request, actor, tx_hash)` | manual payout: approve (four-eyes above the threshold), process, record the hash and complete in one transaction |
+| `add_withdrawal_wallet`, `confirm_withdrawal_wallet`, … | address book with email code (optional, setting) and cooldown |
 | `create_withdrawal` | quote check, limits, holds, MFA flag, moves funds to `withdrawal_hold` |
 | `review_/approve_/reject_/start_withdrawal_processing`, `record_withdrawal_broadcast`, `complete_/fail_withdrawal`, `apply_outgoing_event` | staff processing with four-eyes for large amounts |
 | `open_position`, `release_position`, `process_due_positions` | investments |
@@ -113,7 +118,7 @@ Allowed transitions are rows in `app.status_transitions`; a trigger rejects anyt
 
 RLS is enabled on every table in `app`. The API connects as the schema owner, so RLS does not affect it; RLS protects against direct access with a user's JWT:
 
-- reference data (active assets, networks, products, legal documents) — readable by everyone
+- reference data (active assets, networks, products, legal documents) — readable by everyone; active deposit methods — readable by signed-in users
 - a user's own rows (profile, balances, deposits, withdrawals, wallets, positions, rewards, notifications, tickets) — readable by that user only
 - no policy grants `insert`/`update`/`delete` on any financial table to `anon` or `authenticated`
 - staff read access goes through `app.has_role()` / `app.is_staff()`

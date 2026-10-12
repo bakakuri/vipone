@@ -22,7 +22,6 @@ import { openModal } from '../components/modals/modal.js';
 import { openPositionDialog } from '../components/modals/open-position-dialog.js';
 import { openPositionDetail } from '../components/modals/position-detail.js';
 import { toast } from '../components/notifications/toast.js';
-import { helpButton } from '../components/onboarding/help-drawer.js';
 
 const FILTERS = ['open', 'matured', 'closed_early'];
 
@@ -97,7 +96,7 @@ definePage({
     }
 
     replace(page,
-      pageHeader({ title: t('investments:title'), subtitle: t('investments:subtitle'), actions: helpButton('investments') }),
+      pageHeader({ title: t('investments:title'), actions: h('a', { class: 'btn btn--sm', href: '/earnings' }, t('navigation:earnings')) }),
       tabBar.el, positionsPanel, productsPanel);
     renderProducts();
     await loadPositions();

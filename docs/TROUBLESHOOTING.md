@@ -58,7 +58,8 @@ After changing variables in Vercel, **redeploy** — running deployments keep th
 ## Scheduled jobs
 
 **Admin → System shows no job runs.**
-- Vercel Hobby runs cron jobs at most daily — use Pro or `database/optional/pg_cron.sql`.
+- Vercel Hobby runs cron jobs at most daily — the 5-minute jobs need `database/optional/pg_cron.sql` (or Pro with `CRON_PLAN=pro npm run vercel:config`).
+- Vercel says *"Hobby accounts are limited to daily cron jobs"* on deploy — your `vercel.json` still has the `*/5` schedule. Regenerate it with `npm run vercel:config` (without `CRON_PLAN`) and commit.
 - `CRON_SECRET` must be set in Vercel; without it the job routes answer `403` in production.
 - pg_cron: check `select * from cron.job_run_details order by start_time desc limit 20;` and `select * from net._http_response order by created desc limit 20;`.
 

@@ -52,6 +52,9 @@ const VALIDATORS = {
   stringList: (v) => Array.isArray(v) && v.every((x) => typeof x === 'string' && x.length <= 40),
   email: (v) => v === null || (typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)),
   scope: (v) => v === 'all_deposits' || v === 'first_deposit',
+  // {"en": "...", "ru": "...", "ar": "...", "ka": "..."}; empty object hides the text.
+  localizedText: (v) => v !== null && typeof v === 'object' && !Array.isArray(v)
+    && Object.entries(v).every(([k, x]) => ['en', 'ru', 'ar', 'ka'].includes(k) && typeof x === 'string' && x.length <= 2000),
 };
 
 export const SETTING_TYPES = {
@@ -78,13 +81,16 @@ export const SETTING_TYPES = {
   'languages.enabled': 'stringList',
   'public_stats.enabled': 'boolean',
   'support.contact_email': 'email',
+  'withdrawal.address_email_confirmation': 'boolean',
+  'deposits.page_notice': 'localizedText',
+  'deposits.automatic': 'boolean',
 };
 
 export function validateSettingValue(key, value) {
   const type = SETTING_TYPES[key];
   if (!type) throw new AppError('not_found', { details: { resource: 'setting' } });
   if (!VALIDATORS[type](value)) throw new AppError('validation_failed', { details: [{ path: 'value', code: `expected_${type}` }] });
-  if (key === 'languages.enabled' && (!value.includes('en') || value.some((l) => !['en', 'ru', 'ar'].includes(l)))) {
+  if (key === 'languages.enabled' && (!value.includes('en') || value.some((l) => !['en', 'ru', 'ar', 'ka'].includes(l)))) {
     throw new AppError('validation_failed', { details: [{ path: 'value', code: 'invalid_languages' }] });
   }
   if (key === 'withdrawal.quote_ttl_seconds' && (value < 30 || value > 3600)) {

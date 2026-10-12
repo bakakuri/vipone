@@ -7,3 +7,7 @@
 @font-face { font-family: 'Plex Sans Arabic'; src: url('/assets/fonts/IBMPlexSansArabic-SemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Plex Mono'; src: url('/assets/fonts/IBMPlexMono-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Plex Mono'; src: url('/assets/fonts/IBMPlexMono-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+/* Georgian (Mkhedruli): Noto Sans Georgian, OFL — loaded only when Georgian text is on the page. */
+@font-face { font-family: 'Noto Sans Georgian'; src: url('/assets/fonts/NotoSansGeorgian-Regular.woff') format('woff'); font-weight: 400; font-style: normal; font-display: swap; unicode-range: U+0589, U+10A0-10FF, U+1C90-1CBF, U+2D00-2D2F; }
+@font-face { font-family: 'Noto Sans Georgian'; src: url('/assets/fonts/NotoSansGeorgian-Medium.woff') format('woff'); font-weight: 500; font-style: normal; font-display: swap; unicode-range: U+0589, U+10A0-10FF, U+1C90-1CBF, U+2D00-2D2F; }
+@font-face { font-family: 'Noto Sans Georgian'; src: url('/assets/fonts/NotoSansGeorgian-SemiBold.woff') format('woff'); font-weight: 600 700; font-style: normal; font-display: swap; unicode-range: U+0589, U+10A0-10FF, U+1C90-1CBF, U+2D00-2D2F; }

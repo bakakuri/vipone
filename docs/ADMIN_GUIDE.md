@@ -8,7 +8,7 @@ The admin area is at `/admin`. It is visible only to staff, and in production ev
 | --- | --- | --- |
 | `support` | customer support | read users, deposits, withdrawals, investments, referrals; answer tickets; publish announcements |
 | `compliance` | compliance / AML officer | + review KYC, restrict/freeze users, resolve risk flags, review deposits and referral rewards, review withdrawals, read the audit log, request settings changes, decide approvals |
-| `finance` | treasury / operations | + approve and process withdrawals, manage the deposit address pool, return suspense funds, record and approve investment results, reconcile, treasury transfers and capital, request settings changes, decide approvals, demo tools |
+| `finance` | treasury / operations | + approve and process withdrawals, manage the deposit address pool and deposit methods, return suspense funds, record and approve investment results, reconcile, treasury transfers and capital, request settings changes, decide approvals, demo tools |
 | `super_admin` | owner | everything, including products, roles and fee rules |
 
 The exact matrix is in `server/policies/permissions.js`.
@@ -21,7 +21,7 @@ There is no built-in admin account. Register normally, confirm your email, then 
 npm run admin:grant -- you@your-domain.com super_admin
 ```
 
-Sign in again, set up two-factor authentication on the Security page and open `/admin`. Grant further roles from **Users → user → Roles**; each grant needs a second super administrator's approval (so create two super administrators early).
+Sign in again, set up two-factor authentication on the Security page and open `/admin`. In production every staff page requires it (the error "Turn on two-factor authentication in Security first" has a button that leads there). Outside live mode it can be switched off with `STAFF_MFA_REQUIRED=false`, for example while setting up a demo; staff who have turned 2FA on are still asked for their code. Grant further roles from **Users → user → Roles**; each grant needs a second super administrator's approval (so create two super administrators early).
 
 ## Four-eyes approvals
 
@@ -42,27 +42,46 @@ Pending approvals expire after their time limit. Tightening a safeguard (pausing
 ## Daily routine
 
 1. **Overview** — users, deposits and withdrawals in progress, referral rewards, ledger activity, open risk flags, pending approvals, a 14-day activity chart and, per asset, platform assets versus what is owed to users.
-2. **Deposits** — handle *Under review* items (screening hit, below minimum, unsupported asset, frozen account): *Approve* (credit), *Hold* (keep reviewing) or *Reject* with a reason. Rejected or uncreditable funds sit in suspense; return them with **Return** and the on-chain transaction hash.
+2. **Deposits** — handle *Under review* items (screening hit, below minimum, unsupported asset, frozen account, payments reported by users): *Approve* (credit), *Hold* (keep reviewing) or *Reject* with a reason; reported payments are credited with *Credit deposit* (see Deposit methods). Rejected or uncreditable funds sit in suspense; return them with **Return** and the on-chain transaction hash.
 3. **Withdrawals** — see below.
 4. **Support** — answer tickets; set *Awaiting user* / *Resolved*.
 5. **System** — failed jobs, queued emails, database latency.
 
 ## Withdrawals
 
-```
-Pending ─► (Review) Under review ─► Approve ─► Process ─► Record broadcast (tx hash) ─► Complete
-                                     │                                      └─► Fail (funds not sent)
-                                     └─► Reject (reason) — funds return to the user
-```
+Users type their own USDT BEP20 address and the amount; each request reaches **Withdrawals** as *Pending* with the amount reserved in their balance. To pay one:
 
-1. **Review** the request: user status and KYC, address age and history, recent deposits, risk flags, the quote (amount, 3% fee, network fee, net).
-2. **Approve.** Above the threshold (default 10,000 USDT/USDC, 0.2 BTC, 3 ETH) a second, different finance member must also approve. You cannot approve a request you created.
-3. **Process** marks it as being sent. Send **the net amount** from the custody wallet (outside the platform — the platform never holds private keys).
-4. **Record broadcast** with the transaction hash.
-5. **Complete** happens automatically when the signed blockchain event confirms the hash; otherwise a second staff member verifies it on the explorer and completes it, optionally entering the network fee actually paid.
-6. If the transfer could not be sent, **Fail** it (you must confirm the funds were not sent); the gross amount returns to the user's available balance.
+1. Open the request. Check the user, the address, recent deposits and any risk flags. The box on the right shows **To send** — the amount after the 3% platform fee and the network fee.
+2. From your own wallet or exchange, send exactly **To send** in USDT on **BEP20** to the user's address (copy button next to it).
+3. Paste the **transaction hash** of your payment and press **Mark as paid**. The request is approved, recorded and completed in one step; the user gets a notification and an email with the hash.
+4. Above the threshold (default 10,000 USDT) the request first needs **two approvals from different staff members** (*Approve*, then *Give second approval*) — send nothing before that. After the second approval the payout box appears and you continue with steps 2–3. You cannot approve a request you created.
+5. If you will not pay it, **Reject** it with a reason — the amount returns to the user's available balance.
+
+Requests that were already being processed the old way (*Processing*) keep the legacy buttons: *Record broadcast*, *Complete* and *Fail*.
+
+## Deposit methods (your own address, QR and instructions)
+
+**Deposits → Deposit methods** controls the deposit page. Only **USDT on BEP20 (BNB Smart Chain)** is enabled, so add one method: *Add method* → asset USDT, network BEP20, your BEP20 receiving address (starts with `0x`), optionally a QR picture from your wallet, minimum 10. Each method is one asset on one network with:
+
+- the receiving address and, if the network needs one, a memo/tag;
+- a QR image — upload a QR code or a screenshot from your wallet or exchange (it is re-encoded in the browser, at most about 500 kB); without an image a QR code is generated from the address;
+- an optional name ("Main wallet"), minimum amount and display order;
+- instructions in English, Russian, Arabic and Georgian (one paragraph per line; an empty language shows the English text);
+- *Show on the deposit page* — hidden methods stay in the admin list.
+
+The box under the methods sets a **notice** shown at the top of the deposit page in each language (setting `deposits.page_notice`; leave it empty to hide it).
+
+Automatic personal addresses are off (setting `deposits.automatic`), so the deposit page shows only these methods. The user sends the payment and presses **I have sent it** with the amount and, ideally, the transaction ID and the wallet they sent from. The report carries the user's account, so you see their email next to it. That creates a deposit *Under review* marked **Reported** — it changes no balance. To handle it, open it under **Deposits** (filter *Source → Reported by user*):
+
+1. Find the transaction in a block explorer. Check the network, that the receiving address is yours and the amount that arrived.
+2. Enter the **amount received** (pre-filled with what the user reported) and the **transaction hash** (required), then **Credit deposit** with a short note of what you checked. The amount is credited through the ledger like any deposit, with the 7-day hold, referral reward and email.
+3. If there is no such payment, **Reject** it with the reason; nothing is posted to the ledger.
+
+One transaction hash can be credited only once, a user can have at most 5 reports waiting, and every change to a method is in the audit log. Removing a method that already has reports hides it instead of deleting it.
 
 ## Deposit address pool
+
+Used only when automatic deposits are switched on (`deposits.automatic`); with manual operations you can ignore it.
 
 **Deposits → Address pool** shows available/assigned addresses per network. Generate addresses **offline or with your custody provider** — never on the web server — and import them:
 
@@ -73,7 +92,7 @@ Keep at least a few hundred free addresses per active network and check the coun
 
 ## Investment products
 
-**Investments → Products** (super_admin). A product needs, in English, Russian and Arabic: name, summary, revenue model description and risk disclosure; plus term in days, min/max per position, capacity, performance fee, early-exit rules, risk level, legal reference and legal status. It can be **activated only with legal status *approved***. Editing terms creates a new version; open positions keep their original terms. Pause a product to stop new positions without affecting existing ones.
+**Investments → Products** (super_admin). A product needs, in English, Russian and Arabic: name, summary, revenue model description and risk disclosure (Georgian is optional; without it Georgian readers see English); plus term in days, min/max per position, capacity, performance fee, early-exit rules, risk level, legal reference and legal status. It can be **activated only with legal status *approved***. Editing terms creates a new version; open positions keep their original terms. Pause a product to stop new positions without affecting existing ones.
 
 ## Recording realised results
 
@@ -111,6 +130,8 @@ A wrong result cannot be edited after posting; correct it with an approved adjus
 | `withdrawal.daily_limit` | 50,000 USDT/USDC · 1 BTC · 15 ETH |
 | `withdrawal.quote_ttl_seconds` | 300 |
 | `withdrawal.require_mfa` | on |
+| `withdrawal.address_email_confirmation` | off — turn on once outgoing email works; then each new withdrawal address needs an emailed code (the cooldown applies either way) |
+| `deposits.page_notice` | empty — edited under Deposits → Deposit methods |
 | `referral.deposit_rate` / `profit_rate` / `hold_days` | 5% / 2% / 7 |
 | `compliance.kyc_required_for` | deposit address, withdrawal, investment (live mode) |
 | `compliance.blocked_countries` | KP, IR, SY, CU — set with legal counsel |
@@ -128,7 +149,7 @@ Search by email, reference or id. The user page shows balances, deposits, withdr
 
 ## Announcements
 
-Publish a title and message in all three languages (e.g. a maintenance window). It is delivered as a notification to every active and restricted user and recorded in the audit log.
+Publish a title and message in English, Russian and Arabic (Georgian optional) (e.g. a maintenance window). It is delivered as a notification to every active and restricted user and recorded in the audit log.
 
 ## Audit log
 

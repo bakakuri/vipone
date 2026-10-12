@@ -1,4 +1,6 @@
+import { getConfig } from '../../config/env.js';
 import { sendCreated, sendData } from '../../core/respond.js';
+import { clientIpHash, userAgent } from '../../middleware/client-ip.js';
 import { decodeCursor } from '../../utils/schemas.js';
 import * as service from './withdrawals.service.js';
 
@@ -12,7 +14,7 @@ export async function getOne(req, res) {
 }
 
 export async function quote(req, res) {
-  sendData(res, await service.createQuote(req.auth, req.body));
+  sendData(res, await service.createQuote(req.auth, req.body, { ipHash: clientIpHash(req, getConfig()), userAgent: userAgent(req) }));
 }
 
 export async function create(req, res) {

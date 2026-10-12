@@ -34,22 +34,26 @@ export async function listActiveMethods() {
     select m.*, n.name as network_name, n.memo_label
     from app.deposit_methods m join app.networks n on n.code = m.network_code
     join app.assets a on a.code = m.asset_code
-    where m.is_active and a.is_active
+    join app.asset_networks an on an.asset_code = m.asset_code and an.network_code = m.network_code
+    where m.is_active and a.is_active and n.is_active and an.deposit_enabled
     order by m.sort_order, a.sort_order, m.network_code`;
   const notice = await getSetting(sql, 'deposits.page_notice', {});
   return { methods: rows.map(methodToApi), notice: notice || {} };
 }
 
-export async function submitManualDeposit(auth, { methodId, amount, txHash, note }) {
+export async function submitManualDeposit(auth, { methodId, amount, txHash, note, fromAddress }) {
   assertAccountActive(auth);
   const sql = getSql();
   await assertKycFor(sql, auth, 'deposit_address');
   const [method] = await sql`
-    select m.asset_code, a.decimals from app.deposit_methods m join app.assets a on a.code = m.asset_code where m.id = ${methodId}`;
+    select m.asset_code, a.decimals from app.deposit_methods m join app.assets a on a.code = m.asset_code and a.is_active
+    join app.asset_networks an on an.asset_code = m.asset_code and an.network_code = m.network_code and an.deposit_enabled
+    where m.id = ${methodId}`;
   if (!method) throw new AppError('deposit_method_unavailable', { status: 409 });
   if (!hasAtMostDecimals(amount, method.decimals)) throw new AppError('amount_precision', { status: 422 });
   return withTransaction(async (tx) => {
-    const [row] = await tx`select * from app.submit_manual_deposit(${auth.userId}, ${methodId}, ${amount}, ${txHash ?? null}, ${note ?? null})`;
+    const [row] = await tx`
+      select * from app.submit_manual_deposit(${auth.userId}, ${methodId}, ${amount}, ${txHash ?? null}, ${note ?? null}, ${fromAddress ?? null})`;
     const d = camelize(row);
     return { ...d, amount: trimAmount(row.amount), claimedAmount: trimAmount(row.claimed_amount) };
   });

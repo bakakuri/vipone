@@ -78,5 +78,18 @@
     "accounts": "Accounts",
     "custody": "{{asset}} held for customers and strategies",
     "reconciled": "Last reconciled against custody balances {{date}}."
+  },
+  "simple": {
+    "title": "Deposit USDT. Invest. Withdraw to your wallet.",
+    "lead": "A simple crypto account: send USDT on BEP20, follow your balance and withdraw whenever you need. Every payment is checked by our team.",
+    "chip1": "USDT · BEP20",
+    "chip2": "Payments checked by a person",
+    "chip3": "Every change on record",
+    "depositTitle": "Deposit",
+    "depositText": "Send USDT (BEP20) to our address and press “I have sent it”.",
+    "investTitle": "Invest",
+    "investText": "Choose a product. Results are added only when they are realised.",
+    "withdrawTitle": "Withdraw",
+    "withdrawText": "Enter your wallet and the amount. We send it after review."
   }
 }

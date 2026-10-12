@@ -7,7 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const LOCALES_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../public/locales');
-export const SUPPORTED_LOCALES = ['en', 'ru', 'ar'];
+export const SUPPORTED_LOCALES = ['en', 'ru', 'ar', 'ka'];
 const cache = new Map();
 
 export function loadNamespace(locale, namespace) {

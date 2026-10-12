@@ -3,8 +3,11 @@
 import { AppError } from '../../core/errors.js';
 import { logger } from '../../core/logger.js';
 
-// Development / tests: nothing leaves the machine. Messages are kept in memory
-// so tests can read confirmation links.
+// Development, tests and demo deployments: nothing leaves the machine.
+// Messages are kept in memory so tests can read confirmation links, and the
+// plain-text body (links, address confirmation codes) is written to the server
+// log, so a demo works without an email provider. Live mode refuses
+// EMAIL_PROVIDER=log, so this never happens with real money.
 export function createLogEmailProvider() {
   const outbox = [];
   return {
@@ -13,7 +16,7 @@ export function createLogEmailProvider() {
     async send(message) {
       const id = `log-${outbox.length + 1}`;
       outbox.push({ id, ...message, sentAt: new Date().toISOString() });
-      logger.info('email (log provider)', { to: message.to, subject: message.subject });
+      logger.info('email (log provider)', { to: message.to, subject: message.subject, body: message.text });
       return { id };
     },
   };

@@ -35,9 +35,22 @@ test('production still refuses to start without its secrets', () => {
   assert.throws(() => loadConfig({ ...base, APP_URL: 'site.org', CRON_SECRET: 'short' }), /CRON_SECRET/);
 });
 
-test('staff two-factor authentication is required in production unless switched off outside live mode', () => {
+test('staff two-factor authentication is required in production unless the owner switches it off', () => {
   assert.equal(loadConfig({ ...base, APP_URL: 'site.org' }).staffMfaRequired, true);
   assert.equal(loadConfig({ ...base, APP_URL: 'site.org', STAFF_MFA_REQUIRED: 'false' }).staffMfaRequired, false);
   assert.equal(loadConfig({ ...base, NODE_ENV: 'development', AUTH_PROVIDER: 'supabase', APP_URL: 'http://localhost:3000' }).staffMfaRequired, false);
-  assert.throws(() => loadConfig({ ...base, APP_URL: 'site.org', APP_MODE: 'live', STAFF_MFA_REQUIRED: 'false' }), /STAFF_MFA_REQUIRED/);
+  const live = { ...base, APP_URL: 'site.org', APP_MODE: 'live', AUTH_PROVIDER: 'supabase', LEGAL_APPROVAL_CONFIRMED: 'true' };
+  assert.equal(loadConfig(live).staffMfaRequired, true);
+  const relaxed = loadConfig({ ...live, STAFF_MFA_REQUIRED: 'false' });
+  assert.equal(relaxed.staffMfaRequired, false);
+  assert.ok(relaxed.warnings.some((w) => /two-factor/.test(w)), 'the relaxation is reported');
+});
+
+test('live mode with manual operations needs only the legal confirmation, Supabase Auth and https', () => {
+  const live = { ...base, APP_URL: 'site.org', APP_MODE: 'live', AUTH_PROVIDER: 'supabase', DEMO_TOOLS_ENABLED: 'true' };
+  assert.throws(() => loadConfig(live), /LEGAL_APPROVAL_CONFIRMED/);
+  const c = loadConfig({ ...live, LEGAL_APPROVAL_CONFIRMED: 'true' });
+  assert.equal(c.isLive, true);
+  assert.equal(c.demoToolsEnabled, false, 'demo tools never run with real money');
+  assert.throws(() => loadConfig({ ...live, LEGAL_APPROVAL_CONFIRMED: 'true', APP_URL: 'http://site.org' }), /https/);
 });

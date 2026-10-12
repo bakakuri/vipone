@@ -3,10 +3,8 @@ export const USER_NAV = {
   main: [
     { href: '/dashboard', icon: 'dashboard', label: 'navigation:dashboard', tour: 'dashboard' },
     { href: '/deposit', icon: 'deposit', label: 'navigation:deposit', tour: 'deposit' },
-    { href: '/investments', icon: 'layers', label: 'navigation:investments', tour: 'investments' },
-    { href: '/earnings', icon: 'earnings', label: 'navigation:earnings', tour: 'earnings' },
     { href: '/withdrawals', icon: 'withdraw', label: 'navigation:withdrawals', tour: 'withdrawals' },
-    { href: '/wallets', icon: 'wallet', label: 'navigation:wallets', tour: 'wallets' },
+    { href: '/investments', icon: 'layers', label: 'navigation:investments', tour: 'investments' },
     { href: '/transactions', icon: 'ledger', label: 'navigation:transactions', tour: 'transactions' },
     { href: '/referrals', icon: 'referrals', label: 'navigation:referrals', tour: 'referrals' },
   ],
@@ -19,7 +17,7 @@ export const USER_NAV = {
   ],
 };
 
-export const MOBILE_NAV = ['/dashboard', '/deposit', '/investments', '/withdrawals'];
+export const MOBILE_NAV = ['/dashboard', '/deposit', '/withdrawals', '/investments'];
 
 export const ADMIN_NAV = [
   { href: '/admin', icon: 'gauge', label: 'admin:nav.overview', permission: 'dashboard.read' },
@@ -40,13 +38,11 @@ export const ADMIN_NAV = [
 export const PUBLIC_NAV = [
   { href: '/how-it-works', label: 'navigation:howItWorks' },
   { href: '/products', label: 'navigation:products' },
-  { href: '/risk-disclosure', label: 'navigation:risk' },
   { href: '/faq', label: 'navigation:faq' },
-  { href: '/contact', label: 'navigation:contact' },
 ];
 
 export function isCurrent(href) {
-  const path = location.pathname.replace(/^\/(ru|ar)(?=\/|$)/, '') || '/';
+  const path = location.pathname.replace(/^\/(ru|ar|ka)(?=\/|$)/, '') || '/';
   if (href === '/admin') return path === '/admin';
   return path === href || (href !== '/' && path.startsWith(`${href}/`));
 }

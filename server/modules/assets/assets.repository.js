@@ -43,8 +43,8 @@ export async function listAssetNetworks(db) {
 
 export async function getAssetNetwork(db, assetCode, networkCode) {
   const [row] = await db`
-    select a.code as asset_code, a.decimals, n.code as network_code, n.family, n.address_pattern, n.memo_required,
-           n.memo_pattern, n.memo_label, n.required_confirmations, n.explorer_tx_url, an.deposit_enabled,
+    select a.code as asset_code, a.decimals, n.code as network_code, n.name as network_name, an.token_standard, n.family,
+           n.address_pattern, n.memo_required, n.memo_pattern, n.memo_label, n.required_confirmations, n.explorer_tx_url, an.deposit_enabled,
            an.withdrawal_enabled, an.min_deposit, an.min_withdrawal, an.withdrawal_network_fee, an.token_contract
     from app.asset_networks an
     join app.assets a on a.code = an.asset_code and a.is_active

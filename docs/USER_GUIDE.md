@@ -27,12 +27,10 @@ This guide is also available inside the platform: the **Help** centre (`/help`),
 
 ## 4. Deposit
 
-1. **Deposit** → choose the asset and network (for example USDT on TRON). The network must match the one you send from — a wrong network can mean lost funds.
-2. Copy the address or scan the QR code. Some networks also need a memo/comment; it is shown when required.
-3. Send at least the minimum shown. The deposit appears as *Detected*, then counts confirmations (TRON 20, Ethereum 12, Bitcoin 3) and becomes *Credited*.
+1. **Deposit** shows our USDT address on **BEP20 (BNB Smart Chain)** with a QR code and a copy button. Send only USDT on BEP20 — other coins or networks are lost.
+2. After sending, press **I have sent it** with the amount and, if you have them, the transaction ID and the wallet you sent from. The payment is linked to your account, so we know it is yours.
+3. The deposit shows *Being checked*. Our team finds it on the blockchain and credits the amount that arrived; you get a notification. Your balance does not change before that.
 4. Credited funds are on a **7-day hold** for withdrawals. You can invest them immediately.
-
-You never need to send us a transaction id; we see the deposit on the blockchain.
 
 ## 5. Invest
 
@@ -47,14 +45,9 @@ Investments can lose value. Past results do not predict future results.
 
 ## 6. Withdraw
 
-1. **Wallets → Add address.** Choose the network, paste the address, give it a name. We email you a 6-digit code to confirm it. A new address can be used **24 hours** after confirmation — this protects you if someone gets into your account.
-2. **Withdrawals → New withdrawal.** Choose the address and the amount. You can withdraw your *withdrawable* balance (available minus funds on deposit hold).
-3. **Review** shows the exact quote from the server:
-   - platform fee **3%**,
-   - network fee (for example 1.5 USDT on TRON),
-   - **you receive** = amount − fees.
-   Example: 100 USDT → 3.00 + 1.50 in fees → you receive 95.50 USDT. A quote is valid for 5 minutes.
-4. **Confirm.** The amount moves to *Withdrawal hold*. Status: *Pending* → *Approved* → *Processing* → *Completed* (with the blockchain transaction link). You can cancel while it is pending. If it is rejected or fails, the funds return to Available.
+1. **Withdrawals** → paste your USDT address on **BEP20** (it starts with `0x`) and enter the amount. You can withdraw your *withdrawable* balance (available minus funds on deposit hold). Two-factor sign-in is needed.
+2. **Continue** shows the exact quote from the server: platform fee **3%**, network fee (1 USDT on BEP20) and what arrives. Example: 100 USDT → 3.00 + 1.00 in fees → 96.00 USDT arrives. A quote is valid for 5 minutes.
+3. **Confirm withdrawal.** The amount is reserved and the request goes to our team. They send it to your address and mark it as paid; you get a notification and an email with the transaction. You can cancel while it is *Pending*; if it is rejected, the funds return to Available.
 
 ## 7. Transaction history
 
@@ -78,4 +71,4 @@ Rewards are paid by the platform — never taken from your friend's money — an
 
 ## Languages and accessibility
 
-English, Russian and Arabic (right-to-left). Switch in the top bar; your choice is saved to your profile. The site works with a keyboard and screen readers, respects your system's reduced-motion setting and works on phones.
+English, Russian, Arabic (right-to-left) and Georgian. Switch in the top bar; your choice is saved to your profile. The site works with a keyboard and screen readers, respects your system's reduced-motion setting and works on phones.

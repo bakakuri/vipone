@@ -64,13 +64,12 @@ export function mountPublicShell({ config }) {
   main.parentNode.insertBefore(header, main);
 
   const year = new Date().getFullYear();
-  const col = (title, links) => h('div', {}, h('h2', {}, title), h('ul', {}, links.map(([href, label]) => h('li', {}, h('a', { href }, label)))));
-  const footerEl = h('footer', { class: 'public-footer' },
+  const links = [['/how-it-works', 'navigation:howItWorks'], ['/products', 'navigation:products'], ['/faq', 'navigation:faq'], ['/contact', 'navigation:contact'],
+    ['/legal/terms', 'navigation:terms'], ['/legal/privacy', 'navigation:privacy'], ['/risk-disclosure', 'navigation:risk']];
+  const footerEl = h('footer', { class: 'public-footer public-footer--compact' },
     h('div', { class: 'public-footer__inner' },
-      h('div', { class: 'stack stack--sm' }, brand('/'), h('p', { class: 'text-small text-muted' }, t('common:footer.tagline'))),
-      col(t('navigation:platform'), [['/how-it-works', t('navigation:howItWorks')], ['/products', t('navigation:products')], ['/faq', t('navigation:faq')], ['/help', t('navigation:help')]]),
-      col(t('navigation:legal'), [['/legal/terms', t('navigation:terms')], ['/legal/privacy', t('navigation:privacy')], ['/legal/cookies', t('navigation:cookies')], ['/risk-disclosure', t('navigation:risk')]]),
-      col(t('navigation:company'), [['/contact', t('navigation:contact')], ['/sitemap', t('navigation:sitemap')]])),
+      brand('/'),
+      h('nav', { class: 'public-footer__links', 'aria-label': t('navigation:legal') }, links.map(([href, label]) => h('a', { href }, t(label))))),
     h('div', { class: 'public-footer__note' },
       h('p', {}, t('common:footer.riskNotice')),
       h('p', {}, t('common:footer.copyright', { year }))));

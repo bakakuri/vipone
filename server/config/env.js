@@ -87,6 +87,9 @@ const schema = z.object({
   ERROR_WEBHOOK_URL: z.string().url().optional(),
   DEMO_TOOLS_ENABLED: bool(false),
   LEGAL_APPROVAL_CONFIRMED: bool(false),
+  // Staff must use two-factor authentication in production. The owner may
+  // switch it off (not recommended); it is then reported in Admin → System.
+  STAFF_MFA_REQUIRED: bool(true),
 });
 
 function fail(errors) {
@@ -95,9 +98,29 @@ function fail(errors) {
   throw err;
 }
 
+// "vipone.vercel.app", " https://vipone.vercel.app/ " -> "https://vipone.vercel.app"
+export function normalizeUrl(value) {
+  if (value === undefined || value === null) return value;
+  let v = String(value).trim().replace(/\/+$/, '');
+  if (v && !/^[a-z][a-z0-9+.-]*:\/\//i.test(v)) v = `https://${v}`;
+  return v;
+}
+
+// Deployment URLs Vercel provides (system environment variables).
+function vercelOrigins(env) {
+  return ['VERCEL_PROJECT_PRODUCTION_URL', 'VERCEL_BRANCH_URL', 'VERCEL_URL']
+    .map((k) => (env[k] ? normalizeUrl(env[k]) : null))
+    .filter(Boolean);
+}
+
 export function loadConfig(env = process.env) {
   // An empty variable (KEY= in .env or an empty value in Vercel) means "not set".
   const present = Object.fromEntries(Object.entries(env).filter(([, v]) => v !== undefined && String(v).trim() !== ''));
+  // APP_URL: tolerate a missing scheme or trailing slash; on Vercel fall back
+  // to the project's production domain when it is not set.
+  if (!present.APP_URL && present.VERCEL_PROJECT_PRODUCTION_URL) present.APP_URL = present.VERCEL_PROJECT_PRODUCTION_URL;
+  if (present.APP_URL) present.APP_URL = normalizeUrl(present.APP_URL);
+  if (present.SUPABASE_URL) present.SUPABASE_URL = normalizeUrl(present.SUPABASE_URL);
   const parsed = schema.safeParse(present);
   if (!parsed.success) {
     fail(parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`));
@@ -138,19 +161,18 @@ export function loadConfig(env = process.env) {
     if (!cookieSecure) errors.push('COOKIE_SECURE cannot be disabled in production');
     if (/@example\.(com|org|net)>?$/i.test(e.EMAIL_FROM)) errors.push('EMAIL_FROM must be your own verified sender address in production');
   }
-  // Real money: every safeguard must be configured, or the process stops.
+  // Real money. Deposits and withdrawals are handled by staff (manual
+  // operations), so blockchain webhooks, wallet screening and an external KYC
+  // provider are optional; what remains mandatory is listed here.
+  const warnings = [];
   if (live) {
     if (authProvider !== 'supabase') errors.push('APP_MODE=live requires AUTH_PROVIDER=supabase');
-    if (e.EMAIL_PROVIDER === 'log') errors.push('APP_MODE=live requires a real EMAIL_PROVIDER');
-    if (e.SCREENING_PROVIDER === 'none') errors.push('APP_MODE=live requires wallet screening (SCREENING_PROVIDER)');
-    if (e.KYC_PROVIDER === 'manual') errors.push('APP_MODE=live requires a KYC provider (KYC_PROVIDER=sumsub)');
-    if (e.DEMO_TOOLS_ENABLED) errors.push('DEMO_TOOLS_ENABLED must be false in APP_MODE=live');
-    if (e.PRICE_PROVIDER === 'static') errors.push('APP_MODE=live requires market prices (PRICE_PROVIDER=coingecko)');
     if (!e.LEGAL_APPROVAL_CONFIRMED) errors.push('APP_MODE=live requires LEGAL_APPROVAL_CONFIRMED=true (licensing and legal review completed)');
     if (!appUrl.startsWith('https://')) errors.push('APP_MODE=live requires an https APP_URL');
-    if (!e.BLOCKCHAIN_WEBHOOK_SECRET && e.ALCHEMY_WEBHOOK_SIGNING_KEYS.length === 0) errors.push('APP_MODE=live requires a blockchain webhook secret');
+    if (e.DEMO_TOOLS_ENABLED) warnings.push('DEMO_TOOLS_ENABLED is ignored in live mode');
+    if (!e.STAFF_MFA_REQUIRED) warnings.push('Staff two-factor authentication is switched off (STAFF_MFA_REQUIRED=false)');
+    if (e.EMAIL_PROVIDER === 'log') warnings.push('Emails are only logged (EMAIL_PROVIDER=log)');
   }
-  if (e.DEMO_TOOLS_ENABLED && live) errors.push('Demo tools cannot run with real money');
   if (errors.length) fail(errors);
 
   return Object.freeze({
@@ -161,7 +183,8 @@ export function loadConfig(env = process.env) {
     isLive: live,
     appName: e.APP_NAME,
     appUrl,
-    allowedOrigins: e.ALLOWED_ORIGINS.length ? e.ALLOWED_ORIGINS : [appUrl],
+    // The site's own URL plus this project's Vercel deployment URLs.
+    allowedOrigins: [...new Set([...(e.ALLOWED_ORIGINS.length ? e.ALLOWED_ORIGINS.map(normalizeUrl) : [appUrl]), ...vercelOrigins(present)])],
     port: e.PORT,
     db: {
       url: e.DATABASE_URL,
@@ -215,6 +238,9 @@ export function loadConfig(env = process.env) {
     logLevel: e.LOG_LEVEL,
     errorWebhookUrl: e.ERROR_WEBHOOK_URL,
     demoToolsEnabled: e.DEMO_TOOLS_ENABLED && !live,
+    // Staff 2FA: required in production (and live) unless STAFF_MFA_REQUIRED=false.
+    staffMfaRequired: (production || live) && e.STAFF_MFA_REQUIRED,
+    warnings,
     legalApprovalConfirmed: e.LEGAL_APPROVAL_CONFIRMED,
   });
 }

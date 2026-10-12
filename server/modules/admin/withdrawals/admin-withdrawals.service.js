@@ -96,6 +96,16 @@ export const complete = (req, id, { actualNetworkFee }) =>
     return row;
   });
 
+// Manual payout: staff sent the funds themselves and record the transaction
+// hash; approval (two people above the threshold), processing and completion
+// happen in one step (app.pay_withdrawal_manually).
+export const pay = (req, id, { txHash, reason }) =>
+  act(req, id, 'pay', async (tx) => {
+    const [row] = await tx`select * from app.pay_withdrawal_manually(${id}, ${req.auth.userId}, ${txHash})`;
+    if (row.status === 'completed') await emailUser(tx, row, 'withdrawal_completed', {});
+    return row;
+  }, reason);
+
 export const fail = (req, id, { reason, fundsNotSent }) =>
   act(req, id, 'fail', async (tx) => {
     const [row] = await tx`select * from app.fail_withdrawal(${id}, ${req.auth.userId}, ${reason}, ${fundsNotSent})`;

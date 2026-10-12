@@ -2,8 +2,8 @@
    one file; in development the browser follows them directly. */
 @import url('./base/fonts.css');
 @import url('./base/tokens.css');
-@import url('./themes/light.css');
 @import url('./themes/dark.css');
+@import url('./themes/light.css');
 @import url('./base/reset.css');
 @import url('./base/typography.css');
 @import url('./layout/app-shell.css');
@@ -41,6 +41,9 @@
 @import url('./components/otp.css');
 @import url('./components/finance.css');
 @import url('./components/support.css');
+@import url('./components/orbit-art.css');
 @import url('./animations/motion.css');
+@import url('./effects/aurora.css');
+@import url('./effects/reveal.css');
 @import url('./utilities/utilities.css');
 @import url('./responsive/mobile.css');

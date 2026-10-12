@@ -21,9 +21,11 @@ The dashboard's ledger strip shows exactly these four parts. All of them are com
 
 ## Deposits
 
+**Manual operations (the current setup).** Migration `20261012000300_manual_operations` narrows the site to one route — **USDT on BEP20 (BNB Smart Chain)** — and switches off automatic deposits (setting `deposits.automatic` = false). Users pay to the address staff publish on the deposit page and report the payment; staff check it on the blockchain and credit it (see *Deposit methods published by staff*). Withdrawals are paid by staff from their own wallet and recorded with the transaction hash (see *Processing*). Nothing reaches a balance without a staff decision. The automatic pipeline described next (address pool, signed blockchain events) stays in the server code and its API answers again only if `deposits.automatic` is switched on and assets/networks are re-enabled; the deposit page itself shows only the staff-published methods.
+
 1. The user picks an asset and a network (for example USDT on TRON). The server assigns a deposit address from the **address pool** — addresses are generated offline or by a custody provider and imported by finance staff; the server never holds private keys or seed phrases. For memo networks a shared address is combined with a unique memo.
 2. A deposit request lives for 24 hours (`deposits.request_ttl_hours`); the address stays assigned to the user.
-3. A deposit is **detected** only from a signed blockchain event (Alchemy webhook or a generic HMAC-signed source). A transaction hash typed by the user never credits anything.
+3. A deposit is **detected** only from a signed blockchain event (Alchemy webhook or a generic HMAC-signed source). A transaction hash typed by the user never credits anything by itself (see *Deposit methods* below: staff credit a reported payment after checking it).
 4. Confirmations are counted from the chain tip (job every 5 minutes, plus webhook updates). Required confirmations per network: Bitcoin 3, Ethereum 12, TRON 20.
 5. Wallet screening runs on the sender. A hit sends the deposit to **under review** and raises a high-severity risk flag.
 6. On enough confirmations and a clean screening the deposit is **credited**: `custody → user available`, in one transaction with the referral reward (if any), a notification and a live event.
@@ -31,6 +33,14 @@ The dashboard's ledger strip shows exactly these four parts. All of them are com
 8. A chain reorganisation before crediting marks the deposit **failed** (nothing was credited). A reorganisation after crediting raises a high-severity risk flag and alerts staff — the credit is never silently reversed; any correction is an approved adjustment.
 
 Minimum deposits: USDT-TRC20 10, USDT/USDC-ERC20 20, BTC 0.0005, ETH 0.005.
+
+### Deposit methods published by staff
+
+Instead of personal addresses, staff can publish **deposit methods** (`app.deposit_methods`): one asset/network each, with an address, optional memo, QR image, minimum and instructions per language. While at least one is active the deposit page shows them.
+
+1. The user sends funds and **reports** the payment: amount, optional transaction hash and the wallet it was sent from (`app.submit_manual_deposit`). The report is tied to the signed-in account, so staff see the user's email next to it. The report is a deposit with source `manual` and status **under review**. It posts nothing to the ledger and does not change any balance. A user can have at most 5 open reports; a transaction hash already recorded is refused.
+2. Staff check the transaction on the blockchain and either **credit** it with the amount that actually arrived and the transaction hash (`app.approve_manual_deposit`, then `app.credit_deposit` — the same posting, 7-day hold, referral reward and notifications as an automatic deposit) or **reject** it with a reason (no ledger entry).
+3. A transaction hash can be credited only once per network (unique index), and the generic *approve* decision is refused for reported deposits, so a report can never be credited without a hash.
 
 ### The 7-day rule
 
@@ -40,8 +50,9 @@ Every credited deposit creates a **deposit hold** for 7 days (`funds.deposit_hol
 
 ### Addresses
 
+- With manual operations the user simply types the address into the withdrawal form. The server validates it, saves it to the user's address book (or reuses the saved one) and confirms it at once; the cooldown is 0 hours by default (migration `…000300`). The rules below still apply when the settings are tightened.
 - Users save external addresses (never private keys). The address format is validated per network (Base58Check for TRON/Bitcoin legacy, bech32 for Bitcoin, EIP-55 checksum for Ethereum when mixed case).
-- A new address is confirmed with a 6-digit code sent by email, then waits a **24-hour cooldown** (`withdrawal.new_address_cooldown_hours`) before it can receive funds. Every change is kept in the address history and appears in the user's notifications and security log.
+- A new address is confirmed with a 6-digit code sent by email (setting `withdrawal.address_email_confirmation`; when it is off — the default until outgoing email works — the address is confirmed at once), then waits a **24-hour cooldown** (`withdrawal.new_address_cooldown_hours`) before it can receive funds. Every change is kept in the address history and appears in the user's notifications and security log.
 - Adding an address requires two-factor sign-in (while `withdrawal.require_mfa` is on).
 
 ### Fee quote
@@ -52,7 +63,7 @@ network fee  = current estimate for the network    (USDT-TRC20 1.5, ERC-20 6, BT
 you receive  = amount − platform fee − network fee  (must be > 0)
 ```
 
-Example: withdraw **100 USDT** on TRON → platform fee **3.00**, network fee **1.50**, you receive **95.50 USDT**.
+Example: withdraw **100 USDT** on BEP20 → platform fee **3.00**, network fee **1.00**, you receive **96.00 USDT**.
 
 The browser asks the server for a **quote**; the confirm screen shows the server's numbers, and the request must reference that quote. A quote is valid for 5 minutes and can be used once. The 3% rate is a versioned fee rule; the rule in force is stored on each request, so the fee of every past withdrawal remains provable after a rate change.
 
@@ -77,6 +88,7 @@ pending ──► under_review ──► approved ──► processing ──►
 
 - Finance staff review and approve. At or above the dual-approval threshold (10,000 USDT/USDC, 0.2 BTC, 3 ETH) **two different staff members** must approve, and nobody can approve a request they created or reviewed alone.
 - Processing records the on-chain transaction hash. The request becomes **completed** only when a signed chain event confirms that hash, or a second staff member independently verifies it.
+- **Manual payout** (the current setup): staff send the net amount from their own wallet and press *Mark as paid* with the transaction hash. `app.pay_withdrawal_manually` approves (a second approver is still needed at the threshold), starts processing, records the hash and completes the request in one step; the user gets a notification and an email.
 - Completion books `withdrawal_hold → custody (net) + fee_revenue (3%) + network_fee_recovery`; the network fee actually paid is booked separately so differences are visible.
 - Rejected, cancelled and failed requests release the hold back to available.
 
@@ -84,7 +96,7 @@ pending ──► under_review ──► approved ──► processing ──►
 
 ### Products
 
-A product has: name and summary in all three languages, a written **revenue model** (how returns are actually generated and where funds are held), a **risk disclosure** in every language, term in days (the demo product uses **28 days**), minimum and maximum per position, total capacity, performance fee rate, whether early exit is allowed and its fee, risk level, legal status and legal reference.
+A product has: name and summary in English, Russian and Arabic (Georgian optional — English is shown when it is missing), a written **revenue model** (how returns are actually generated and where funds are held), a **risk disclosure** in each of those languages, term in days (the demo product uses **28 days**), minimum and maximum per position, total capacity, performance fee rate, whether early exit is allowed and its fee, risk level, legal status and legal reference.
 
 A product **cannot be activated** unless its legal status is `approved` and all texts exist in every language. Every change to the terms creates a new immutable **product version**; a position always keeps the terms it was opened under. If terms changed while the user was looking at the old ones, opening fails with `terms_changed` and the new terms are shown.
 

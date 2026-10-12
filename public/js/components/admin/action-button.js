@@ -8,9 +8,11 @@ import { confirmDialog, reasonDialog } from '../modals/confirm-dialog.js';
 import { withMfa } from '../modals/mfa-dialog.js';
 import { toast } from '../notifications/toast.js';
 
-export function actionButton(label, { tone = '', reason = false, confirm = null, run, done, onDone, size = 'sm' } = {}) {
+// `check` runs first and can stop the action (e.g. a required field is empty).
+export function actionButton(label, { tone = '', reason = false, confirm = null, check = null, run, done, onDone, size = 'sm' } = {}) {
   const btn = h('button', { class: ['btn', size ? `btn--${size}` : '', tone ? `btn--${tone}` : ''].filter(Boolean).join(' '), type: 'button' }, label);
   btn.addEventListener('click', async () => {
+    if (check && !check()) return;
     let input = null;
     if (reason) {
       input = await reasonDialog({ title: label, text: typeof reason === 'string' ? reason : undefined, confirmLabel: label, tone: tone === 'danger' ? 'danger' : 'primary' });

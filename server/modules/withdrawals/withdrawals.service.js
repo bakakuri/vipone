@@ -11,6 +11,7 @@ import { explorerTxUrl, getAssetNetwork } from '../assets/assets.repository.js';
 import { assertAccountActive, assertKycFor } from '../compliance/compliance.service.js';
 import { dispatchSoon, queueEmail } from '../notifications/email-outbox.js';
 import { getSetting } from '../settings/settings.service.js';
+import { useWithdrawalAddress } from '../wallets/wallets.service.js';
 import { calculateWithdrawalFee } from './calculate-withdrawal-fee.js';
 
 const AMOUNT_FIELDS = ['amount', 'platformFee', 'networkFee', 'netAmount', 'feeRate', 'actualNetworkFee'];
@@ -24,10 +25,11 @@ function toApi(row) {
   return w;
 }
 
-export async function createQuote(auth, { walletId, amount }) {
+export async function createQuote(auth, { walletId, amount, asset, network, address, memo }, ctx) {
   const sql = getSql();
   assertAccountActive(auth);
   await assertKycFor(sql, auth, 'withdrawal');
+  if (!walletId) walletId = (await useWithdrawalAddress(auth, { asset, network, address, memo }, ctx)).id;
   const [wallet] = await sql`
     select * from app.withdrawal_wallets where id = ${walletId} and user_id = ${auth.userId} and status = 'active'`;
   if (!wallet) throw new AppError('wallet_not_active', { status: 409 });

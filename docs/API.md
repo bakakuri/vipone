@@ -96,6 +96,8 @@ Lists return `{ "items": [ … ], "nextCursor": "…" | null }` inside `data`. P
 | GET | `/deposits` | signed in |  |
 | GET | `/deposits/address` | signed in |  |
 | POST | `/deposits/requests` | signed in | Idempotency-Key |
+| GET | `/deposits/methods` | signed in | published methods and the page notice |
+| POST | `/deposits/manual` | signed in | Idempotency-Key; reports a payment, credits nothing |
 | GET | `/deposits/:id` | signed in |  |
 
 ### Withdrawal addresses
@@ -224,8 +226,13 @@ Lists return `{ "items": [ … ], "nextCursor": "…" | null }` inside `data`. P
 | GET | `/admin/deposits` | staff: `deposits.read` |  |
 | GET | `/admin/deposits/address-pool` | staff: `deposits.read` |  |
 | POST | `/admin/deposits/address-pool/import` | staff: `addresses.manage` |  |
+| GET | `/admin/deposits/methods` | staff: `deposits.read` |  |
+| POST | `/admin/deposits/methods` | staff: `deposit_methods.manage` | body up to 1 MB (QR image) |
+| PATCH | `/admin/deposits/methods/:id` | staff: `deposit_methods.manage` |  |
+| DELETE | `/admin/deposits/methods/:id` | staff: `deposit_methods.manage` | hides a method that has reports |
 | GET | `/admin/deposits/:id` | staff: `deposits.read` |  |
 | POST | `/admin/deposits/:id/review` | staff: `deposits.review` |  |
+| POST | `/admin/deposits/:id/approve-manual` | staff: `deposits.review` | amount, txHash, reason |
 | POST | `/admin/deposits/:id/return` | staff: `deposits.return` |  |
 
 ### Admin — withdrawals

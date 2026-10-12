@@ -73,7 +73,7 @@ export function openMethodEditor({ assets, method = null, onSaved }) {
   const networkField = formField({ label: t('common:fields.network'), control: select([]), id: 'dm-network' });
   function syncNetworks(selected) {
     const asset = assets.find((a) => a.code === assetField.control.value);
-    const nets = asset?.networks || [];
+    const nets = (asset?.networks || []).filter((n) => n.depositEnabled || n.code === selected);
     replace(networkField.control, nets.map((n) => h('option', { value: n.code, selected: n.code === selected }, n.name === n.code ? n.name : `${n.name} (${n.code})`)));
   }
   syncNetworks(m.network);

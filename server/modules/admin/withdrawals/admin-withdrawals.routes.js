@@ -15,6 +15,7 @@ export function adminWithdrawalsRoutes() {
   r.post('/:id/process', requirePermission('withdrawals.process'), id, c.process);
   r.post('/:id/broadcast', requirePermission('withdrawals.process'), id, validate({ body: v.broadcastBody }), c.broadcast);
   r.post('/:id/complete', requirePermission('withdrawals.process'), id, validate({ body: v.completeBody }), c.complete);
+  r.post('/:id/pay', requirePermission('withdrawals.process'), id, validate({ body: v.payBody }), c.pay);
   r.post('/:id/fail', requirePermission('withdrawals.process'), id, validate({ body: v.failBody }), c.fail);
   return r;
 }

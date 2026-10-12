@@ -27,6 +27,9 @@ export async function broadcast(req, res) {
 export async function complete(req, res) {
   sendData(res, await service.complete(req, req.params.id, req.body));
 }
+export async function pay(req, res) {
+  sendData(res, await service.pay(req, req.params.id, req.body));
+}
 export async function fail(req, res) {
   sendData(res, await service.fail(req, req.params.id, req.body));
 }

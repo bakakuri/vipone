@@ -16,6 +16,11 @@ export const adminApi = {
   deposit: (id) => api.get(`/admin/deposits/${id}`),
   reviewDeposit: (id, body) => api.post(`/admin/deposits/${id}/review`, body),
   returnDeposit: (id, body) => api.post(`/admin/deposits/${id}/return`, body),
+  approveManualDeposit: (id, body) => api.post(`/admin/deposits/${id}/approve-manual`, body),
+  depositMethods: () => api.get('/admin/deposits/methods'),
+  createDepositMethod: (body) => api.post('/admin/deposits/methods', body),
+  updateDepositMethod: (id, body) => api.patch(`/admin/deposits/methods/${id}`, body),
+  removeDepositMethod: (id) => api.del(`/admin/deposits/methods/${id}`),
   addressPool: () => api.get('/admin/deposits/address-pool'),
   importAddresses: (body) => api.post('/admin/deposits/address-pool/import', body),
 
