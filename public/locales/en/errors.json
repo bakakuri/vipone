@@ -104,7 +104,7 @@
     "insufficient_confirmations": "Not enough confirmations yet.",
     "tx_hash_already_recorded": "This transaction hash is already recorded.",
     "tx_hash_in_use": "This transaction hash belongs to another operation.",
-    "tx_hash_required": "Enter the transaction ID (hash) of the payment.",
+    "tx_hash_required": "Enter the transaction hash.",
     "nothing_to_return": "There is nothing to return for this deposit.",
     "allocation_exceeds_position_value": "The allocation is larger than the position value.",
     "allocation_incomplete": "The allocation does not cover every eligible position.",
@@ -118,12 +118,7 @@
     "invalid_direction": "That direction is not allowed.",
     "invalid_event_direction": "That blockchain event is not allowed here.",
     "invalid_initial_status": "That status is not allowed.",
-    "invalid_completion_source": "That completion source is not allowed.",
-    "deposit_method_unavailable": "This deposit method is no longer available. Reload the page and choose another one.",
-    "too_many_pending": "You already have 5 payments waiting to be checked. Wait until they are processed.",
-    "duplicate_transaction": "This transaction has already been reported or credited.",
-    "mfa_unavailable": "Two-factor authentication is switched off in the sign-in service. The site owner can turn it on in Supabase: Authentication → Multi-Factor → TOTP.",
-    "mfa_setup_failed": "Two-factor setup could not start. Close this window and try again in a minute."
+    "invalid_completion_source": "That completion source is not allowed."
   },
   "validation": {
     "required": "Fill in this field.",
@@ -152,7 +147,7 @@
     "invalid_rate": "Enter a rate as a decimal between 0 and 1, for example 0.03.",
     "invalid_slug": "Use 3–60 lowercase letters, digits and hyphens.",
     "invalid_date": "Enter a valid date.",
-    "invalid_languages": "English must stay enabled; only en, ru, ar and ka are supported.",
+    "invalid_languages": "English must stay enabled; only en, ru and ar are supported.",
     "out_of_range": "This value is out of the allowed range.",
     "period_invalid": "The end must be after the start.",
     "period_in_future": "The period cannot end in the future.",
@@ -165,6 +160,5 @@
     "expected_stringList": "Enter a comma-separated list.",
     "expected_email": "Enter an email address.",
     "expected_scope": "Choose one of the options."
-  },
-  "setupMfa": "Set up two-factor authentication"
+  }
 }

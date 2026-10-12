@@ -44,8 +44,6 @@ export const depositsApi = {
   get: (id) => api.get(`/deposits/${id}`),
   address: (network) => api.get('/deposits/address', { network }),
   request: (body, idempotencyKey) => api.post('/deposits/requests', body, { idempotencyKey }),
-  methods: () => api.get('/deposits/methods'),
-  reportManual: (body, idempotencyKey) => api.post('/deposits/manual', body, { idempotencyKey }),
 };
 
 export const walletsApi = {

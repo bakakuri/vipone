@@ -1,10 +1,8 @@
 .otp { display: flex; gap: var(--space-2); direction: ltr; justify-content: center; }
 .otp input {
-  width: 50px; height: 60px; text-align: center; font-size: var(--text-xl); font-family: var(--font-mono);
-  border: 1px solid var(--color-line-strong); border-radius: var(--radius-control); background: var(--color-surface-sunken); color: var(--color-ink);
-  transition: border-color var(--duration-base), box-shadow var(--duration-base), transform var(--duration-base) var(--ease-spring);
+  width: 46px; height: 54px; text-align: center; font-size: var(--text-xl); font-family: var(--font-mono);
+  border: 1px solid var(--color-line-strong); border-radius: var(--radius-control); background: var(--color-surface); color: var(--color-ink);
 }
-.otp input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 4px var(--color-focus), 0 0 24px -4px var(--color-accent); transform: translateY(-2px); }
-.otp input:not(:placeholder-shown) { border-color: color-mix(in srgb, var(--color-accent) 50%, transparent); }
+.otp input:focus { border-color: var(--color-accent); box-shadow: var(--focus-ring); }
 .mfa-setup { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-5); align-items: start; }
 .mfa-secret { font-family: var(--font-mono); font-size: var(--text-sm); letter-spacing: 0.08em; overflow-wrap: anywhere; direction: ltr; }

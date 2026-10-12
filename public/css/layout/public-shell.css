@@ -1,72 +1,39 @@
-/* Public pages: a floating glass header, sections and a glass footer. */
+/* Public pages: header, sections and footer. */
 .public-header {
   position: sticky; inset-block-start: 0; z-index: var(--z-sticky);
-  padding: var(--space-3) var(--space-4) 0;
-  view-transition-name: site-header;
-  pointer-events: none;
+  background: color-mix(in srgb, var(--color-canvas) 90%, transparent);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  border-block-end: 1px solid var(--color-line);
 }
 .public-header__inner {
-  pointer-events: auto;
   max-width: var(--container); margin-inline: auto; height: 64px;
-  display: flex; align-items: center; gap: var(--space-6); padding-inline: var(--space-5) var(--space-3);
-  border-radius: var(--radius-round);
-  border: 1px solid transparent;
-  transition: background-color var(--duration-slow) var(--ease-out), border-color var(--duration-slow), box-shadow var(--duration-slow), max-width var(--duration-slow) var(--ease-out), height var(--duration-slow) var(--ease-out);
+  display: flex; align-items: center; gap: var(--space-6); padding-inline: var(--space-6);
 }
-.is-scrolled .public-header__inner {
-  max-width: calc(var(--container) - 80px);
-  height: 58px;
-  background: var(--glass-bg-strong);
-  backdrop-filter: blur(22px) saturate(170%);
-  -webkit-backdrop-filter: blur(22px) saturate(170%);
-  border-color: var(--glass-border);
-  box-shadow: 0 18px 50px -24px rgba(0, 0, 0, 0.7), 0 1px 0 var(--glass-highlight) inset;
-}
-.public-nav { display: flex; gap: var(--space-1); }
-.public-nav a {
-  position: relative; padding: 8px 14px; border-radius: var(--radius-round); white-space: nowrap;
-  color: var(--color-ink-muted); text-decoration: none; font-size: var(--text-sm); font-weight: 500;
-  transition: color var(--duration-base), background-color var(--duration-base);
-}
-.public-nav a:hover { color: var(--color-ink); background: var(--color-surface-hover); }
-.public-nav a[aria-current='page'] { color: var(--color-ink); background: var(--color-surface-hover); }
-.public-nav a[aria-current='page']::after {
-  content: ''; position: absolute; inset-inline: 30%; inset-block-end: 3px; height: 2px; border-radius: 2px;
-  background: var(--grad-accent); box-shadow: 0 0 10px var(--color-accent);
-}
+.public-nav { display: flex; gap: var(--space-5); }
+.public-nav a { color: var(--color-ink-muted); text-decoration: none; font-size: var(--text-sm); font-weight: 500; }
+.public-nav a:hover, .public-nav a[aria-current='page'] { color: var(--color-ink); }
 .public-header__actions { margin-inline-start: auto; display: flex; align-items: center; gap: var(--space-2); }
 .public-header .public-header__menu { display: none; }
 
-.scroll-progress {
-  position: fixed; inset-block-start: 0; inset-inline: 0; height: 2px; z-index: calc(var(--z-sticky) + 1);
-  background: var(--grad-accent); transform-origin: left center; transform: scaleX(var(--progress, 0));
-  box-shadow: 0 0 12px var(--color-accent); pointer-events: none;
-}
-[dir='rtl'] .scroll-progress { transform-origin: right center; }
-
 .public-main { min-height: 60vh; }
-.section { position: relative; padding-block: var(--space-24); }
-.section--tight { padding-block: var(--space-12); }
+.section { padding-block: var(--space-16); }
+.section--tight { padding-block: var(--space-10); }
 .section__inner { max-width: var(--container); margin-inline: auto; padding-inline: var(--space-6); }
 .section__inner--narrow { max-width: var(--container-narrow); }
-.section--alt { background: linear-gradient(180deg, transparent, var(--color-surface-sunken) 20%, var(--color-surface-sunken) 80%, transparent); }
-.section__header { display: flex; flex-direction: column; gap: var(--space-4); margin-block-end: var(--space-12); max-width: 64ch; }
-.section__header h1, .section__header h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); letter-spacing: var(--tracking-display); line-height: 1.08; }
+.section--alt { background: var(--color-surface); border-block: 1px solid var(--color-line); }
+.section__header { display: flex; flex-direction: column; gap: var(--space-3); margin-block-end: var(--space-8); max-width: 62ch; }
 .section__header p { color: var(--color-ink-muted); font-size: var(--text-md); }
 
-.public-footer { position: relative; margin-block-start: var(--space-16); background: var(--glass-bg); border-block-start: 1px solid var(--glass-border); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
-.public-footer::before {
-  content: ''; position: absolute; inset-inline: 10%; inset-block-start: -1px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-accent), var(--color-accent-2), transparent);
-}
+.public-footer { background: var(--color-surface); border-block-start: 1px solid var(--color-line); }
 .public-footer__inner {
-  max-width: var(--container); margin-inline: auto; padding: var(--space-16) var(--space-6) var(--space-10);
-  display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: var(--space-10);
+  max-width: var(--container); margin-inline: auto; padding: var(--space-12) var(--space-6) var(--space-8);
+  display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: var(--space-8);
 }
-.public-footer h2 { font-size: var(--text-sm); margin-block-end: var(--space-4); color: var(--color-ink); }
-.public-footer ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
-.public-footer a { color: var(--color-ink-muted); text-decoration: none; font-size: var(--text-sm); transition: color var(--duration-fast), padding var(--duration-base) var(--ease-out); }
-.public-footer a:hover { color: var(--color-ink); padding-inline-start: 4px; }
+.public-footer h2 { font-size: var(--text-sm); margin-block-end: var(--space-3); }
+.public-footer ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.public-footer a { color: var(--color-ink-muted); text-decoration: none; font-size: var(--text-sm); }
+.public-footer a:hover { color: var(--color-ink); }
 .public-footer__note {
   max-width: var(--container); margin-inline: auto; padding: var(--space-6);
   border-block-start: 1px solid var(--color-line);
@@ -74,7 +41,7 @@
 }
 .public-footer__note p { max-width: none; }
 .public-header__prefs { display: inline-flex; align-items: center; gap: var(--space-1); }
-.drawer__prefs { padding-block: var(--space-3); border-block: 1px solid var(--color-line); }
+.drawer__prefs { padding-block: var(--space-2); border-block: 1px solid var(--color-line); }
 @media (max-width: 560px) {
   .public-header__prefs { display: none; }
 }

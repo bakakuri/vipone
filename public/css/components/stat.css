@@ -1,14 +1,7 @@
 .stat { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
 .stat__label { font-size: var(--text-sm); color: var(--color-ink-muted); display: flex; align-items: center; gap: var(--space-1); }
-.stat__value { font-size: var(--text-xl); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.15; letter-spacing: -0.02em; }
+.stat__value { font-size: var(--text-xl); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.15; }
 .stat__value--lg { font-size: var(--text-2xl); }
 .stat__meta { font-size: var(--text-xs); color: var(--color-ink-subtle); }
-.stat-card {
-  position: relative; isolation: isolate; overflow: hidden;
-  padding: var(--space-6); border-radius: var(--radius-panel);
-  background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--shadow-raised);
-  backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
-}
-.stat-card .stat__value { background: linear-gradient(180deg, var(--color-ink), color-mix(in srgb, var(--color-ink) 70%, var(--color-accent))); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.stat-card.is-updated .stat__value { animation: value-flash 1200ms var(--ease-out); }
-.stat-card.is-updated { animation: card-flash 1200ms var(--ease-out); }
+.stat-card { padding: var(--space-5); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-panel); }
+.stat-card.is-updated .stat__value { animation: value-flash 900ms var(--ease-out); }

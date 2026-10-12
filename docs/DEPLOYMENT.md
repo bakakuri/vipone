@@ -6,7 +6,7 @@ Time needed: about an hour for a demo deployment. A live (real-money) deployment
 
 - the repository on GitHub (or GitLab/Bitbucket)
 - a **Supabase** project
-- a **Vercel** project. Hobby works for a demo (the 5-minute jobs then run from Supabase pg_cron, step 6). Vercel's Hobby plan is for personal, non-commercial use — a platform taking customers' money needs **Pro**
+- a **Vercel** project — **Pro plan** if you want Vercel Cron every 5 minutes (Hobby allows only daily cron jobs; use pg_cron instead, step 6)
 - an email provider for transactional email (Resend or Postmark) and a domain you can add DNS records to
 - for live mode only: Sumsub (KYC), a wallet-screening API, Alchemy (EVM webhooks) and RPC endpoints, CoinGecko API key, a custody setup
 
@@ -23,11 +23,7 @@ Pick the **same region** for both: e.g. Supabase `eu-central-1` (Frankfurt) with
 
 ## 2. Database migrations
 
-**Automatic (default):** every Vercel build runs `node scripts/migrate.js && node scripts/seed-demo.js && npm run build` (see `vercel.json`). Add `MIGRATION_DATABASE_URL` (session pooler, port 5432) to the Vercel environment variables and the first deployment creates the schema; in demo mode it also adds the demo product and address pools. The build fails, with the reason in the build log, if a migration fails.
-
-**Without a terminal:** `node scripts/bundle-migrations.js` writes `dist/sql/ledgerline-install-part-1-of-4.sql` … `part-4-of-4.sql`. Paste each into Supabase → SQL Editor → Run, in order. They record the same checksums as the migration runner, so later deployments continue from there. Part 1 removes an earlier incomplete install but refuses to touch a database that already has accounts.
-
-**Manual alternative**, from your machine:
+From your machine:
 
 ```bash
 npm install
@@ -43,7 +39,6 @@ Check: in the SQL editor, `select * from app.verify_ledger_integrity();` returns
 
 **Authentication → Sign In / Providers → Email**
 - Enable email provider, **Confirm email: on**, Secure email change: on, Secure password change: on
-- No working email yet (no Resend/Postmark, or Supabase's built-in mailer refuses your addresses)? Turn **Confirm email off**: new users are signed in straight after registering. Turn it back on once email works. The app's own address codes are controlled separately by the setting `withdrawal.address_email_confirmation` (off by default).
 - Minimum password length: 12 (the server enforces the full policy anyway)
 
 **Authentication → URL Configuration**
@@ -68,7 +63,7 @@ Check: in the SQL editor, `select * from app.verify_ledger_integrity();` returns
 <p>If you did not ask for this, ignore this email — your password stays the same.</p>
 ```
 
-(For Russian, Arabic and Georgian users you can add the text in every language to the same template; the app's own emails — address codes, deposits, withdrawals — are sent in each user's language.)
+(For Russian and Arabic users you can add the text in all three languages to the same template; the app's own emails — address codes, deposits, withdrawals — are sent in each user's language.)
 
 **Authentication → Multi-Factor**: TOTP enabled.
 
@@ -99,7 +94,7 @@ Add a DMARC record (`v=DMARC1; p=quarantine; rua=mailto:…`) for deliverability
 | `NODE_ENV` | `production` |
 | `APP_MODE` | `demo` (until everything for live is ready) |
 | `APP_NAME` | your brand (max 40 characters) |
-| `APP_URL` | `https://your-domain.com` (optional on Vercel: without it the project's production domain is used; a missing `https://` is added) |
+| `APP_URL` | `https://your-domain.com` |
 | `DATABASE_URL` | transaction pooler URL (port 6543) |
 | `DB_POOL_MAX` | `3`–`5` |
 | `AUTH_PROVIDER` | `supabase` |
@@ -111,7 +106,6 @@ Add a DMARC record (`v=DMARC1; p=quarantine; rua=mailto:…`) for deliverability
 | `ALCHEMY_WEBHOOK_SIGNING_KEYS`, `ALCHEMY_NETWORK_MAP`, `CHAIN_RPC_URLS` | step 7 |
 | `ERROR_WEBHOOK_URL` | optional Slack/Teams incoming webhook for error alerts |
 | `DEMO_TOOLS_ENABLED` | `true` only for a demo deployment |
-| `STAFF_MFA_REQUIRED` | leave unset (staff need 2FA in production); `false` only outside live mode, e.g. while setting up a demo |
 
 The full list with explanations is in `.env.example`. The server validates the combination at start-up and refuses unsafe ones (the error appears in the function log).
 
@@ -121,19 +115,14 @@ The full list with explanations is in `.env.example`. The server validates the c
 
 ## 6. Scheduled jobs
 
-The `frequent` group (confirmations, maturities, referral rewards, expiries, email queue) should run **every 5 minutes**; the `daily` group once a day.
+**Vercel Cron (Pro plan)** — already configured in `vercel.json`:
 
-**Vercel Hobby (default `vercel.json`)** — Hobby allows cron jobs at most once a day, so `vercel.json` calls both groups once a day (03:00 and 03:30 UTC) as a backup. Run the 5-minute schedule from Supabase:
+| Path | Schedule |
+| --- | --- |
+| `/api/v1/jobs/group/frequent` | every 5 minutes |
+| `/api/v1/jobs/group/daily` | 03:00 UTC |
 
-1. Supabase → Database → Extensions: enable **pg_cron** and **pg_net**.
-2. SQL editor, once, with your values:
-   ```sql
-   select vault.create_secret('https://your-domain.com', 'ledgerline_app_url');
-   select vault.create_secret('<same value as CRON_SECRET in Vercel>', 'ledgerline_cron_secret');
-   ```
-3. Paste and run `database/optional/pg_cron.sql`.
-
-**Vercel Pro** — let Vercel call the frequent group itself: `CRON_PLAN=pro npm run vercel:config`, commit `vercel.json` (frequent every 5 minutes, daily at 03:00 UTC), and skip pg_cron.
+**Hobby plan or no Vercel Cron** — use Supabase pg_cron + pg_net: open `database/optional/pg_cron.sql`, put your URL in it, store `CRON_SECRET` in Supabase Vault as the file explains, run it in the SQL editor. Remove the `crons` block from `vercel.json` (or keep it as a daily backup).
 
 Check **Admin → System**: job runs appear every 5 minutes.
 

@@ -6,7 +6,6 @@ import { authApi } from '../api/endpoints.js';
 import { definePage } from '../core/page.js';
 import { h, icon, replace } from '../core/dom.js';
 import { query } from '../core/url.js';
-import { redirectAfterLogin, setSession } from '../auth/session.js';
 import { getLocale, t } from '../i18n/i18n.js';
 import { countryOptions } from '../utils/countries.js';
 import { checkPassword } from '../validation/password-rules.js';
@@ -99,18 +98,6 @@ definePage({
       replace(notice);
       try {
         await authApi.register(values);
-        // When the auth service does not require email confirmation the new
-        // account can sign in straight away; otherwise show "check your email".
-        try {
-          const result = await authApi.login({ email: values.email, password: values.password });
-          setSession(result);
-          if (!result.mfaRequired) {
-            redirectAfterLogin();
-            return;
-          }
-        } catch {
-          /* email confirmation required (or the address was already registered) */
-        }
         done(values.email);
       } catch (err) {
         if (err.code === 'referral_code_invalid') ref.setError(errorMessage(err));

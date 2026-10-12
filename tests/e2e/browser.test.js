@@ -85,13 +85,13 @@ test('theme switcher and language switcher work and are remembered', async () =>
   const { context, page, errors } = await newPage({ colorScheme: 'light' });
   await page.goto(`${app.baseUrl}/faq`);
   await page.waitForSelector('.public-header');
-  assert.equal(await page.getAttribute('html', 'data-theme'), 'dark', 'dark is the default theme');
-  await page.click('.public-header__prefs .dropdown:nth-of-type(2) > button');
-  await page.click('.dropdown__item:has-text("Light")');
   assert.equal(await page.getAttribute('html', 'data-theme'), 'light');
+  await page.click('.public-header__prefs .dropdown:nth-of-type(2) > button');
+  await page.click('.dropdown__item:has-text("Dark")');
+  assert.equal(await page.getAttribute('html', 'data-theme'), 'dark');
   await page.reload();
-  assert.equal(await page.getAttribute('html', 'data-theme'), 'light', 'theme remembered before first paint');
-  await page.screenshot({ path: path.join(SHOTS, 'faq-light.png') });
+  assert.equal(await page.getAttribute('html', 'data-theme'), 'dark', 'theme remembered before first paint');
+  await page.screenshot({ path: path.join(SHOTS, 'faq-dark.png') });
   await page.click('.public-header__prefs .dropdown:nth-of-type(1) > button');
   await page.click('.dropdown__item[lang="ru"]');
   await page.waitForURL(/\/ru\/faq$/);

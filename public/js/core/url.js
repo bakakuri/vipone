@@ -19,10 +19,10 @@ export function safeRedirect(target, fallback = '/dashboard') {
 }
 
 export function localePrefix() {
-  const m = location.pathname.match(/^\/(ru|ar|ka)(?=\/|$)/);
+  const m = location.pathname.match(/^\/(ru|ar)(?=\/|$)/);
   return m ? m[1] : null;
 }
 
 export function pathWithoutLocale() {
-  return location.pathname.replace(/^\/(ru|ar|ka)(?=\/|$)/, '') || '/';
+  return location.pathname.replace(/^\/(ru|ar)(?=\/|$)/, '') || '/';
 }

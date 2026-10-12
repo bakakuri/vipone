@@ -22,7 +22,7 @@ export function pageHtml({ page, area, titleKey, title, description, description
   <title>${title} · Ledgerline</title>${metaDescription}
   <meta name="robots" content="${indexable ? 'index, follow' : 'noindex, nofollow'}">
   <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#05070d">
+  <meta name="theme-color" content="#1f6f63">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/assets/icons/app-icon-180.png">
   <link rel="manifest" href="/manifest.webmanifest">
@@ -33,7 +33,6 @@ export function pageHtml({ page, area, titleKey, title, description, description
   <script type="module" src="/js/pages/${page}.js"></script>
 </head>
 <body class="area-${area}">
-  <div class="aurora" aria-hidden="true"><span class="aurora__blob aurora__blob--1"></span><span class="aurora__blob aurora__blob--2"></span><span class="aurora__blob aurora__blob--3"></span><span class="aurora__grid"></span><span class="aurora__grain"></span><canvas class="aurora__particles"></canvas></div>
   <a class="skip-link" href="#main" data-i18n="common:a11y.skipToContent">Skip to content</a>
   <main id="main" tabindex="-1">
     <div id="page" class="${SHELL_CLASS[area]}">${content ?? SKELETON}

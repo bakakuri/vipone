@@ -95,13 +95,8 @@ export async function releaseHolds(app, userId) {
 export async function addConfirmedWallet(app, client, { asset = 'USDT', network = 'TRON', address = tronAddress(), label = 'Main' } = {}) {
   const added = await client.post('/api/v1/wallets', { label, asset, network, address });
   if (added.status !== 201) throw new Error(`wallet add failed: ${JSON.stringify(added.body)}`);
-  let wallet = added.data;
-  // Email codes are optional (setting withdrawal.address_email_confirmation).
-  if (wallet.status !== 'active') {
-    const confirmed = await client.post(`/api/v1/wallets/${added.data.id}/confirm`, { code: added.data.devCode });
-    if (confirmed.status !== 200) throw new Error(`wallet confirm failed: ${JSON.stringify(confirmed.body)}`);
-    wallet = confirmed.data;
-  }
+  const confirmed = await client.post(`/api/v1/wallets/${added.data.id}/confirm`, { code: added.data.devCode });
+  if (confirmed.status !== 200) throw new Error(`wallet confirm failed: ${JSON.stringify(confirmed.body)}`);
   await app.sql`update app.withdrawal_wallets set usable_from = now() - interval '1 second' where id = ${added.data.id}`;
-  return wallet;
+  return confirmed.data;
 }

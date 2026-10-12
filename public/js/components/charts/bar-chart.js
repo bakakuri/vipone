@@ -20,15 +20,11 @@ export function barChart({ categories, series, height = 220, formatX = String, l
     categories.map((_, i) =>
       series.map((s, j) => {
         const v = Number(s.values[i]) || 0;
-        const bar = svg('rect', { class: `chart__bar ${s.className || ''}`, x: pad.left + groupW * i + 3 + barW * j, y: y(v), width: barW - 1, height: Math.max(0, height - pad.bottom - y(v)), rx: Math.min(4, barW / 3) },
+        return svg('rect', { class: `chart__bar ${s.className || ''}`, x: pad.left + groupW * i + 3 + barW * j, y: y(v), width: barW - 1, height: Math.max(0, height - pad.bottom - y(v)), rx: 2 },
           svg('title', {}, `${s.name}: ${v}`));
-        bar.style.setProperty('animation-delay', `${Math.min(i * 25, 600)}ms`);
-        return bar;
       }),
     ),
   );
-  const wrap = h('div', { class: 'chart', dir: 'ltr' }, chart,
-    h('div', { class: 'chart__legend' }, series.map((s) => h('span', {}, h('i', { style: { background: s.swatch || 'var(--color-accent)', color: s.swatch || 'var(--color-accent)' } }), s.name))));
-  requestAnimationFrame(() => wrap.classList.add('is-drawn'));
-  return wrap;
+  return h('div', { class: 'chart', dir: 'ltr' }, chart,
+    h('div', { class: 'chart__legend' }, series.map((s) => h('span', {}, h('i', { style: { background: s.swatch || 'var(--color-accent)' } }), s.name))));
 }

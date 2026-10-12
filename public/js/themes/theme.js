@@ -1,4 +1,4 @@
-// Dark / light / system theme. The choice is a visual preference stored in
+// Light / dark / system theme. The choice is a visual preference stored in
 // localStorage (and in the profile when signed in); the initial value is
 // applied before paint by core/boot-theme.js.
 import { emit } from '../core/events.js';
@@ -6,10 +6,9 @@ import { getPref, setPref } from '../core/storage.js';
 
 const media = window.matchMedia('(prefers-color-scheme: dark)');
 
-// Dark is the default; "system" follows the operating system.
 export function getThemePreference() {
   const pref = getPref('theme');
-  return pref === 'light' || pref === 'dark' || pref === 'system' ? pref : 'dark';
+  return pref === 'light' || pref === 'dark' ? pref : 'system';
 }
 
 export function resolvedTheme(pref = getThemePreference()) {
@@ -23,7 +22,7 @@ function apply() {
 }
 
 export function setTheme(preference) {
-  setPref('theme', preference);
+  setPref('theme', preference === 'system' ? null : preference);
   apply();
 }
 

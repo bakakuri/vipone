@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "node scripts/migrate.js && node scripts/seed-demo.js && npm run build",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "cleanUrls": false,
   "trailingSlash": false,
@@ -28,10 +28,6 @@
       "destination": "/pages/ar/home.html"
     },
     {
-      "source": "/ka",
-      "destination": "/pages/ka/home.html"
-    },
-    {
       "source": "/how-it-works",
       "destination": "/pages/how-it-works.html"
     },
@@ -42,10 +38,6 @@
     {
       "source": "/ar/how-it-works",
       "destination": "/pages/ar/how-it-works.html"
-    },
-    {
-      "source": "/ka/how-it-works",
-      "destination": "/pages/ka/how-it-works.html"
     },
     {
       "source": "/products",
@@ -60,10 +52,6 @@
       "destination": "/pages/ar/products.html"
     },
     {
-      "source": "/ka/products",
-      "destination": "/pages/ka/products.html"
-    },
-    {
       "source": "/risk-disclosure",
       "destination": "/pages/risk-disclosure.html"
     },
@@ -74,10 +62,6 @@
     {
       "source": "/ar/risk-disclosure",
       "destination": "/pages/ar/risk-disclosure.html"
-    },
-    {
-      "source": "/ka/risk-disclosure",
-      "destination": "/pages/ka/risk-disclosure.html"
     },
     {
       "source": "/faq",
@@ -92,10 +76,6 @@
       "destination": "/pages/ar/faq.html"
     },
     {
-      "source": "/ka/faq",
-      "destination": "/pages/ka/faq.html"
-    },
-    {
       "source": "/contact",
       "destination": "/pages/contact.html"
     },
@@ -106,10 +86,6 @@
     {
       "source": "/ar/contact",
       "destination": "/pages/ar/contact.html"
-    },
-    {
-      "source": "/ka/contact",
-      "destination": "/pages/ka/contact.html"
     },
     {
       "source": "/sitemap",
@@ -124,10 +100,6 @@
       "destination": "/pages/ar/sitemap.html"
     },
     {
-      "source": "/ka/sitemap",
-      "destination": "/pages/ka/sitemap.html"
-    },
-    {
       "source": "/legal/terms",
       "destination": "/pages/legal/terms.html"
     },
@@ -138,10 +110,6 @@
     {
       "source": "/ar/legal/terms",
       "destination": "/pages/ar/legal/terms.html"
-    },
-    {
-      "source": "/ka/legal/terms",
-      "destination": "/pages/ka/legal/terms.html"
     },
     {
       "source": "/legal/privacy",
@@ -156,10 +124,6 @@
       "destination": "/pages/ar/legal/privacy.html"
     },
     {
-      "source": "/ka/legal/privacy",
-      "destination": "/pages/ka/legal/privacy.html"
-    },
-    {
       "source": "/legal/cookies",
       "destination": "/pages/legal/cookies.html"
     },
@@ -170,10 +134,6 @@
     {
       "source": "/ar/legal/cookies",
       "destination": "/pages/ar/legal/cookies.html"
-    },
-    {
-      "source": "/ka/legal/cookies",
-      "destination": "/pages/ka/legal/cookies.html"
     },
     {
       "source": "/login",
@@ -749,12 +709,12 @@
   ],
   "crons": [
     {
-      "path": "/api/v1/jobs/group/daily",
-      "schedule": "0 3 * * *"
+      "path": "/api/v1/jobs/group/frequent",
+      "schedule": "*/5 * * * *"
     },
     {
-      "path": "/api/v1/jobs/group/frequent",
-      "schedule": "30 3 * * *"
+      "path": "/api/v1/jobs/group/daily",
+      "schedule": "0 3 * * *"
     }
   ]
 }

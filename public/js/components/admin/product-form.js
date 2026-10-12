@@ -11,7 +11,7 @@ import { setBusy, showServerErrors } from '../forms/form-validation.js';
 import { openModal } from '../modals/modal.js';
 import { toast } from '../notifications/toast.js';
 
-const LANGS = ['en', 'ru', 'ar', 'ka'];
+const LANGS = ['en', 'ru', 'ar'];
 
 function localizedFields(name, label, { multiline = false, value = {} } = {}) {
   const fields = Object.fromEntries(LANGS.map((l) => {

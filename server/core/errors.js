@@ -44,8 +44,6 @@ const STATUS_BY_CODE = {
   mfa_setup_required: 403,
   mfa_already_enabled: 409,
   mfa_not_enabled: 409,
-  mfa_unavailable: 503,
-  mfa_setup_failed: 422,
   code_invalid: 422,
   code_expired: 422,
   too_many_attempts: 429,

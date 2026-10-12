@@ -1,4 +1,4 @@
-// Announcements: written in English, Russian and Arabic (Georgian optional), delivered to every active
+// Announcements: written in all three languages, delivered to every active
 // account as an in-app notification.
 import { adminApi } from '../../api/admin-endpoints.js';
 import { definePage } from '../../core/page.js';
@@ -14,9 +14,7 @@ import { pageHeader } from '../../components/misc/page-header.js';
 import { confirmDialog } from '../../components/modals/confirm-dialog.js';
 import { toast } from '../../components/notifications/toast.js';
 
-const LANGS = ['en', 'ru', 'ar', 'ka'];
-// Georgian is optional: readers without a Georgian text see the English one.
-const REQUIRED = ['en', 'ru', 'ar'];
+const LANGS = ['en', 'ru', 'ar'];
 
 definePage({
   id: 'admin-announcements',
@@ -47,8 +45,8 @@ definePage({
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const value = (fields) => Object.fromEntries(LANGS.map((l) => [l, fields[l].control.value.trim()]));
-      const missing = REQUIRED.filter((l) => !titles[l].control.value.trim() || !bodies[l].control.value.trim());
-      REQUIRED.forEach((l) => {
+      const missing = LANGS.filter((l) => !titles[l].control.value.trim() || !bodies[l].control.value.trim());
+      LANGS.forEach((l) => {
         titles[l].setError(titles[l].control.value.trim() ? '' : t('errors:validation.required'));
         bodies[l].setError(bodies[l].control.value.trim() ? '' : t('errors:validation.required'));
       });

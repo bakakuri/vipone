@@ -29,9 +29,6 @@ export function createApp({ beforeApi } = {}) {
   if (beforeApi) beforeApi(app);
 
   app.use('/api', noStore());
-  // Deposit methods carry an uploaded QR image (a data URL of at most 700 kB);
-  // everything else keeps the small default limit.
-  app.use('/api/v1/admin/deposits/methods', express.json({ limit: '1mb' }));
   app.use(
     '/api',
     express.json({

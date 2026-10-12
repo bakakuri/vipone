@@ -7,7 +7,7 @@ A crypto investment platform built around one rule: **every number a person sees
 - Database: Supabase PostgreSQL (schema `app`), Row Level Security on every table, money in `NUMERIC(38,18)`.
 - Sign-in: Supabase Auth, called only from the server; sessions live in `HttpOnly` cookies.
 - Live updates: Supabase Realtime private channels (Server-Sent Events fallback for local development).
-- Languages: English, Russian, Arabic (full right-to-left layout), Georgian. Light and dark themes.
+- Languages: English, Russian, Arabic (full right-to-left layout). Light and dark themes.
 
 > **Demo mode is the default.** The platform starts with `APP_MODE=demo`: every page shows a demo banner and balances have no value. `APP_MODE=live` refuses to start until KYC, wallet screening, a real email provider, market prices, blockchain webhooks and `LEGAL_APPROVAL_CONFIRMED=true` are configured. Operating an investment service with other people's money needs licences in most countries (for example MiCA in the EU). See [docs/SECURITY.md](docs/SECURITY.md) and [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
@@ -15,7 +15,7 @@ A crypto investment platform built around one rule: **every number a person sees
 
 | Area | Pages |
 | --- | --- |
-| Public | home, how it works, products, risk disclosure, FAQ, contact, sitemap, terms, privacy, cookies — pre-rendered in `/`, `/ru/…`, `/ar/…`, `/ka/…` with `hreflang` |
+| Public | home, how it works, products, risk disclosure, FAQ, contact, sitemap, terms, privacy, cookies — pre-rendered in `/`, `/ru/…`, `/ar/…` with `hreflang` |
 | Account | sign in (with two-factor), registration, email confirmation, password reset |
 | Cabinet | dashboard, deposit, investments, earnings, withdrawals, wallets, transaction history (CSV export), referrals, notifications, profile, security, support, help centre |
 | Admin | overview, users, user detail, deposits, withdrawals, investments and results, referrals, treasury and reconciliation, four-eyes approvals, settings and fees, support inbox, announcements, audit log, system health |
@@ -51,12 +51,12 @@ Short version — the full checklist is in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.
 | Command | What it does |
 | --- | --- |
 | `npm run dev` | API + pages on one local server |
-| `npm run build` | Pre-renders public pages in four languages, writes `dist/`, `sitemap.xml`, `robots.txt` |
+| `npm run build` | Pre-renders public pages in three languages, writes `dist/`, `sitemap.xml`, `robots.txt` |
 | `npm run vercel:config` | Regenerates `vercel.json` from `server/config/site-routes.js` |
 | `npm run db:migrate` / `db:migrate:local` | Applies `supabase/migrations` (checksummed, never edited after applying) |
 | `npm run db:seed:demo` | Demo data — refuses to run with `APP_MODE=live` |
 | `npm run admin:grant -- <email> <role>` | Grants `support`, `finance`, `compliance` or `super_admin` |
-| `npm run check:i18n` | Every key used in code exists in all four languages |
+| `npm run check:i18n` | Every key used in code exists in all three languages |
 | `npm test` | Unit, integration, security and browser tests (see below) |
 | `node scripts/create-page.js <name>` | Scaffolds a new page (HTML shell, JS module, CSS); then add its route to `server/config/site-routes.js` |
 
@@ -111,4 +111,4 @@ docs/                        everything below
 
 ## Licence and third-party code
 
-Application code: all rights reserved by the project owner (add your own licence). Vendored: `decimal.js` (MIT, `public/vendor/decimal.LICENCE.md`), QR Code generator by Project Nayuki (MIT, header of `public/vendor/qrcodegen.js`). Fonts: IBM Plex Sans, Sans Arabic and Mono, and Noto Sans Georgian (all SIL Open Font Licence 1.1), self-hosted in `public/assets/fonts`.
+Application code: all rights reserved by the project owner (add your own licence). Vendored: `decimal.js` (MIT, `public/vendor/decimal.LICENCE.md`), QR Code generator by Project Nayuki (MIT, header of `public/vendor/qrcodegen.js`). Fonts: IBM Plex Sans, Sans Arabic and Mono (SIL Open Font Licence 1.1), self-hosted in `public/assets/fonts`.

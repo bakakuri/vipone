@@ -1,4 +1,4 @@
-// The site as a browser sees it: every page URL (and its /ru, /ar, /ka versions)
+// The site as a browser sees it: every page URL (and its /ru, /ar versions)
 // returns the page with security headers; robots.txt and sitemap.xml; the
 // public configuration and asset list; no-store on API responses.
 import assert from 'node:assert/strict';
@@ -49,18 +49,7 @@ test('robots.txt keeps private areas out of search engines; sitemap lists locali
   const sitemap = await (await fetch(`${app.baseUrl}/sitemap.xml`)).text();
   assert.match(sitemap, /<loc>[^<]*\/ar\/how-it-works<\/loc>/);
   assert.match(sitemap, /hreflang="ru"/);
-  assert.match(sitemap, /hreflang="ka"/);
-  assert.match(sitemap, /<loc>[^<]*\/ka\/faq<\/loc>/);
   assert.doesNotMatch(sitemap, /\/dashboard|\/admin/);
-});
-
-test('Georgian: profile language and emails', async () => {
-  const user = await registerAndLogin(app, { locale: 'ka' });
-  const me = (await user.client.get('/api/v1/profile')).data;
-  assert.equal(me.locale ?? me.profile?.locale, 'ka');
-  const mail = app.emails().find((m) => m.to === user.email);
-  assert.ok(mail, 'an email was sent');
-  assert.match(mail.subject, /[\u10D0-\u10FF]/, 'the email is written in Georgian');
 });
 
 test('public configuration exposes no secrets and marks demo mode', async () => {

@@ -17,7 +17,6 @@ import { applyTranslations } from '../i18n/apply-translations.js';
 import { initI18n, setLocale, t } from '../i18n/i18n.js';
 import { startLive } from '../services/live-connection.js';
 import { initTheme } from '../themes/theme.js';
-import { initEffects } from '../effects/index.js';
 import { h, replace } from './dom.js';
 import { installErrorReporter } from './error-reporter.js';
 import { listen } from './events.js';
@@ -36,7 +35,7 @@ function markupNamespaces() {
 let configPromise;
 export function loadConfig() {
   if (!configPromise) {
-    configPromise = publicApi.config().catch(() => ({ appName: 'Ledgerline', mode: 'demo', languages: ['en', 'ru', 'ar', 'ka'], live: { enabled: false } }));
+    configPromise = publicApi.config().catch(() => ({ appName: 'Ledgerline', mode: 'demo', languages: ['en', 'ru', 'ar'], live: { enabled: false } }));
   }
   return configPromise;
 }
@@ -72,7 +71,7 @@ export async function definePage(spec) {
   if (auth === 'admin' && !user.roles?.length) return location.replace('/dashboard');
 
   // A signed-in user's saved language follows them across devices.
-  if (user?.locale && !getPref('locale') && !/^\/(ru|ar|ka)(\/|$)/.test(location.pathname) && user.locale !== document.documentElement.lang) {
+  if (user?.locale && !getPref('locale') && !/^\/(ru|ar)(\/|$)/.test(location.pathname) && user.locale !== document.documentElement.lang) {
     await setLocale(user.locale);
   }
 
@@ -99,17 +98,14 @@ export async function definePage(spec) {
   }
   if ((area === 'app' || area === 'admin') && session.mfaRequired) page.prepend(mfaBanner());
   page.classList.add('page-enter');
-  // The entrance cascade plays once; later re-renders (live updates) do not replay it.
-  setTimeout(() => page.classList.remove('page-enter'), 1800);
-  initEffects({ area });
 
   // Switching language re-renders the whole page in the new language. Signed-in
   // users' choice is saved to the profile (emails use it too). Public pages
-  // that have pre-rendered /ru, /ar and /ka versions navigate to that URL.
+  // that have pre-rendered /ru and /ar versions navigate to that URL.
   listen('locale:changed', async ({ locale }) => {
     if (user) await profileApi.update({ locale }).catch(() => {});
     if (document.documentElement.dataset.localized === 'true') {
-      const path = location.pathname.replace(/^\/(ru|ar|ka)(?=\/|$)/, '') || '/';
+      const path = location.pathname.replace(/^\/(ru|ar)(?=\/|$)/, '') || '/';
       const target = locale === 'en' ? path : `/${locale}${path === '/' ? '' : path}`;
       location.assign(target + location.search + location.hash);
     } else {

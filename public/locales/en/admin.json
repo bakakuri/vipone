@@ -27,18 +27,8 @@
     "audit": "Audit log",
     "system": "System"
   },
-  "roles": {
-    "support": "Support",
-    "finance": "Finance",
-    "compliance": "Compliance",
-    "super_admin": "Super administrator"
-  },
-  "kyc": {
-    "none": "Not started",
-    "pending": "Pending",
-    "approved": "Verified",
-    "rejected": "Rejected"
-  },
+  "roles": { "support": "Support", "finance": "Finance", "compliance": "Compliance", "super_admin": "Super administrator" },
+  "kyc": { "none": "Not started", "pending": "Pending", "approved": "Verified", "rejected": "Rejected" },
   "dashboard": {
     "title": "Overview",
     "subtitle": "What needs a person now, and whether user balances are fully covered.",
@@ -55,11 +45,7 @@
     "solvency": "Coverage by asset",
     "solvencyHint": "Custody plus strategy assets compared with what the platform owes users, all from the ledger. A coverage below 1× must be investigated immediately.",
     "activity": "Activity, last 14 days",
-    "series": {
-      "deposits": "Deposits credited",
-      "withdrawals": "Withdrawals completed",
-      "registrations": "Registrations"
-    },
+    "series": { "deposits": "Deposits credited", "withdrawals": "Withdrawals completed", "registrations": "Registrations" },
     "withdrawalQueue": "Withdrawal queue",
     "queueEmpty": "No withdrawals waiting."
   },
@@ -90,11 +76,7 @@
     "resolve": "Resolve",
     "dismiss": "Dismiss",
     "none": "No open risk flags.",
-    "severities": {
-      "low": "Low",
-      "medium": "Medium",
-      "high": "High"
-    },
+    "severities": { "low": "Low", "medium": "Medium", "high": "High" },
     "types": {
       "shared_signup_ip_with_referrer": "Signed up from the referrer's network",
       "shared_wallet_with_referrer": "Withdrawal address shared with referrer",
@@ -166,11 +148,7 @@
     "none": "No deposits match these filters.",
     "detail": "Deposit",
     "risk": "Screening",
-    "riskResults": {
-      "clear": "Clear",
-      "flagged": "Flagged",
-      "unknown": "Not checked"
-    },
+    "riskResults": { "clear": "Clear", "flagged": "Flagged", "unknown": "Not checked" },
     "from": "From address",
     "toAddress": "Received on",
     "events": "Blockchain events",
@@ -194,11 +172,7 @@
     "hint": "Addresses are generated outside the platform (custody provider or offline wallet) and imported here. Keep enough available for each active network.",
     "count": "Count",
     "available": "Available",
-    "statuses": {
-      "available": "Available",
-      "assigned": "Assigned",
-      "retired": "Retired"
-    },
+    "statuses": { "available": "Available", "assigned": "Assigned", "retired": "Retired" },
     "importTitle": "Import addresses",
     "addresses": "Addresses",
     "addressesHint": "One per line. Each is checked against the network's format and checksum.",
@@ -258,7 +232,7 @@
     "edit": "Edit product",
     "saved": "Product saved. Changing terms creates a new terms version.",
     "none": "No products yet.",
-    "activationRules": "A product can be activated only with approved legal status, a legal reference, a source of return and texts in English, Russian and Arabic (Georgian is optional). Changing terms creates a new version; open positions keep theirs.",
+    "activationRules": "A product can be activated only with approved legal status, a legal reference, a source of return and texts in all three languages. Changing terms creates a new version; open positions keep theirs.",
     "slug": "URL name",
     "slugHint": "Lowercase letters, digits and hyphens. Cannot be changed later.",
     "name": "Name",
@@ -275,12 +249,7 @@
     "legalStatus": "Legal status",
     "legalReference": "Legal reference",
     "legalReferenceHint": "Licence, opinion or approval reference that permits offering this product.",
-    "legal": {
-      "draft": "Draft",
-      "under_review": "Under legal review",
-      "approved": "Approved",
-      "suspended": "Suspended"
-    },
+    "legal": { "draft": "Draft", "under_review": "Under legal review", "approved": "Approved", "suspended": "Suspended" },
     "allocated": "Allocated",
     "activate": "Activate",
     "activateText": "The product becomes available to users with its current terms.",
@@ -355,10 +324,7 @@
     "lastRecon": "Last reconciliation",
     "never": "Never",
     "integrityOk": "Ledger integrity check passed: every balance matches its entries and every transaction balances.",
-    "integrityIssues": {
-      "one": "{{count}} ledger integrity issue",
-      "other": "{{count}} ledger integrity issues"
-    },
+    "integrityIssues": { "one": "{{count}} ledger integrity issue", "other": "{{count}} ledger integrity issues" },
     "pausedTitle": "Withdrawals paused",
     "pausedText": "Withdrawals are paused for {{assets}} after a reconciliation mismatch. Resuming needs a second approver.",
     "reconcile": "Reconcile",
@@ -439,11 +405,7 @@
       "when_relaxing": "Tightening applies immediately; relaxing needs a second staff member.",
       "none": "This setting changes immediately. The change is recorded with your reason."
     },
-    "policyShort": {
-      "always": "Always",
-      "when_relaxing": "When relaxing",
-      "none": "Not needed"
-    },
+    "policyShort": { "always": "Always", "when_relaxing": "When relaxing", "none": "Not needed" },
     "keys": {
       "deposits_enabled": "Accept new deposits and credit confirmed ones.",
       "withdrawals_enabled": "Accept new withdrawal requests.",
@@ -467,9 +429,7 @@
       "live_enabled": "Send live update signals to dashboards.",
       "languages_enabled": "Languages offered to users.",
       "public_stats_enabled": "Show aggregate statistics on the home page (live mode only).",
-      "support_contact_email": "Support email shown to users.",
-      "withdrawal_address_email_confirmation": "Email a code to confirm each new withdrawal address (needs working email).",
-      "deposits_page_notice": "Notice at the top of the deposit page (edit it in Deposits → Deposit methods)."
+      "support_contact_email": "Support email shown to users."
     }
   },
   "fees": {
@@ -503,7 +463,7 @@
   "announcements": {
     "title": "Announcements",
     "subtitle": "Messages delivered to every active account as a notification.",
-    "rules": "Write English, Russian and Arabic; Georgian is optional (without it, Georgian readers see the English text). Never announce returns, promotions with guaranteed gains or anything that could be read as investment advice.",
+    "rules": "Write all three languages. Never announce returns, promotions with guaranteed gains or anything that could be read as investment advice.",
     "new": "New announcement",
     "titleIn": "Title ({{lang}})",
     "bodyIn": "Message ({{lang}})",
@@ -539,20 +499,9 @@
   "system": {
     "title": "System",
     "subtitle": "Mode: {{mode}}. Health of the database, ledger, jobs and integrations.",
-    "modes": {
-      "demo": "demo",
-      "live": "live"
-    },
+    "modes": { "demo": "demo", "live": "live" },
     "providersTitle": "Integrations in use",
-    "providers": {
-      "auth": "Sign-in",
-      "email": "Email",
-      "screening": "Address screening",
-      "kyc": "Identity verification",
-      "prices": "Prices",
-      "live": "Live updates",
-      "rateLimit": "Rate limits"
-    },
+    "providers": { "auth": "Sign-in", "email": "Email", "screening": "Address screening", "kyc": "Identity verification", "prices": "Prices", "live": "Live updates", "rateLimit": "Rate limits" },
     "dbLatency": "Database latency",
     "emailQueue": "Email outbox",
     "emailCounts": "{{queued}} queued, {{failed}} failed",
@@ -564,60 +513,5 @@
     "lastRun": "Last run",
     "result": "Result",
     "noJobs": "No job has run yet."
-  },
-  "methods": {
-    "tab": "Deposit methods",
-    "title": "Deposit page",
-    "intro": "Publish where users send funds: address, QR image and instructions for each asset and network. While at least one method is shown, the deposit page uses these methods. Users report their payments; you credit them after checking the blockchain (Deposits tab, open the deposit).",
-    "add": "Add method",
-    "edit": "Edit deposit method",
-    "label": "Name shown to users",
-    "labelHint": "For example “Main wallet” or “Binance”.",
-    "address": "Deposit address",
-    "memo": "Memo / tag",
-    "memoHint": "Only if the network needs one (for example TON or XRP).",
-    "minAmount": "Minimum amount",
-    "sortOrder": "Order on the page",
-    "active": "Show on the deposit page",
-    "qr": "QR code",
-    "qrHint": "Upload a QR image or a screenshot from your wallet. Without an image, a QR code is generated from the address.",
-    "uploadQr": "Upload image",
-    "removeQr": "Remove image",
-    "imageError": "This image could not be read. Use a PNG, JPEG or WebP file.",
-    "instructions": "Instructions",
-    "instructionsHint": "Shown under the address. One paragraph per line. A language left empty shows the English text.",
-    "saved": "Deposit method saved.",
-    "exists": "A method for this asset and network already exists. Edit that one instead.",
-    "remove": "Remove",
-    "removeText": "Users will no longer see this method. If payments were reported to it, it is hidden instead of deleted.",
-    "removed": "Method removed.",
-    "deactivated": "Method hidden: payments were reported to it.",
-    "isActive": "Shown",
-    "isHidden": "Hidden",
-    "updated": "Updated {{date}}",
-    "emptyTitle": "No deposit methods yet",
-    "emptyText": "Add one to show your own address, QR code and instructions on the deposit page.",
-    "noticeTitle": "Notice on the deposit page",
-    "notice": "Notice",
-    "noticeHint": "Shown at the top of the deposit page. Leave every field empty to hide it.",
-    "noticeReason": "Deposit page notice updated",
-    "noticeSaved": "Notice saved."
-  },
-  "manual": {
-    "title": "Reported payment",
-    "text": "Find the transaction in a block explorer. Check the network, the receiving address and the amount, then credit the amount that actually arrived.",
-    "confirmedAmount": "Amount received",
-    "confirmedAmountHint": "As shown on the blockchain. Pre-filled with the amount the user reported.",
-    "txHashHint": "Required. One transaction can be credited only once.",
-    "approve": "Credit deposit",
-    "approveText": "The amount is added to the user's balance, with the usual deposit hold. Write what you checked.",
-    "approved": "Deposit credited.",
-    "rejectText": "The user is told the payment could not be confirmed. Write the reason.",
-    "source": "Source",
-    "sourceManual": "Reported by user",
-    "sourceChain": "Blockchain",
-    "reported": "Reported",
-    "claimed": "Amount reported",
-    "userNote": "User's note"
   }
 }

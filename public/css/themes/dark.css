@@ -1,65 +1,41 @@
-/* Aurora Dark — the default theme. Applied to :root and <html data-theme="dark">.
-   Every colour a component uses is a token here; light.css overrides them. */
-:root,
+/* Dark theme. Applied when <html data-theme="dark">. */
 [data-theme='dark'] {
   color-scheme: dark;
-  --color-canvas: #05070d;
-  --color-surface: rgba(255, 255, 255, 0.035);
-  --color-surface-solid: #0b0f1a;
-  --color-surface-raised: #0e1320;
-  --color-surface-sunken: rgba(255, 255, 255, 0.025);
-  --color-surface-hover: rgba(255, 255, 255, 0.06);
-  --color-ink: #eef2ff;
-  --color-ink-muted: #a3adc2;
-  --color-ink-subtle: #6b768c;
-  --color-ink-inverse: #05070d;
-  --color-line: rgba(255, 255, 255, 0.08);
-  --color-line-strong: rgba(255, 255, 255, 0.15);
+  --color-canvas: #0d1412;
+  --color-surface: #141d1a;
+  --color-surface-raised: #1a2521;
+  --color-surface-sunken: #101815;
+  --color-surface-hover: #1d2925;
+  --color-ink: #e3ece8;
+  --color-ink-muted: #9aaba3;
+  --color-ink-subtle: #76877f;
+  --color-ink-inverse: #0d1412;
+  --color-line: #26332e;
+  --color-line-strong: #34443d;
 
-  --color-accent: #22e3b5;
-  --color-accent-hover: #5ff5d0;
-  --color-accent-soft: rgba(34, 227, 181, 0.12);
-  --color-accent-ink: #03140f;
-  --color-accent-2: #7c5cff;
-  --color-accent-2-soft: rgba(124, 92, 255, 0.14);
+  --color-accent: #4fb3a2;
+  --color-accent-hover: #6cc6b6;
+  --color-accent-soft: #15302b;
+  --color-accent-ink: #08110f;
 
-  --color-brass: #ffc266;
-  --color-brass-soft: rgba(255, 194, 102, 0.1);
-  --color-positive: #2ee6a6;
-  --color-positive-soft: rgba(46, 230, 166, 0.11);
-  --color-negative: #ff5d7a;
-  --color-negative-soft: rgba(255, 93, 122, 0.12);
-  --color-info: #5ca8ff;
-  --color-info-soft: rgba(92, 168, 255, 0.12);
-  --color-neutral-soft: rgba(255, 255, 255, 0.06);
+  --color-brass: #d9ab52;
+  --color-brass-soft: #2e2615;
+  --color-positive: #4cc38a;
+  --color-positive-soft: #12291e;
+  --color-negative: #f07a6e;
+  --color-negative-soft: #321a17;
+  --color-info: #86afd9;
+  --color-info-soft: #16222f;
+  --color-neutral-soft: #1c2622;
 
-  /* Ledger strip segments */
-  --color-seg-available: #22e3b5;
-  --color-seg-deposit-hold: #ffc266;
-  --color-seg-withdrawal-hold: #b48cff;
-  --color-seg-invested: #4d9dff;
+  --color-seg-available: #4fb3a2;
+  --color-seg-deposit-hold: #d9ab52;
+  --color-seg-withdrawal-hold: #a98bd1;
+  --color-seg-invested: #6f9ccc;
 
-  /* Glass and glow */
-  --glass-bg: rgba(14, 19, 32, 0.55);
-  --glass-bg-strong: rgba(10, 14, 24, 0.78);
-  --glass-border: rgba(255, 255, 255, 0.09);
-  --glass-highlight: rgba(255, 255, 255, 0.06);
-  --grad-border: linear-gradient(140deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.03) 40%, rgba(124, 92, 255, 0.28) 100%);
-  --glow-accent: 0 0 0 1px rgba(34, 227, 181, 0.35), 0 10px 40px -8px rgba(34, 227, 181, 0.45), 0 4px 30px -6px rgba(124, 92, 255, 0.45);
-  --spotlight: rgba(124, 92, 255, 0.16);
-  --spotlight-2: rgba(34, 227, 181, 0.12);
-
-  /* Aurora background */
-  --aurora-1: rgba(34, 227, 181, 0.32);
-  --aurora-2: rgba(124, 92, 255, 0.38);
-  --aurora-3: rgba(59, 168, 255, 0.26);
-  --aurora-opacity: 1;
-  --particle-rgb: 190, 205, 255;
-  --grid-line: rgba(255, 255, 255, 0.035);
-
-  --color-focus: rgba(34, 227, 181, 0.45);
-  --color-overlay: rgba(2, 4, 10, 0.66);
-  --shadow-raised: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 12px 40px -12px rgba(0, 0, 0, 0.7);
-  --shadow-overlay: 0 30px 90px -20px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.06);
-  --hero-grid: rgba(255, 255, 255, 0.04);
+  --color-focus: rgba(79, 179, 162, 0.45);
+  --color-overlay: rgba(0, 0, 0, 0.6);
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-overlay: 0 24px 70px rgba(0, 0, 0, 0.55);
+  --hero-grid: rgba(79, 179, 162, 0.08);
 }

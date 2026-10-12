@@ -6,7 +6,7 @@ Access: **public** — anyone · **guest** — signed-out visitors (signed-in us
 
 ## Public pages
 
-Pre-rendered in four languages: `/path` (English), `/ru/path`, `/ar/path` (right-to-left), `/ka/path` (Georgian), with `canonical` and `hreflang` links. Listed in `sitemap.xml`.
+Pre-rendered in three languages: `/path` (English), `/ru/path`, `/ar/path` (right-to-left), with `canonical` and `hreflang` links. Listed in `sitemap.xml`.
 
 | Path | Page | Purpose |
 | --- | --- | --- |

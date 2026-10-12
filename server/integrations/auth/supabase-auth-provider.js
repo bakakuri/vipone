@@ -8,7 +8,6 @@
 // (asymmetric signing keys); SUPABASE_JWT_SECRET enables legacy HS256 projects.
 
 import { AppError } from '../../core/errors.js';
-import { logger } from '../../core/logger.js';
 import { createJwksResolver, decodeUnverified, verifyJwt, JwtError } from '../../security/jwt.js';
 
 const ERROR_MAP = {
@@ -29,28 +28,16 @@ const ERROR_MAP = {
   mfa_verification_failed: 'mfa_invalid_code',
   mfa_challenge_expired: 'mfa_invalid_code',
   mfa_factor_not_found: 'not_found',
-  mfa_totp_enroll_not_enabled: 'mfa_unavailable',
-  mfa_totp_verify_not_enabled: 'mfa_unavailable',
-  insufficient_aal: 'mfa_required',
-  mfa_factor_name_conflict: 'mfa_setup_failed',
-  too_many_enrolled_mfa_factors: 'mfa_setup_failed',
-  mfa_ip_address_mismatch: 'mfa_setup_failed',
   otp_expired: 'link_expired',
   same_password: 'password_same',
   reauthentication_needed: 'reauthentication_required',
 };
 
-function mapError(status, body, path) {
+function mapError(status, body) {
   const raw = body?.error_code || body?.code || body?.error || '';
   const code = ERROR_MAP[raw] || (status === 429 ? 'rate_limited' : status >= 500 ? 'service_unavailable' : null);
-  if (code && ERROR_MAP[raw] && /^mfa_|^too_many_enrolled/.test(raw)) {
-    // Logged so a configuration problem in Supabase is visible in the function log.
-    logger.warn('auth_provider_error', { status, providerCode: raw, path });
-  }
   if (code) return new AppError(code);
   if (/invalid login credentials/i.test(body?.msg || body?.error_description || '')) return new AppError('invalid_credentials');
-  // Unknown refusal: keep the provider's code in the log (never tokens or passwords).
-  logger.warn('auth_provider_error', { status, providerCode: String(raw).slice(0, 80) || null, path, message: String(body?.msg || body?.error_description || body?.message || '').slice(0, 200) });
   return new AppError('auth_failed', { status: status >= 400 && status < 500 ? 400 : 502 });
 }
 
@@ -108,7 +95,7 @@ export function createSupabaseAuthProvider(config, { fetchImpl = fetch } = {}) {
     } catch {
       data = null;
     }
-    if (!res.ok) throw mapError(res.status, data, `${method} ${path.replace(/[0-9a-f-]{36}/g, ':id')}`);
+    if (!res.ok) throw mapError(res.status, data);
     return data;
   }
 
@@ -194,19 +181,8 @@ export function createSupabaseAuthProvider(config, { fetchImpl = fetch } = {}) {
     },
 
     mfa: {
-      async enroll(accessToken, { friendlyName, issuer }) {
-        // An earlier setup that was opened but never finished leaves an
-        // unverified factor behind; Supabase then refuses a new one (same
-        // name, factor limit). Remove those first, like the local provider.
-        const user = await call('GET', '/user', { token: accessToken });
-        const totp = (user.factors || []).filter((f) => f.factor_type === 'totp');
-        if (totp.some((f) => f.status === 'verified')) throw new AppError('mfa_already_enabled', { status: 409 });
-        for (const f of totp) {
-          await call('DELETE', `/factors/${encodeURIComponent(f.id)}`, { token: accessToken });
-        }
-        // A unique name avoids conflicts with factors Supabase has not cleaned up yet.
-        const name = `${friendlyName} ${Date.now().toString(36)}`.slice(0, 120);
-        const data = await call('POST', '/factors', { token: accessToken, body: { factor_type: 'totp', friendly_name: name, issuer } });
+      async enroll(accessToken, { friendlyName }) {
+        const data = await call('POST', '/factors', { token: accessToken, body: { factor_type: 'totp', friendly_name: friendlyName } });
         return { factorId: data.id, secret: data.totp?.secret, uri: data.totp?.uri };
       },
       async verify(accessToken, factorId, code) {

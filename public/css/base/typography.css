@@ -1,44 +1,29 @@
-html { background: var(--color-canvas); }
 body {
   font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: var(--leading-normal);
   color: var(--color-ink);
-  background: transparent;
+  background: var(--color-canvas);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-feature-settings: 'ss01', 'cv11';
-  position: relative;
-  isolation: isolate;
-  overflow-x: clip;
+  transition: background-color var(--duration-base) var(--ease-in-out), color var(--duration-base) var(--ease-in-out);
 }
 
-h1, h2, h3, h4 { font-weight: 600; line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); color: var(--color-ink); text-wrap: balance; }
-h1 { font-size: clamp(1.75rem, 2.6vw, var(--text-2xl)); }
+h1, h2, h3, h4 { font-weight: 600; line-height: var(--leading-tight); letter-spacing: -0.01em; color: var(--color-ink); }
+h1 { font-size: var(--text-2xl); }
 h2 { font-size: var(--text-xl); }
 h3 { font-size: var(--text-lg); }
 h4 { font-size: var(--text-md); }
+:lang(ar) h1, :lang(ar) h2, :lang(ar) h3 { letter-spacing: 0; }
 
-p { max-width: 72ch; text-wrap: pretty; }
+p { max-width: 72ch; }
 small, .text-small { font-size: var(--text-sm); }
 .text-xs { font-size: var(--text-xs); }
 .text-muted { color: var(--color-ink-muted); }
 .text-subtle { color: var(--color-ink-subtle); }
 
-a { color: var(--color-accent); text-decoration-thickness: 1px; text-underline-offset: 3px; transition: color var(--duration-fast); }
+a { color: var(--color-accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover { color: var(--color-accent-hover); }
-
-/* Animated gradient text for display headings. */
-.text-gradient {
-  background: var(--grad-text);
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradient-pan 9s linear infinite;
-}
-[data-theme='light'] .text-gradient { background-image: linear-gradient(100deg, #078266 0%, #2563eb 45%, #6a4bff 80%, #078266 100%); }
 
 /* Money and identifiers */
 .num { font-variant-numeric: tabular-nums lining-nums; }
@@ -60,10 +45,4 @@ a:hover { color: var(--color-accent-hover); }
 }
 .skip-link:focus { transform: translateY(0); }
 
-::selection { background: rgba(124, 92, 255, 0.35); color: var(--color-ink); }
-
-/* Slim, theme-aware scrollbars */
-* { scrollbar-width: thin; scrollbar-color: var(--color-line-strong) transparent; }
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-thumb { background: var(--color-line-strong); border-radius: 10px; border: 3px solid transparent; background-clip: padding-box; }
-::-webkit-scrollbar-track { background: transparent; }
+::selection { background: var(--color-accent-soft); color: var(--color-ink); }

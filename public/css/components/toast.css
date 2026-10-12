@@ -1,27 +1,22 @@
 .toast-region {
-  position: fixed; z-index: var(--z-toast); inset-block-end: var(--space-6); inset-inline-end: var(--space-6);
-  display: flex; flex-direction: column; gap: var(--space-2); width: min(400px, calc(100vw - 2 * var(--space-4)));
+  position: fixed; z-index: var(--z-toast); inset-block-end: var(--space-5); inset-inline-end: var(--space-5);
+  display: flex; flex-direction: column; gap: var(--space-2); width: min(380px, calc(100vw - 2 * var(--space-4)));
   pointer-events: none;
 }
 .toast {
-  position: relative; overflow: hidden;
   pointer-events: auto;
   display: flex; gap: var(--space-3); align-items: flex-start;
-  padding: var(--space-4) var(--space-5);
-  background: var(--glass-bg-strong); border: 1px solid var(--glass-border); border-radius: var(--radius-panel);
-  backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%);
-  box-shadow: var(--shadow-overlay); font-size: var(--text-sm);
-  animation: toast-in 520ms var(--ease-spring);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-raised); border: 1px solid var(--color-line); border-radius: var(--radius-control);
+  box-shadow: var(--shadow-raised); font-size: var(--text-sm);
+  animation: toast-in var(--duration-slow) var(--ease-out);
 }
-[dir='rtl'] .toast { animation-name: toast-in-rtl; }
-@keyframes toast-in-rtl { from { opacity: 0; transform: translateX(-24px) scale(0.96); } to { opacity: 1; transform: none; } }
-.toast::before { content: ''; position: absolute; inset-block: 0; inset-inline-start: 0; width: 3px; background: var(--toast-accent, var(--color-info)); box-shadow: 0 0 14px var(--toast-accent, var(--color-info)); }
 .toast.is-leaving { animation: toast-out var(--duration-base) var(--ease-in-out) forwards; }
-.toast__icon { flex: none; margin-block-start: 1px; color: var(--toast-accent, var(--color-info)); }
-.toast--success { --toast-accent: var(--color-positive); }
-.toast--error { --toast-accent: var(--color-negative); }
-.toast--info { --toast-accent: var(--color-info); }
-.toast--warning { --toast-accent: var(--color-brass); }
+.toast__icon { flex: none; margin-block-start: 1px; }
+.toast--success .toast__icon { color: var(--color-positive); }
+.toast--error .toast__icon { color: var(--color-negative); }
+.toast--info .toast__icon { color: var(--color-info); }
+.toast--warning .toast__icon { color: var(--color-brass); }
 .toast__body { flex: 1; min-width: 0; }
 .toast__title { font-weight: 600; }
 .toast__close { color: var(--color-ink-subtle); }

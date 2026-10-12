@@ -18,7 +18,6 @@ export const PERMISSIONS = Object.freeze({
   'deposits.review': ['compliance', 'super_admin'],
   'deposits.return': ['finance', 'super_admin'],
   'addresses.manage': ['finance', 'super_admin'],
-  'deposit_methods.manage': ['finance', 'super_admin'],
   'withdrawals.read': ALL_STAFF,
   'withdrawals.review': ['finance', 'compliance', 'super_admin'],
   'withdrawals.approve': ['finance', 'super_admin'],

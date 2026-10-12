@@ -1,74 +1,27 @@
-/* Motion. Rich, but never pretending: balances only move between real server
-   values, and everything here switches off with prefers-reduced-motion. */
-
-/* Smooth cross-page transitions (multi-page app, View Transitions API). The
-   background, header and sidebar keep their place; only content changes. */
-@view-transition { navigation: auto; }
-::view-transition-old(root) { animation: vt-out 240ms var(--ease-in-out) both; }
-::view-transition-new(root) { animation: vt-in 460ms var(--ease-out) both; }
-::view-transition-group(aurora), ::view-transition-group(site-header), ::view-transition-group(app-sidebar), ::view-transition-group(app-topbar) { animation-duration: 0s; }
-@keyframes vt-out { to { opacity: 0; transform: translateY(-6px); filter: blur(6px); } }
-@keyframes vt-in { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } }
-
+/* Motion: short, purposeful, and only in response to something real. */
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-@keyframes rise-in { from { opacity: 0; transform: translateY(18px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
-@keyframes pop-in { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: none; } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes shimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
-@keyframes toast-in { from { opacity: 0; transform: translateX(24px) scale(0.96); } to { opacity: 1; transform: none; } }
-@keyframes toast-out { to { opacity: 0; transform: translateX(24px) scale(0.96); } }
-@keyframes dropdown-in { from { opacity: 0; transform: translateY(-8px) scale(0.96); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
-@keyframes tour-in { from { opacity: 0; transform: translateY(12px) scale(0.97); } to { opacity: 1; transform: none; } }
-@keyframes live-pulse { 0% { opacity: 0.8; transform: scale(0.6); } 80%, 100% { opacity: 0; transform: scale(2); } }
+@keyframes toast-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes toast-out { to { opacity: 0; transform: translateY(8px); } }
+@keyframes dropdown-in { from { opacity: 0; transform: translateY(-4px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes tour-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes live-pulse { 0% { opacity: 0.7; transform: scale(0.6); } 80%, 100% { opacity: 0; transform: scale(1.6); } }
 @keyframes blink { 50% { opacity: 0.35; } }
-@keyframes value-flash { 0% { color: var(--color-accent); text-shadow: 0 0 24px var(--color-accent); } 100% { color: inherit; text-shadow: none; } }
-@keyframes card-flash { 0% { box-shadow: var(--glow-accent); } 100% { box-shadow: var(--shadow-raised); } }
+@keyframes value-flash { 0% { color: var(--color-accent); } 100% { color: inherit; } }
+@keyframes card-flash { 0% { box-shadow: 0 0 0 2px var(--color-accent-soft); } 100% { box-shadow: 0 0 0 0 transparent; } }
 @keyframes row-in { from { background: var(--color-accent-soft); } to { background: transparent; } }
-@keyframes badge-pop { 0% { transform: scale(0.8); } 60% { transform: scale(1.1); } 100% { transform: none; } }
-@keyframes draw-line { from { stroke-dasharray: 1600; stroke-dashoffset: 1600; } to { stroke-dasharray: 1600; stroke-dashoffset: 0; } }
-@keyframes gradient-pan { from { background-position: 0% 50%; } to { background-position: 220% 50%; } }
-@keyframes float-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-@keyframes coin-spin { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
-@keyframes orbit { to { transform: rotate(360deg); } }
-@keyframes shine { 0% { transform: translateX(-120%) skewX(-20deg); } 60%, 100% { transform: translateX(220%) skewX(-20deg); } }
-@keyframes glow-pulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
-@keyframes word-in { from { opacity: 0; transform: translateY(0.6em) rotate(2deg); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes marquee-rtl { from { transform: translateX(0); } to { transform: translateX(50%); } }
-@keyframes strip-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes strip-sweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
-@keyframes number-in { from { opacity: 0; transform: translateY(10px); filter: blur(10px); } to { opacity: 1; transform: none; filter: none; } }
-@keyframes border-spin { to { --angle: 360deg; } }
-@keyframes aurora-drift-1 { 0% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(12vw, 8vh, 0) scale(1.15); } 100% { transform: translate3d(-6vw, 14vh, 0) scale(0.95); } }
-@keyframes aurora-drift-2 { 0% { transform: translate3d(0, 0, 0) scale(1.05); } 50% { transform: translate3d(-14vw, 10vh, 0) scale(0.9); } 100% { transform: translate3d(-4vw, -6vh, 0) scale(1.2); } }
-@keyframes aurora-drift-3 { 0% { transform: translate3d(0, 0, 0) scale(0.95); } 50% { transform: translate3d(10vw, -12vh, 0) scale(1.2); } 100% { transform: translate3d(-12vw, -4vh, 0) scale(1); } }
-@keyframes bar-rise { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-@keyframes ring-ping { 0% { transform: scale(0.8); opacity: 0.9; } 100% { transform: scale(2.2); opacity: 0; } }
-@keyframes icon-bounce { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-4px); } 70% { transform: translateY(1px); } }
+@keyframes badge-pop { 0% { transform: scale(0.85); } 60% { transform: scale(1.06); } 100% { transform: none; } }
+@keyframes draw-line { from { stroke-dasharray: 1200; stroke-dashoffset: 1200; } to { stroke-dasharray: 1200; stroke-dashoffset: 0; } }
 
-@property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-
-/* Page-load choreography: sections, then cards, then rows, in a cascade. */
-.page-enter > * { animation: rise-in var(--duration-slower) var(--ease-out) both; }
-.page-enter > *:nth-child(2) { animation-delay: 60ms; }
-.page-enter > *:nth-child(3) { animation-delay: 120ms; }
-.page-enter > *:nth-child(4) { animation-delay: 180ms; }
-.page-enter > *:nth-child(n + 5) { animation-delay: 240ms; }
-.page-enter .grid > * { animation: rise-in var(--duration-slower) var(--ease-out) both; }
-.page-enter .grid > *:nth-child(2) { animation-delay: 90ms; }
-.page-enter .grid > *:nth-child(3) { animation-delay: 160ms; }
-.page-enter .grid > *:nth-child(4) { animation-delay: 230ms; }
-.page-enter .grid > *:nth-child(n + 5) { animation-delay: 290ms; }
-.page-enter .stat__value, .page-enter .ledger-legend__value { animation: number-in 900ms var(--ease-out) both; animation-delay: 200ms; }
-.page-enter .table tbody tr { animation: rise-in 600ms var(--ease-out) both; }
-.page-enter .table tbody tr:nth-child(2) { animation-delay: 40ms; }
-.page-enter .table tbody tr:nth-child(3) { animation-delay: 80ms; }
-.page-enter .table tbody tr:nth-child(4) { animation-delay: 120ms; }
-.page-enter .table tbody tr:nth-child(5) { animation-delay: 160ms; }
-.page-enter .table tbody tr:nth-child(n + 6) { animation-delay: 200ms; }
+/* The one orchestrated page-load moment: main content rises in once. */
+.page-enter > * { animation: rise-in var(--duration-slow) var(--ease-out) both; }
+.page-enter > *:nth-child(2) { animation-delay: 40ms; }
+.page-enter > *:nth-child(3) { animation-delay: 80ms; }
+.page-enter > *:nth-child(n + 4) { animation-delay: 110ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  @view-transition { navigation: none; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

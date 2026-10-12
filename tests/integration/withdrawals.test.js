@@ -37,7 +37,6 @@ describe('withdrawal addresses', () => {
 
   test('checksum errors are rejected, valid address needs an emailed code', async () => {
     await enableMfa(user.client);
-    await app.sql`update app.system_settings set value = 'true' where key = 'withdrawal.address_email_confirmation'`;
     const bad = await user.client.post('/api/v1/wallets', { label: 'Typo', asset: 'USDT', network: 'TRON', address: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6u' });
     assert.equal(bad.status, 422);
     assert.equal(bad.error.details[0].code, 'address_checksum');
@@ -53,18 +52,6 @@ describe('withdrawal addresses', () => {
     assert.ok(new Date(ok.data.usableFrom) > new Date(), 'new address is in cooldown');
     const emails = app.emails().filter((m) => m.to === user.email && m.subject.includes('withdrawal address'));
     assert.ok(emails.length >= 1, 'confirmation code was emailed');
-  });
-
-  test('with email codes switched off, a new address is active at once but still cools down', async () => {
-    await app.sql`update app.system_settings set value = 'false' where key = 'withdrawal.address_email_confirmation'`;
-    const before = app.emails().length;
-    const added = await user.client.post('/api/v1/wallets', { label: 'Exchange', asset: 'USDT', network: 'TRON', address: 'TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf' });
-    assert.equal(added.status, 201, JSON.stringify(added.body));
-    assert.equal(added.data.status, 'active');
-    assert.equal(added.data.devCode, undefined);
-    assert.ok(new Date(added.data.usableFrom) > new Date(), 'new address is in cooldown');
-    assert.equal(app.emails().length, before, 'no email was sent');
-    await user.client.del(`/api/v1/wallets/${added.data.id}`);
   });
 });
 

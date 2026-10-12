@@ -63,8 +63,7 @@ export function walletForm({ assets, onAdded }) {
       form.reset();
       syncNetwork();
       onAdded?.(wallet);
-      if (wallet.status === 'active') toast(t('wallets:confirmedToast', { date: formatDateTime(wallet.usableFrom) }));
-      else confirmWalletDialog(wallet, { onConfirmed: onAdded });
+      confirmWalletDialog(wallet, { onConfirmed: onAdded });
     } catch (err) {
       if (err.code === 'mfa_setup_required') {
         toast(errorMessage(err), { tone: 'warning' });

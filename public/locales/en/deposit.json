@@ -32,22 +32,10 @@
   "referenceText": "We are expecting {{amount}}. The reference is valid until {{date}}.",
   "howTitle": "How deposits work",
   "how": {
-    "send": {
-      "title": "You send",
-      "text": "From your wallet or exchange to the address shown, on the same network."
-    },
-    "detected": {
-      "title": "We see the transaction",
-      "text": "It appears in your list as detected, usually within minutes."
-    },
-    "confirmations": {
-      "title": "The network confirms it",
-      "text": "We wait for the required number of blockchain confirmations."
-    },
-    "credited": {
-      "title": "It is credited",
-      "text": "The amount is added to your balance and you get a notification."
-    },
+    "send": { "title": "You send", "text": "From your wallet or exchange to the address shown, on the same network." },
+    "detected": { "title": "We see the transaction", "text": "It appears in your list as detected, usually within minutes." },
+    "confirmations": { "title": "The network confirms it", "text": "We wait for the required number of blockchain confirmations." },
+    "credited": { "title": "It is credited", "text": "The amount is added to your balance and you get a notification." },
     "hold": {
       "title": "Hold for withdrawals",
       "text": "For {{count}} days it can be invested but not withdrawn."
@@ -77,54 +65,5 @@
     "screening_unavailable": "Held because the automated check could not be completed.",
     "below_minimum": "Below the minimum deposit; it needs manual review.",
     "source_not_settled": "The source transaction has not settled yet."
-  },
-  "manual": {
-    "subtitle": "Send crypto to the address below, then tell us about the payment. We credit it after checking it on the blockchain.",
-    "formTitle": "Where to send",
-    "chooseMethod": "Choose what you are sending",
-    "enlarge": "Enlarge",
-    "minimum": "Minimum deposit {{amount}}",
-    "creditedAfterCheck": "Credited after we find the payment on the blockchain",
-    "instructionsTitle": "How to pay",
-    "reportTitle": "Already sent it?",
-    "reportText": "Tell us the amount and, if you have it, the transaction ID. Your balance changes only after we confirm the payment.",
-    "amountSent": "Amount you sent",
-    "txHash": "Transaction ID (TxID / hash)",
-    "txHashHint": "You find it in the withdrawal history of your wallet or exchange. It speeds up the check.",
-    "txHashInvalid": "Paste the transaction ID exactly as shown: letters and digits only.",
-    "note": "Note",
-    "noteHint": "For example, the exchange you sent from.",
-    "report": "I have sent it",
-    "reported": "Payment reported. Reference {{reference}}",
-    "reportedText": "We are checking your payment of {{amount}}. You get a notification when it is credited.",
-    "checking": "Being checked",
-    "checkingNote": "We are looking for your payment on the blockchain. Nothing is needed from you.",
-    "amountReported": "Amount you reported"
-  },
-  "manualHow": {
-    "send": {
-      "title": "You send",
-      "text": "From your wallet or exchange to the address shown, on the same network."
-    },
-    "report": {
-      "title": "You tell us",
-      "text": "Press “I have sent it” with the amount and the transaction ID."
-    },
-    "check": {
-      "title": "We check it",
-      "text": "Our team finds the payment on the blockchain and confirms the amount."
-    },
-    "credited": {
-      "title": "It is credited",
-      "text": "The amount is added to your balance and you get a notification."
-    },
-    "hold": {
-      "title": "Hold for withdrawals",
-      "text": "For {{count}} days it can be invested but not withdrawn."
-    }
-  },
-  "manualTimeline": {
-    "reported": "Payment reported",
-    "checking": "Checked by our team"
   }
 }

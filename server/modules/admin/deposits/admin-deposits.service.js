@@ -12,20 +12,14 @@ import { audit } from '../../audit/audit.service.js';
 import { creditConfirmedDeposit } from '../../deposits/deposits.service.js';
 import { dispatchSoon } from '../../notifications/email-outbox.js';
 
-const fmt = (r) => ({
-  ...camelize(r),
-  amount: trimAmount(r.amount),
-  expectedAmount: trimAmount(r.expected_amount),
-  claimedAmount: trimAmount(r.claimed_amount),
-});
+const fmt = (r) => ({ ...camelize(r), amount: trimAmount(r.amount), expectedAmount: trimAmount(r.expected_amount) });
 
-export async function listDeposits({ status, asset, network, source, search, limit, cursor }) {
+export async function listDeposits({ status, asset, network, search, limit, cursor }) {
   const rows = await getSql()`
     select d.id, d.reference, d.user_id, p.email, d.asset_code, d.network_code, d.amount, d.expected_amount, d.tx_hash,
-           d.confirmations, d.required_confirmations, d.status, d.status_reason, d.risk_result, d.created_at, d.credited_at,
-           d.source, d.claimed_amount
+           d.confirmations, d.required_confirmations, d.status, d.status_reason, d.risk_result, d.created_at, d.credited_at
     from app.deposits d join app.profiles p on p.id = d.user_id
-    where (${source ?? null}::text is null or d.source = ${source ?? null}) and (${status ?? null}::text is null or d.status = ${status ?? null})
+    where (${status ?? null}::text is null or d.status = ${status ?? null})
       and (${asset ?? null}::text is null or d.asset_code = ${asset ?? null})
       and (${network ?? null}::text is null or d.network_code = ${network ?? null})
       and (${search ?? null}::text is null or d.reference = upper(${search ?? ''}) or d.tx_hash = ${search ?? ''} or lower(p.email) = lower(${search ?? ''}))
@@ -38,13 +32,10 @@ export async function listDeposits({ status, asset, network, source, search, lim
 export async function getDeposit(id) {
   const sql = getSql();
   const [row] = await sql`
-    select d.*, p.email, coalesce(a.address, m.address) as address, coalesce(a.memo, m.memo) as memo, n.explorer_tx_url,
-           m.label as method_label
+    select d.*, p.email, a.address, a.memo, n.explorer_tx_url
     from app.deposits d join app.profiles p on p.id = d.user_id
     join app.networks n on n.code = d.network_code
-    left join app.deposit_addresses a on a.id = d.deposit_address_id
-    left join app.deposit_methods m on m.id = d.method_id
-    where d.id = ${id}`;
+    left join app.deposit_addresses a on a.id = d.deposit_address_id where d.id = ${id}`;
   if (!row) throw new AppError('not_found');
   const events = row.tx_hash
     ? await sql`
@@ -57,14 +48,8 @@ export async function getDeposit(id) {
 
 export async function reviewDeposit(req, id, { decision, reason }) {
   const result = await withTransaction(async (tx) => {
-    const [before] = await tx`select status, source from app.deposits where id = ${id}`;
+    const [before] = await tx`select status from app.deposits where id = ${id}`;
     if (!before) throw new AppError('not_found');
-    // A reported payment has no chain record yet: it is approved with the
-    // checked amount and transaction hash (approve-manual), not here.
-    if (before.source === 'manual' && decision === 'approve') {
-      throw new AppError('invalid_status_transition', { status: 409, details: { reason: 'use_manual_approval' } });
-    }
-    delete before.source;
     let [row] = await tx`select * from app.review_deposit(${id}, ${decision}, ${req.auth.userId}, ${reason})`;
     if (decision === 'approve' && row.status === 'confirmed') {
       await creditConfirmedDeposit(tx, id, { actorId: req.auth.userId, source: 'admin' });

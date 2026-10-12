@@ -5,7 +5,6 @@ import { languageSwitcher } from '../navigation/language-switcher.js';
 import { themeSwitcher } from '../navigation/theme-switcher.js';
 import { brand } from './brand.js';
 import { demoBanner } from './demo-banner.js';
-import { orbitArt } from './orbit-art.js';
 
 export function mountAuthShell({ config }) {
   const main = document.getElementById('main');
@@ -13,7 +12,6 @@ export function mountAuthShell({ config }) {
   main.parentNode.insertBefore(shell, main);
   main.classList.add('auth-shell__content');
   const aside = h('aside', { class: 'auth-shell__aside' },
-    orbitArt(),
     brand('/'),
     h('div', { class: 'auth-shell__quote' },
       h('h2', {}, t('auth:aside.title')),

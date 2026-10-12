@@ -32,9 +32,7 @@ This guide is also available inside the platform: the **Help** centre (`/help`),
 3. Send at least the minimum shown. The deposit appears as *Detected*, then counts confirmations (TRON 20, Ethereum 12, Bitcoin 3) and becomes *Credited*.
 4. Credited funds are on a **7-day hold** for withdrawals. You can invest them immediately.
 
-With personal addresses you never need to send us a transaction id; we see the deposit on the blockchain.
-
-If the deposit page shows the platform's own address and instructions instead (a QR code or picture, sometimes several assets to choose from), follow the instructions shown, then press **I have sent it** with the amount and the transaction ID from your wallet or exchange. The deposit appears as *Being checked*; our team finds it on the blockchain and credits the amount that arrived. Your balance does not change before that.
+You never need to send us a transaction id; we see the deposit on the blockchain.
 
 ## 5. Invest
 
@@ -80,4 +78,4 @@ Rewards are paid by the platform — never taken from your friend's money — an
 
 ## Languages and accessibility
 
-English, Russian, Arabic (right-to-left) and Georgian. Switch in the top bar; your choice is saved to your profile. The site works with a keyboard and screen readers, respects your system's reduced-motion setting and works on phones.
+English, Russian and Arabic (right-to-left). Switch in the top bar; your choice is saved to your profile. The site works with a keyboard and screen readers, respects your system's reduced-motion setting and works on phones.

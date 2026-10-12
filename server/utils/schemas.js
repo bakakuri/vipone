@@ -6,7 +6,7 @@ import { validateAmount, normalizeAmountInput } from '../../public/js/validation
 export const uuid = z.string().uuid('invalid');
 export const assetCode = z.string().regex(/^[A-Z0-9]{2,10}$/, 'invalid');
 export const networkCode = z.string().regex(/^[A-Z0-9_]{2,20}$/, 'invalid');
-export const locale = z.enum(['en', 'ru', 'ar', 'ka']);
+export const locale = z.enum(['en', 'ru', 'ar']);
 export const countryCode = z.string().regex(/^[A-Z]{2}$/, 'invalid');
 export const reason = z.string().trim().min(3, 'too_short').max(1000, 'too_long');
 export const txHash = z.string().trim().regex(/^(0x)?[A-Za-z0-9]{16,128}$/, 'invalid');
@@ -29,15 +29,11 @@ export const nonNegativeAmount = z
   });
 
 export const localizedText = (max = 2000) =>
-  z
-    .object({
-      en: z.string().trim().min(1, 'required').max(max),
-      ru: z.string().trim().min(1, 'required').max(max),
-      ar: z.string().trim().min(1, 'required').max(max),
-      // Georgian is optional: a missing or empty text falls back to English.
-      ka: z.string().trim().max(max).optional(),
-    })
-    .transform(({ ka, ...rest }) => (ka ? { ...rest, ka } : rest));
+  z.object({
+    en: z.string().trim().min(1, 'required').max(max),
+    ru: z.string().trim().min(1, 'required').max(max),
+    ar: z.string().trim().min(1, 'required').max(max),
+  });
 
 export const pagination = {
   limit: z.coerce.number().int().min(1).max(100).default(25),
